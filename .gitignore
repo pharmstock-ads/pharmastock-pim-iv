@@ -4,9 +4,10 @@
 publish/
 docs/caps/
 
-# IDE
+# IDE / Cursor (regras locais do agente — não versionar)
 .vscode/
 .vs/
+.cursor/
 *.user
 *.userosscache
 *.sln.docstates

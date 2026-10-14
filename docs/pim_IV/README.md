@@ -1,12 +1,9 @@
-# docs/pim_IV — documentação acadêmica deste semestre
+# docs/pim_IV — documentação deste semestre
 
-Colocar aqui o documento ABNT, diagramas novos (arquitetura MVC/API/Flutter, DER SQL Server, sequência) e capturas de tela da entrega do PIM IV.
-
-Estrutura sugerida:
-
-```
-pim_IV/
-├── imgs/
-├── rascunhos/
-└── (documento final .docx/.pdf)
-```
+| Arquivo | Uso |
+|---------|-----|
+| [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) | Divisão de papéis, ordem de execução e checklist por etapa |
+| [RELATORIO_DECISOES_KICKOFF.md](./RELATORIO_DECISOES_KICKOFF.md) | Decisões do kickoff para a Geovanna (Ágil) |
+| `imgs/` | Diagramas e capturas do PIM IV |
+| `rascunhos/` | Rascunhos do documento ABNT |
+| _(documento final)_ | `.docx` / `.pdf` da entrega |

@@ -1,0 +1,3 @@
+-- PharmaStock — triggers (PIM IV)
+-- Obrigatório: ao menos 1 trigger.
+-- Com EF Core 7+, mapear HasTrigger na entidade afetada.

@@ -1,0 +1,3 @@
+-- PharmaStock — stored procedures (PIM IV)
+-- Obrigatório: ao menos 1 procedure, executada por PharmaStock.Repositorio
+-- (EF Core: FromSql/ExecuteSql | Dapper: CommandType.StoredProcedure).

@@ -1,2 +1,0 @@
-PLANO EVOLUÇÃO
-O Pharmastock está pronto como protótipo em camadas com regras de negócio e testes básicos; a evolução natural é persistir no PostgreSQL (já modelado), autenticar com funcionários reais e registrar vendas/estoque no banco, mantendo a arquitetura atual e expandindo qualidade com testes de integração — escopo típico e defensável para a continuação acadêmica do projeto.

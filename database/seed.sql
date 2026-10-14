@@ -1,0 +1,1 @@
+-- PharmaStock — dados de exemplo (PIM IV)

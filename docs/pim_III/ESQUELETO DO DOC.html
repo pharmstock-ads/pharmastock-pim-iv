@@ -1,0 +1,297 @@
+﻿
+<style>
+  .container { padding: 1rem 0; max-width: 680px; }
+  .section { margin-bottom: 1.2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .section-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+  .section-header:hover { background: var(--color-background-secondary); }
+  .section-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
+  .section-tag { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+  .tag-obr { background: var(--color-background-info); color: var(--color-text-info); }
+  .tag-bd { background: #E1F5EE; color: #0F6E56; }
+  .tag-eng { background: #EEEDFE; color: #3C3489; }
+  .tag-poo { background: #FAEEDA; color: #633806; }
+  .tag-ui { background: #FAECE7; color: #712B13; }
+  .tag-geral { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+  .chevron { font-size: 12px; color: var(--color-text-tertiary); transition: transform .2s; }
+  .chevron.open { transform: rotate(90deg); }
+  .section-body { padding: 0 16px 14px; display: none; }
+  .section-body.open { display: block; }
+  .item { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; padding: 2px 0; }
+  .item::before { content: "›"; margin-right: 8px; color: var(--color-text-tertiary); }
+  .item strong { font-weight: 500; color: var(--color-text-primary); }
+  .sub-item { font-size: 12px; color: var(--color-text-tertiary); line-height: 1.6; padding-left: 20px; }
+  .sub-item::before { content: "–"; margin-right: 6px; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 8px 0; }
+  .note { font-size: 12px; color: var(--color-text-tertiary); font-style: italic; margin-top: 8px; }
+  .top-label { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+  .section-num { font-size: 13px; font-weight: 500; color: var(--color-text-tertiary); min-width: 28px; }
+</style>
+<div class="container">
+  <div class="top-label">PIM III — ADS/UNIP · Sistema de Estoque de Farmácia (fictício) · Grupo · Scrum</div>
+
+  <!-- 1. Capa -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">1.</span>
+      <span class="section-title">Capa</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Nome da instituição (UNIP), curso (ADS)</div>
+      <div class="item">Nome de todos os integrantes + RAs</div>
+      <div class="item">Título do trabalho — ex: <strong>Sistema de Gestão de Estoque Farmacêutico</strong></div>
+      <div class="item">Subtítulo (se houver)</div>
+      <div class="item">Cidade e ano de entrega</div>
+    </div>
+  </div>
+
+  <!-- 2. Resumo -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">2.</span>
+      <span class="section-title">Resumo</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">150 a 500 palavras — síntese do projeto</div>
+      <div class="item">Mencionar: farmácia fictícia, escopo do sistema, disciplinas integradas</div>
+      <div class="item">Palavras-chave: ex: <strong>C#, PostgreSQL, Scrum, UX/UI, POO</strong></div>
+    </div>
+  </div>
+
+  <!-- 3. Abstract -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">3.</span>
+      <span class="section-title">Abstract</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Tradução do resumo para o inglês</div>
+      <div class="item">Keywords no mesmo idioma</div>
+    </div>
+  </div>
+
+  <!-- 4. Sumário -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">4.</span>
+      <span class="section-title">Sumário</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Gerado automaticamente com numeração e páginas</div>
+      <div class="item">Seções em algarismos arábicos</div>
+    </div>
+  </div>
+
+  <!-- 5. Introdução -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">5.</span>
+      <span class="section-title">Introdução</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Apresentação da farmácia fictícia (nome, porte, contexto)</div>
+      <div class="item">Problema identificado — necessidade de gestão de estoque</div>
+      <div class="item">Objetivo geral do sistema e do trabalho</div>
+      <div class="item">Metodologia adotada (Scrum, pesquisa bibliográfica)</div>
+      <div class="item">Estrutura do documento (breve guia de capítulos)</div>
+    </div>
+  </div>
+
+  <!-- 6. Desenvolvimento -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">6.</span>
+      <span class="section-title">Desenvolvimento — Cap. 1: Caracterização da Empresa</span>
+      <span class="section-tag tag-geral">contextualização</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Nome e descrição da farmácia fictícia</div>
+      <div class="item">Porte, público-alvo, produtos comercializados</div>
+      <div class="item">Problemas atuais no controle de estoque (justificativa do sistema)</div>
+      <div class="item">Objetivos específicos do projeto de software</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">6.</span>
+      <span class="section-title">Desenvolvimento — Cap. 2: Engenharia de Software Ágil (Scrum)</span>
+      <span class="section-tag tag-eng">Eng. Software</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item"><strong>Levantamento de requisitos</strong></div>
+      <div class="sub-item">Requisitos funcionais (RF01…RFn)</div>
+      <div class="sub-item">Requisitos não funcionais (RNF01…RNFn)</div>
+      <div class="divider"></div>
+      <div class="item"><strong>Modelagem de casos de uso (AOO)</strong></div>
+      <div class="sub-item">Diagrama de casos de uso geral</div>
+      <div class="sub-item">Diagrama de classes do sistema completo</div>
+      <div class="sub-item">Diagrama de sequência (ao menos 1 caso de uso)</div>
+      <div class="sub-item">Diagrama de implantação</div>
+      <div class="divider"></div>
+      <div class="item"><strong>Gestão do projeto com Scrum</strong></div>
+      <div class="sub-item">Definição de papéis: Product Owner, Scrum Master, Dev Team</div>
+      <div class="sub-item">Product Backlog com histórias de usuário</div>
+      <div class="sub-item">Sprints planejadas (mín. 2–3 sprints)</div>
+      <div class="sub-item">Evidências de acompanhamento (board, burndown, reuniões)</div>
+      <div class="divider"></div>
+      <div class="item"><strong>Qualidade do software e processo</strong></div>
+      <div class="sub-item">Estratégia de qualidade adotada pelo grupo</div>
+      <div class="sub-item">Testes de unidade de ao menos uma classe completa</div>
+      <div class="sub-item">Evidências de testes funcionais realizados</div>
+      <div class="note"> Obrigatório: commits de todos os membros no GitHub ao longo do tempo</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">6.</span>
+      <span class="section-title">Desenvolvimento — Cap. 3: Banco de Dados (PostgreSQL)</span>
+      <span class="section-tag tag-bd">BD</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Modelagem conceitual — DER completo do sistema</div>
+      <div class="item">Modelo relacional — mapeamento do DER</div>
+      <div class="item">Esquema físico — SGBD escolhido: <strong>PostgreSQL</strong></div>
+      <div class="sub-item">Tipos de dados por coluna</div>
+      <div class="sub-item">Índices, constraints e otimizações</div>
+      <div class="divider"></div>
+      <div class="item">Script SQL de criação do banco e inserção de dados iniciais</div>
+      <div class="item">Consultas SQL demonstrando as funcionalidades principais</div>
+      <div class="item">Planilha de testes com valores inseridos + evidências</div>
+      <div class="item">Se usar ORM: texto explicando, justificativa e todos os comandos SQL gerados</div>
+      <div class="note"> Script deve estar no GitHub</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">6.</span>
+      <span class="section-title">Desenvolvimento — Cap. 4: POO com C# — Implementação</span>
+      <span class="section-tag tag-poo">POO</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Arquitetura da aplicação C# (camadas, namespaces)</div>
+      <div class="item"><strong>Implementação completa de ao menos um caso de uso</strong></div>
+      <div class="sub-item">ex: Cadastro de medicamento, Entrada de estoque, Baixa por venda</div>
+      <div class="item">Boas práticas de OO aplicadas — separação de responsabilidades</div>
+      <div class="sub-item">Sem lógica de negócio no evento do botão</div>
+      <div class="sub-item">Classes, herança, encapsulamento, interfaces (quando aplicável)</div>
+      <div class="item">Código-fonte comentado inserido no corpo do trabalho ou Apêndice</div>
+      <div class="note"> Todo código deve estar no GitHub com commits ao longo do tempo</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">6.</span>
+      <span class="section-title">Desenvolvimento — Cap. 5: UX/UI, Protótipos e Interface</span>
+      <span class="section-tag tag-ui">UX/UI</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item"><strong>Protótipos e wireframes</strong></div>
+      <div class="sub-item">Ao menos um protótipo por tipo de tela distinta</div>
+      <div class="sub-item">Telas similares = apenas um protótipo (ex: cadastros)</div>
+      <div class="sub-item">Ferramentas: Figma, Adobe XD, ou outra</div>
+      <div class="divider"></div>
+      <div class="item"><strong>Front-end HTML/CSS</strong></div>
+      <div class="sub-item">Página(s) desenvolvida(s) — descrever o que foi implementado</div>
+      <div class="sub-item">Se integrado ao C#: descrever a integração</div>
+      <div class="sub-item">Se não integrado: justificar e apresentar como entregável independente</div>
+      <div class="divider"></div>
+      <div class="item"><strong>Implementação de interface Windows Forms / WPF (C#)</strong></div>
+      <div class="sub-item">Ao menos todos os casos de uso de um fluxo completo</div>
+      <div class="sub-item">ex: Fluxo de estoque — abertura, lançamento, consulta, relatório</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">6.</span>
+      <span class="section-title">Desenvolvimento — Cap. 6: Análise Integrada e Manual</span>
+      <span class="section-tag tag-geral">geral</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Correlação entre as disciplinas — como cada área contribuiu para o sistema</div>
+      <div class="item">Pontos positivos, limitações técnicas e oportunidades de melhoria</div>
+      <div class="divider"></div>
+      <div class="item"><strong>Manual de instalação do sistema</strong></div>
+      <div class="sub-item">Pré-requisitos (C#, .NET, PostgreSQL, etc.)</div>
+      <div class="sub-item">Passo a passo de instalação e configuração</div>
+      <div class="sub-item">Como executar o sistema pela primeira vez</div>
+    </div>
+  </div>
+
+  <!-- 7. Conclusão -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">7.</span>
+      <span class="section-title">Conclusão</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Retomada dos objetivos propostos na introdução</div>
+      <div class="item">Resultados alcançados pelo grupo</div>
+      <div class="item">Dificuldades encontradas e aprendizados</div>
+      <div class="item">Sugestões para trabalhos futuros / escalabilidade</div>
+    </div>
+  </div>
+
+  <!-- 8. Referências -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">8.</span>
+      <span class="section-title">Referências</span>
+      <span class="section-tag tag-obr">obrigatório</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Livros, artigos e sites utilizados em ordem alfabética</div>
+      <div class="item">Incluir referências de: C#, PostgreSQL, Scrum, UX</div>
+    </div>
+  </div>
+
+  <!-- Apêndices -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-num">A.</span>
+      <span class="section-title">Apêndices (recomendados)</span>
+      <span class="section-tag tag-geral">opcional</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="section-body">
+      <div class="item">Apêndice A — Código-fonte C# completo (se não inserido no corpo)</div>
+      <div class="item">Apêndice B — Script SQL completo de criação do banco</div>
+      <div class="item">Apêndice C — Planilha de testes do banco de dados</div>
+      <div class="item">Apêndice D — Evidências de execução do sistema (prints/screenshots)</div>
+      <div class="item">Apêndice E — <strong>Ficha de controle de reuniões</strong> (com visto do professor)</div>
+      <div class="note"> A ficha de controle é obrigatória e deve conter todas as reuniões, inclusive com o professor</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>

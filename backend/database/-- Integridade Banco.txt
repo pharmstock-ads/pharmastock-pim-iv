@@ -1,0 +1,30 @@
+-- Integridade banco
+-- Registros para simular a confiabilidade do banco
+
+-- Validação de Valores
+-- CHECK (margem >= 0)
+insert into produtos_precos
+(id_prod, margem, custo_bruto, acrescimo, custo_liquido, preco_venda)
+values
+(1, -30, 10, 1, 11, 14.30);
+
+--Consistência de Status:
+-- check (tipo_mov in ('S', 'N'))
+insert into funcionario
+(nome, cpf, cargo, email, senha, data_admissao, ativo)
+values
+('Carlos Silva', '11111111111', 'Gerente', 'carlos@empresa.com', '123', '2023-01-10', 'G');
+
+-- Integridade Referencial (Foreign Keys)
+-- Regra (CONSTRAINT) abaixo na tabela Produto
+-- foreign key (id_categoria) references categoria (id) ON DELETE RESTRICT 
+
+delete from categoria where nome = 'Primeiros Socorros'; 
+
+--Unicidade (Unique)
+-- UNIQUE
+
+insert into produto
+(codigo, codbarra, nome, id_categoria, id_fornecedor)
+values
+(1001, '789100000001', 'Paracetamol 750mg', 1, 1);

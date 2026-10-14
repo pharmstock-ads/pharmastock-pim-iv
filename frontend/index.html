@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Painel de Controle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+        
+        
+    <!-- SIDEBAR DE NAVEGAÇÃO DO SISTEMA -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+        
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="produtos-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="fornecedor-cadastro/index.html" class="nav-link ">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="funcionarios-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="movimentacao/index.html" class="nav-link ">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+        
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="user-profile-block">
+                    <div class="user-info">
+                        <span class="welcome">Bem-vindo,</span>
+                        <span class="username">Usuário</span>
+                    </div>
+                    <div class="user-avatar">👤</div>
+                </div>
+            </header>
+
+            <section class="metrics-grid">
+                <div class="card-metric">
+                    <div class="metric-icon-box">📦</div>
+                    <div class="metric-data">
+                        <div class="metric-title">Produtos cadastrados</div>
+                        <div class="metric-value">256</div>
+                        <div class="metric-subtext">Total de produtos</div>
+                    </div>
+                </div>
+                
+                <div class="card-metric low-stock">
+                    <div class="metric-icon-box">⚠️</div>
+                    <div class="metric-data">
+                        <div class="metric-title">Estoque baixo</div>
+                        <div class="metric-value text-danger">18</div>
+                        <div class="metric-subtext">Produtos</div>
+                    </div>
+                </div>
+                
+                <div class="card-metric">
+                    <div class="metric-icon-box">📅</div>
+                    <div class="metric-data">
+                        <div class="metric-title">Vencendo em 30 dias</div>
+                        <div class="metric-value">12</div>
+                        <div class="metric-subtext">Produtos</div>
+                    </div>
+                </div>
+                
+                <div class="card-metric">
+                    <div class="metric-icon-box">👥</div>
+                    <div class="metric-data">
+                        <div class="metric-title">Fornecedores</div>
+                        <div class="metric-value">34</div>
+                        <div class="metric-subtext">Cadastrados</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="dashboard-row">
+                <section class="data-panel">
+                    <div class="panel-header">
+                        <h2>Produtos com estoque baixo</h2>
+                        <a href="produtos-lista/index.html" class="view-all-link">Ver todos</a>
+                    </div>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <caption class="sr-only">Tabela de produtos com estoque baixo</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Estoque</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Paracetamol 750mg</td>
+                                    <td>Analgésico</td>
+                                    <td>5</td>
+                                    <td><span class="status-badge danger">Baixo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Amoxicilina 500mg</td>
+                                    <td>Antibiótico</td>
+                                    <td>8</td>
+                                    <td><span class="status-badge danger">Baixo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dipirona 500mg</td>
+                                    <td>Analgésico</td>
+                                    <td>3</td>
+                                    <td><span class="status-badge danger">Baixo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Losartana 50mg</td>
+                                    <td>Cardiológico</td>
+                                    <td>6</td>
+                                    <td><span class="status-badge danger">Baixo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Omeprazol 20mg</td>
+                                    <td>Gastrointestinal</td>
+                                    <td>7</td>
+                                    <td><span class="status-badge danger">Baixo</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="data-panel">
+                    <div class="panel-header">
+                        <h2>Próximos do vencimento</h2>
+                        <a href="produtos-lista/index.html" class="view-all-link">Ver todos</a>
+                    </div>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <caption class="sr-only">Tabela de produtos próximos do vencimento</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col">Validade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Atorvastatina 500mg</td>
+                                    <td>20/05/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Cetoconazol 200mg</td>
+                                    <td>22/05/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Ibuprofeno 600mg</td>
+                                    <td>25/05/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Nimesulida 100mg</td>
+                                    <td>27/06/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Metformina 850mg</td>
+                                    <td>28/06/2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <section class="data-panel">
+                <div class="panel-header">
+                    <h2>Últimas movimentações</h2>
+                    <a href="movimentacao/index.html" class="view-all-link">Ver todos</a>
+                </div>
+                <div class="table-container">
+                    <table class="custom-table">
+                        <caption class="sr-only">Tabela de últimas movimentações de estoque</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="mov-entrada">Entrada</span></td>
+                                <td>Paracetamol 750mg</td>
+                                <td>200</td>
+                                <td>20/05/2025 10:30</td>
+                            </tr>
+                            <tr>
+                                <td><span class="mov-saida">Saída</span></td>
+                                <td>Dipirona 500mg</td>
+                                <td>50</td>
+                                <td>20/05/2025 09:15</td>
+                            </tr>
+                            <tr>
+                                <td><span class="mov-entrada">Entrada</span></td>
+                                <td>Amoxicilina 500mg</td>
+                                <td>150</td>
+                                <td>19/05/2025 16:45</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

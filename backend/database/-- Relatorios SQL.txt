@@ -1,0 +1,68 @@
+-- Relatório de produtos a vencer nos próximos 30 dias
+
+SELECT p.codigo AS cod_produto,
+       p.nome AS nome_produto,
+      (SELECT nome FROM categoria c WHERE c.id = p.id_categoria) AS categoria,
+       l.numero_lote,
+       l.quantidade AS qtd_estoque,
+       to_char(l.validade, 'dd/mm/yyyy') as validade,
+       (l.validade - CURRENT_DATE) AS dias_restantes
+  FROM lote l
+ INNER JOIN produto p
+    ON l.id_produto = p.id
+ WHERE l.validade BETWEEN CURRENT_DATE AND (CURRENT_DATE + INTERVAL '30 days') -- data atual somando mais 30 dias
+ ORDER BY l.validade ASC,
+          p.nome     ASC;
+		  
+-------------------------------------------------------------------
+--Relatório de Produtos Vencidos (Perdas)
+
+SELECT p.codigo AS cod_produto,
+       p.nome AS nome_produto,
+       (SELECT nome FROM categoria c WHERE c.id = p.id_categoria) AS categoria,
+       l.numero_lote,
+       l.quantidade AS qtd_vencida,
+       to_char(l.validade, 'dd/mm/yyyy') AS validade,
+       (CURRENT_DATE - l.validade) AS dias_vencidos
+  FROM lote l
+ INNER JOIN produto p
+    ON l.id_produto = p.id
+ WHERE l.validade < CURRENT_DATE
+ ORDER BY l.validade ASC;
+		
+-------------------------------------------------------------------
+--Relatório de Alerta de Estoque Baixo
+
+SELECT p.nome AS nome_produto,
+       (SELECT nome FROM categoria c WHERE c.id = p.id_categoria) AS categoria,
+       l.numero_lote,
+       l.quantidade AS qtd_restante,
+       to_char(l.validade, 'dd/mm/yyyy') AS validade
+  FROM lote l
+ INNER JOIN produto p
+    ON l.id_produto = p.id
+ WHERE l.quantidade <= 50
+ ORDER BY l.quantidade ASC;
+ 
+-------------------------------------------------------------------
+--Relatório de Movimentação (Entrada e Saida)
+
+SELECT m.id_movimentacao as ID_venda,
+		p.nome,
+       m.quantidade as Qtd,
+       CASE
+         WHEN tipo_mov = 'S' THEN
+          'Saida'
+         ELSE
+          'Entrada'
+       END AS tipo_mov,
+       to_char(data_mov, 'dd/mm/yyyy') as "Data Venda",
+       m.valor_total,
+       preco_unitario,
+       m.pagamento,
+       (SELECT nome FROM funcionario f WHERE f.id_funcionario = m.id_funcionario) AS nome_funcionario
+  FROM movimentacao m
+ INNER JOIN produto p
+    ON m.id_produto = p.id
+ ORDER BY data_mov DESC;
+

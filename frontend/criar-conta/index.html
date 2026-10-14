@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Criar Conta</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="auth-page">
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="auth-card auth-card-wide">
+        <div class="auth-card-side">
+            <div class="auth-logo">💊</div>
+            <h1>PharmStock</h1>
+            <p>Gestão inteligente para sua farmácia</p>
+            <div class="auth-shield">🛡️</div>
+            <p class="auth-side-footer">Já tem uma conta? <a href="../login/index.html">Faça login</a></p>
+        </div>
+
+        <div id="conteudo-principal" class="auth-card-main" tabindex="-1">
+            <h2>Criar sua conta</h2>
+            <p class="auth-subtitle">Preencha os dados abaixo para criar sua conta</p>
+
+            <section class="form-panel">
+                <form action="../login/index.html" method="get" onsubmit="event.preventDefault(); window.location.href='../login/index.html';">
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label">Nome completo</label>
+                            <input type="text" class="form-control" placeholder="Digite seu nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CPF</label>
+                            <input type="text" class="form-control" placeholder="000.000.000-00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label">Cargo</label>
+                            <select class="form-control" required>
+                                <option value="" disabled selected>Selecione seu cargo</option>
+                                <option>Farmacêutico</option>
+                                <option>Atendente</option>
+                                <option>Caixa</option>
+                                <option>Auxiliar</option>
+                                <option>Estoquista</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" placeholder="exemplo@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label">Senha</label>
+                            <input type="password" class="form-control" placeholder="Digite sua senha" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirmar senha</label>
+                            <input type="password" class="form-control" placeholder="Confirme sua senha" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-20">
+                        <label class="form-label">Status</label>
+                        <div class="toggle-wrapper">
+                            <label class="switch-component">
+                                <input type="checkbox" id="status_conta" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                            <span class="toggle-label-text" id="lbl_status_conta">Ativo</span>
+                        </div>
+                    </div>
+
+                    <div class="form-footer-actions">
+                        <a href="../login/index.html" class="btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn-primary btn-form-save">Criar conta</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('status_conta').addEventListener('change', function () {
+            document.getElementById('lbl_status_conta').textContent = this.checked ? 'Ativo' : 'Inativo';
+        });
+    </script>
+</body>
+</html>

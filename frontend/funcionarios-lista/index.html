@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Funcionários</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="../index.html" class="nav-link ">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../produtos-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fornecedor-cadastro/index.html" class="nav-link ">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../funcionarios-lista/index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../movimentacao/index.html" class="nav-link ">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="../login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Funcionários</h1>
+                    <p>Visualize e gerencie os funcionários cadastrados</p>
+                </div>
+            </header>
+
+            <section class="filter-actions-row">
+                <div class="search-filters-group">
+                    <div class="search-input-wrapper">
+                        <label class="sr-only" for="busca-funcionario">Buscar por nome ou CPF</label>
+                        <span class="search-icon-inside" aria-hidden="true">🔍</span>
+                        <input type="search" id="busca-funcionario" class="filter-input" placeholder="Buscar por nome ou CPF" autocomplete="off">
+                    </div>
+                </div>
+                <div>
+                    <a href="../funcionario-cadastro/index.html" class="btn-primary"><span>➕</span> Novo funcionário</a>
+                </div>
+            </section>
+
+            <section class="data-panel">
+                <div class="table-container">
+                    <table class="custom-table">
+                        <caption class="sr-only">Tabela com a lista de funcionários cadastrados</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">CPF</th>
+                                <th scope="col">Cargo</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>João Silva</td>
+                                <td>123.456.789-00</td>
+                                <td>Farmacêutico</td>
+                                <td>joao@pharmstock.com</td>
+                                <td><span class="status-badge success-text">Ativo</span></td>
+                                <td class="text-center">
+                                    <a href="../funcionario-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button type="button" class="btn-action delete" title="Excluir">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Maria Santos</td>
+                                <td>987.654.321-00</td>
+                                <td>Atendente</td>
+                                <td>maria@pharmstock.com</td>
+                                <td><span class="status-badge success-text">Ativo</span></td>
+                                <td class="text-center">
+                                    <a href="../funcionario-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button type="button" class="btn-action delete" title="Excluir">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Pedro Oliveira</td>
+                                <td>456.987.654-00</td>
+                                <td>Caixa</td>
+                                <td>pedro@pharmstock.com</td>
+                                <td><span class="status-badge danger-text">Inativo</span></td>
+                                <td class="text-center">
+                                    <a href="../funcionario-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button type="button" class="btn-action delete" title="Excluir">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Ana Lima</td>
+                                <td>321.654.987-00</td>
+                                <td>Auxiliar</td>
+                                <td>ana@pharmstock.com</td>
+                                <td><span class="status-badge success-text">Ativo</span></td>
+                                <td class="text-center">
+                                    <a href="../funcionario-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button type="button" class="btn-action delete" title="Excluir">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Lucas Pereira</td>
+                                <td>159.753.486-00</td>
+                                <td>Estoquista</td>
+                                <td>lucas@pharmstock.com</td>
+                                <td><span class="status-badge success-text">Ativo</span></td>
+                                <td class="text-center">
+                                    <a href="../funcionario-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button type="button" class="btn-action delete" title="Excluir">🗑️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <nav class="pagination-container" aria-label="Paginação da lista de funcionários">
+                    <span class="page-link" aria-disabled="true">‹ Anterior</span>
+                    <span class="page-link active" aria-current="page">1</span>
+                    <span class="page-link" aria-disabled="true">2</span>
+                    <span class="page-link" aria-disabled="true">3</span>
+                    <span class="page-link" aria-disabled="true">Próximo ›</span>
+                </nav>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

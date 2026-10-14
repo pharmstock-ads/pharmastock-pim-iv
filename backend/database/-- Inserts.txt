@@ -1,0 +1,186 @@
+/*Observação:
+Os scripts abaixo foram gerados via IA (ChatGPT) com o objetivo de realizar inserções em massa. 
+Essa escolha foi para otimizar o tempo e preencher o banco com dados realistas, tornando o cenário do projeto um pouco mais real
+O responsável do banco sabe a utilidade do comando e como usar o mesmo.*/
+-- link do comando utilizado: https://chatgpt.com/share/6a010add-0f70-83e9-b0ef-617941695413
+
+-- =========================
+-- INSERT FORNECEDOR
+-- =========================
+insert into fornecedor (nome_empresa, cnpj, telefone) values
+('MedFarma Distribuidora', '11111111000101', '16999990001'),
+('Saude Farma LTDA', '11111111000102', '16999990002'),
+('BioMedic Produtos', '11111111000103', '16999990003'),
+('Vida Pharma', '11111111000104', '16999990004'),
+('ClinMed Supply', '11111111000105', '16999990005'),
+('Farmaline', '11111111000106', '16999990006'),
+('Medic House', '11111111000107', '16999990007'),
+('Pharma Express', '11111111000108', '16999990008'),
+('Nova Saude', '11111111000109', '16999990009'),
+('MedicBrasil', '11111111000110', '16999990010'),
+('Health Distribuidora', '11111111000111', '16999990011'),
+('Ultra Farma', '11111111000112', '16999990012'),
+('Farmatec', '11111111000113', '16999990013'),
+('Prime Medic', '11111111000114', '16999990014'),
+('Max Farma', '11111111000115', '16999990015');
+
+-- =========================
+-- INSERT FUNCIONARIO
+-- =========================
+insert into funcionario
+(nome, cpf, cargo, email, senha, data_admissao, ativo)
+values
+('Carlos Silva', '11111111111', 'Gerente', 'carlos@empresa.com', '123', '2023-01-10', 'S'),
+('Mariana Souza', '22222222222', 'Atendente', 'mariana@empresa.com', '123', '2023-02-15', 'S'),
+('Joao Pereira', '33333333333', 'Estoquista', 'joao@empresa.com', '123', '2023-03-20', 'S'),
+('Fernanda Lima', '44444444444', 'Caixa', 'fernanda@empresa.com', '123', '2023-04-11', 'S'),
+('Lucas Oliveira', '55555555555', 'Atendente', 'lucas@empresa.com', '123', '2023-05-01', 'S'),
+('Patricia Gomes', '66666666666', 'Financeiro', 'patricia@empresa.com', '123', '2023-06-02', 'S'),
+('Rafael Costa', '77777777777', 'Estoquista', 'rafael@empresa.com', '123', '2023-07-12', 'S'),
+('Juliana Rocha', '88888888888', 'Caixa', 'juliana@empresa.com', '123', '2023-08-05', 'S'),
+('Anderson Melo', '99999999999', 'Supervisor', 'anderson@empresa.com', '123', '2023-09-01', 'S'),
+('Camila Alves', '10101010101', 'Atendente', 'camila@empresa.com', '123', '2023-10-18', 'S'),
+('Thiago Santos', '12121212121', 'Caixa', 'thiago@empresa.com', '123', '2023-11-22', 'N'),
+('Amanda Freitas', '13131313131', 'Estoquista', 'amanda@empresa.com', '123', '2023-12-01', 'S'),
+('Eduardo Martins', '14141414141', 'Financeiro', 'eduardo@empresa.com', '123', '2024-01-15', 'S'),
+('Bruna Castro', '15151515151', 'Atendente', 'bruna@empresa.com', '123', '2024-02-10', 'S'),
+('Felipe Araujo', '16161616161', 'Gerente', 'felipe@empresa.com', '123', '2024-03-20', 'S');
+
+-- =========================
+-- INSERT CATEGORIA
+-- =========================
+insert into categoria (nome) values
+('Analgésicos'),
+('Antibióticos'),
+('Vitaminas'),
+('Higiene'),
+('Dermocosméticos'),
+('Infantil'),
+('Controlados'),
+('Hospitalares'),
+('Suplementos'),
+('Antialérgicos'),
+('Antigripais'),
+('Primeiros Socorros'),
+('Diabetes'),
+('Pressão Arterial'),
+('Fitoterápicos');
+
+-- =========================
+-- INSERT PRODUTO
+-- =========================
+insert into produto
+(codigo, codbarra, nome, id_categoria, id_fornecedor)
+values
+(1001, '789100000001', 'Paracetamol 750mg', 1, 1),
+(1002, '789100000002', 'Ibuprofeno 600mg', 1, 2),
+(1003, '789100000003', 'Amoxicilina 500mg', 2, 3),
+(1004, '789100000004', 'Vitamina C', 3, 4),
+(1005, '789100000005', 'Shampoo Anticaspa', 4, 5),
+(1006, '789100000006', 'Pomada Dermatologica', 5, 6),
+(1007, '789100000007', 'Fralda Infantil', 6, 7),
+(1008, '789100000008', 'Clonazepam 2mg', 7, 8),
+(1009, '789100000009', 'Soro Fisiologico', 8, 9),
+(1010, '789100000010', 'Whey Protein', 9, 10),
+(1011, '789100000011', 'Loratadina', 10, 11),
+(1012, '789100000012', 'Antigripal X', 11, 12),
+(1013, '789100000013', 'Curativo', 12, 13),
+(1014, '789100000014', 'Glicosimetro', 13, 14),
+(1015, '789100000015', 'Cha de Camomila', 15, 15);
+
+-- =========================
+-- INSERT PRODUTOS_PRECOS
+-- =========================
+insert into produtos_precos
+(id_prod, margem, custo_bruto, acrescimo, custo_liquido, preco_venda)
+values
+(1, 30, 10, 1, 11, 14.30),
+(2, 35, 15, 2, 17, 22.95),
+(3, 40, 20, 3, 23, 32.20),
+(4, 25, 8, 1, 9, 11.25),
+(5, 50, 12, 2, 14, 21),
+(6, 45, 18, 2, 20, 29),
+(7, 30, 40, 5, 45, 58.50),
+(8, 60, 25, 4, 29, 46.40),
+(9, 20, 7, 1, 8, 9.60),
+(10, 70, 80, 5, 85, 144.50),
+(11, 35, 9, 1, 10, 13.50),
+(12, 40, 14, 2, 16, 22.40),
+(13, 25, 5, 1, 6, 7.50),
+(14, 55, 60, 5, 65, 100.75),
+(15, 20, 4, 1, 5, 6);
+
+
+-- =========================
+-- INSERT LOTE
+-- Produtos 14 e 15 SEM LOTE
+-- =========================
+insert into lote
+(id_produto, numero_lote, validade, quantidade)
+values
+(1, 'LT001', '2026-03-31', 100), -- vencido
+(2, 'LT002', '2026-05-20', 80),  -- vence em breve
+(3, 'LT003', '2026-06-04', 50),  -- vence em breve
+(4, 'LT004', '2026-08-08', 120),
+(5, 'LT005', '2026-05-05', 40),  -- vencido
+(6, 'LT006', '2026-05-25', 60),  -- vence em breve
+(7, 'LT007', '2026-11-26', 150),
+(8, 'LT008', '2026-03-11', 30),  -- vencido
+(9, 'LT009', '2026-05-15', 90),  -- vence em breve
+(10, 'LT010', '2027-05-10', 20),
+(11, 'LT011', '2026-05-28', 70), -- vence em breve
+(12, 'LT012', '2026-05-09', 55), -- vencido
+(13, 'LT013', '2026-06-07', 45), -- vence em breve
+(1, 'LT014', '2027-06-14', 200),
+(3, 'LT015', '2026-09-07', 75);
+
+-- =========================
+-- INSERT USUARIO_LOG
+-- =========================
+insert into usuario_log (id_usuario, data_login) values
+(1, '2026-04-25 08:10:00'),
+(2, '2026-04-26 09:15:00'),
+(3, '2026-04-27 10:20:00'),
+(4, '2026-04-28 11:25:00'),
+(5, '2026-04-29 12:30:00'),
+(6, '2026-04-30 13:00:00'),
+(7, '2026-05-01 14:10:00'),
+(8, '2026-05-02 15:20:00'),
+(9, '2026-05-03 16:30:00'),
+(10, '2026-05-04 17:40:00'),
+(11, '2026-05-05 18:00:00'),
+(12, '2026-05-06 08:45:00'),
+(13, '2026-05-07 09:50:00'),
+(14, '2026-05-08 10:10:00'),
+(15, '2026-05-09 11:15:00');
+
+-- =========================
+-- INSERT MOVIMENTACAO
+-- Produtos 12,13,14,15 SEM MOVIMENTACAO
+-- =========================
+insert into movimentacao
+(id_funcionario, id_produto, id_lote, valor_total,
+preco_unitario, quantidade, data_mov, pagamento, tipo_mov)
+values
+(1, 1, 1, 1430, 14.30, 100, '2026-03-21', 'PIX', 'E'),
+(2, 1, 14, 286, 14.30, 20, '2026-04-30', 'DINHEIRO', 'S'),
+
+(3, 2, 2, 1836, 22.95, 80, '2026-03-26', 'BOLETO', 'E'),
+(4, 2, 2, 229.50, 22.95, 10, '2026-05-02', 'CARTAO', 'S'),
+
+(5, 3, 3, 1610, 32.20, 50, '2026-04-10', 'PIX', 'E'),
+(6, 3, 15, 644, 32.20, 20, '2026-05-07', 'CARTAO', 'S'),
+
+(7, 4, 4, 1350, 11.25, 120, '2026-02-09', 'BOLETO', 'E'),
+(8, 4, 4, 112.50, 11.25, 10, '2026-05-08', 'PIX', 'S'),
+
+(9, 5, 5, 840, 21, 40, '2026-04-20', 'DINHEIRO', 'E'),
+(10, 5, 5, 105, 21, 5, '2026-05-09', 'PIX', 'S'),
+
+(11, 6, 6, 1740, 29, 60, '2026-04-15', 'BOLETO', 'E'),
+(12, 6, 6, 290, 29, 10, '2026-05-05', 'CARTAO', 'S'),
+
+(13, 7, 7, 8775, 58.50, 150, '2026-02-19', 'PIX', 'E'),
+(14, 7, 7, 585, 58.50, 10, '2026-05-06', 'DINHEIRO', 'S'),
+
+(15, 8, 8, 1392, 46.40, 30, '2026-03-11', 'BOLETO', 'E');

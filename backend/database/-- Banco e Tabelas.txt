@@ -1,0 +1,87 @@
+-- Banco e Tabelas
+--create database pharmstock;
+
+-- Tabela Fornecedor
+create table fornecedor (
+	id serial primary key,
+	nome_empresa varchar(100) not null,
+	cnpj varchar (14) not null unique,
+	telefone varchar (30)
+); -- fim
+
+--Tabela Funcionario
+create table funcionario (
+	id_funcionario serial primary key,
+	nome varchar (100) not null,
+	cpf varchar (11) unique,
+	cargo varchar (50),
+	email varchar (50),
+	senha_hash varchar (25) not null,
+	data_admissao date default current_date not null,
+	ativo BOOLEAN not null
+); -- fim
+
+-- Tabela para usuario atual logado no sistema
+create table usuario_log( --drop table usuario_log;
+	id_usuario int references funcionario (id_funcionario),
+	data_login timestamp default current_timestamp
+);
+
+create table categoria (
+	id serial primary key,
+	nome varchar(50) not null unique
+); -- fim
+
+-- Tabela Produto
+create table produto (
+	id serial primary key,
+	codigo int not null unique,
+	codbarra varchar (25) unique,
+	nome varchar (100) not null,
+	id_categoria int,
+	id_fornecedor int, 
+	foreign key (id_fornecedor) references fornecedor (id) ON DELETE RESTRICT,
+	foreign key (id_categoria) references categoria (id) ON DELETE RESTRICT
+); -- fim
+
+-- Tabela de preços dos produtos
+create table produtos_precos(
+	id serial primary key,
+	id_prod int not null,
+	margem numeric (15, 2) not null check (margem >= 0),
+	custo_bruto numeric (15, 2) not null check (custo_bruto >= 0),
+	acrescimo numeric (15, 2) default 0 check (acrescimo >= 0),
+	custo_liquido numeric (15, 2), 
+	preco_venda numeric (15, 2), 
+	foreign key (id_prod) references produto (id)
+); -- fim
+
+-- Tabela Lote
+create  table lote (
+	id serial primary key,
+	id_produto int not null,
+	numero_lote varchar(50) not null,
+	validade date not null,
+	quantidade numeric (15, 2) not null check (quantidade >= 0),
+	foreign key (id_produto) references produto (id)
+); -- fim
+
+-- tabela de movimentacao 
+create table movimentacao (
+	id_movimentacao serial primary key,
+	id_funcionario int not null,
+	id_produto int not null,
+	id_lote int not null,
+	valor_total numeric (15, 2) not null,
+	preco_unitario numeric (15, 2) not null,
+	quantidade int not null check (quantidade > 0),
+	data_mov date not null default current_date,
+	pagamento varchar (30),
+	tipo_mov char (1) check (tipo_mov in ('S', 'E')) not null, 
+	foreign key (id_funcionario) references funcionario (id_funcionario),
+	foreign key (id_produto) references produto (id),
+	foreign key (id_lote) references lote (id)
+); -- fim
+
+--drop table movimentacao, lote, categoria, produtos_precos, produto, usuario_log, funcionario, fornecedor;
+

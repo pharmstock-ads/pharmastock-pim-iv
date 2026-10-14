@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock — Documentação do Front-end</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <main id="conteudo-principal" class="docs-page" tabindex="-1">
+        <header class="docs-header">
+            <h1>PharmStock — Documentação</h1>
+            <p>
+                Front-end estático do sistema de gestão de estoque farmacêutico.
+                Projeto acadêmico (ADS) com foco em <strong>HTML semântico</strong>,
+                <strong>acessibilidade</strong> e <strong>layout responsivo</strong>.
+            </p>
+            <nav class="docs-nav-top" aria-label="Atalhos do projeto">
+                <a href="../index.html">Abrir o sistema</a>
+                <a href="../login/index.html">Login</a>
+                <a href="../produtos-lista/index.html">Produtos</a>
+            </nav>
+        </header>
+
+        <section class="docs-section" aria-labelledby="sec-visao">
+            <h2 id="sec-visao">Visão geral</h2>
+            <p>
+                O repositório é um protótipo de interface <strong>sem backend</strong>:
+                as telas simulam cadastros, listagens e navegação entre módulos.
+                Toda a aparência visual vem de um único arquivo CSS na raiz (<code>style.css</code>).
+            </p>
+            <p>
+                <span class="docs-badge html">HTML5</span>
+                <span class="docs-badge css">CSS3</span>
+                <span class="docs-badge a11y">Acessibilidade</span>
+                <span class="docs-badge resp">Responsivo</span>
+            </p>
+            <h3>Como o sistema se comporta</h3>
+            <ul>
+                <li><strong>Entrada:</strong> o usuário abre <code>login/index.html</code>, preenche e-mail e senha e clica em Entrar → redireciona para o dashboard (<code>index.html</code>).</li>
+                <li><strong>Navegação interna:</strong> o menu lateral leva a cada módulo (produtos, fornecedor, funcionários, movimentação).</li>
+                <li><strong>Sair:</strong> o link “Sair” volta para a tela de login.</li>
+                <li><strong>Formulários:</strong> ao salvar, exibem alerta ou redirecionam — não há persistência em banco de dados.</li>
+            </ul>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-estrutura">
+            <h2 id="sec-estrutura">Estrutura de pastas</h2>
+            <p>Na raiz ficam apenas o dashboard e o CSS global. Cada tela tem sua própria pasta com <code>index.html</code>.</p>
+            <pre class="docs-tree" aria-label="Árvore de diretórios do projeto">FRONTWORKSPACE/
+├── index.html              ← Dashboard (página inicial do app)
+├── style.css               ← Estilos globais compartilhados
+├── login/index.html        ← Autenticação
+├── criar-conta/index.html  ← Cadastro público
+├── produtos-lista/index.html
+├── produtos-cadastro/index.html
+├── fornecedor-cadastro/index.html
+├── funcionarios-lista/index.html
+├── funcionario-cadastro/index.html
+├── movimentacao/index.html
+└── docs/index.html         ← Esta documentação</pre>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-semantico">
+            <h2 id="sec-semantico">HTML semântico</h2>
+            <p>As páginas internas usam landmarks e hierarquia adequada para leitores de tela e SEO básico:</p>
+            <ul>
+                <li><code>&lt;aside&gt;</code> — barra lateral com identidade do sistema</li>
+                <li><code>&lt;nav aria-label="Menu principal"&gt;</code> — links do menu</li>
+                <li><code>&lt;main id="conteudo-principal"&gt;</code> — conteúdo principal da página</li>
+                <li><code>&lt;header&gt;</code> — título da tela (<code>&lt;h1&gt;</code>) e contexto</li>
+                <li><code>&lt;section&gt;</code> — blocos de formulário, tabelas e filtros</li>
+                <li><code>&lt;table&gt;</code> com <code>&lt;caption class="sr-only"&gt;</code> e <code>&lt;th scope="col"&gt;</code></li>
+                <li><code>&lt;form&gt;</code> com <code>&lt;label for="..."&gt;</code> associado aos campos</li>
+            </ul>
+            <p>O item ativo do menu usa <code>aria-current="page"</code> para indicar a página atual.</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-a11y">
+            <h2 id="sec-a11y">Acessibilidade</h2>
+            <ul>
+                <li><strong>Skip link</strong> — “Ir para o conteúdo” no início de cada página (visível ao focar com Tab).</li>
+                <li><strong>Labels</strong> — campos de busca e formulários com <code>label</code> visível ou <code>.sr-only</code> (somente leitor de tela).</li>
+                <li><strong>Foco visível</strong> — <code>:focus-visible</code> em links, botões e inputs.</li>
+                <li><strong>Paginação</strong> — itens desabilitados usam <code>aria-disabled="true"</code> em vez de <code>href="#"</code>.</li>
+                <li><strong>Ícones decorativos</strong> — emojis do menu podem usar <code>aria-hidden="true"</code> onde aplicável.</li>
+                <li><strong>Redução de movimento</strong> — <code>@media (prefers-reduced-motion: reduce)</code> reduz animações.</li>
+            </ul>
+            <p><strong>Limitação atual:</strong> login não valida credenciais; qualquer e-mail/senha preenchidos permitem entrar (protótipo).</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-resp">
+            <h2 id="sec-resp">Layout responsivo</h2>
+            <p>O <code>style.css</code> adapta o layout em três faixas principais:</p>
+            <table class="docs-table">
+                <caption class="sr-only">Breakpoints de responsividade</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Largura máxima</th>
+                        <th scope="col">Comportamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>900px</td>
+                        <td>Cards do dashboard em 2 colunas; login em coluna; painéis empilhados</td>
+                    </tr>
+                    <tr>
+                        <td>768px</td>
+                        <td>Sidebar no topo; menu em linha; filtros e botões em coluna; formulários em 1 coluna</td>
+                    </tr>
+                    <tr>
+                        <td>480px</td>
+                        <td>Métricas em 1 coluna; tabelas com fonte menor</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Tabelas largas usam <code>overflow-x: auto</code> no container para scroll horizontal em telas pequenas.</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-css">
+            <h2 id="sec-css">CSS e organização visual</h2>
+            <ul>
+                <li><strong>Variáveis CSS</strong> (<code>:root</code>) — cores primárias, status, bordas e raios.</li>
+                <li><strong>Paleta sóbria</strong> — azul escuro no menu (<code>#1f3b63</code> → <code>#162b49</code>).</li>
+                <li><strong>Sem estilos inline</strong> — espaçamentos e alinhamentos via classes utilitárias (<code>.mb-20</code>, <code>.text-center</code>, etc.).</li>
+                <li><strong>Componentes</strong> — sidebar, cards, tabelas, formulários, botões e telas de autenticação compartilham o mesmo design system.</li>
+            </ul>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-js">
+            <h2 id="sec-js">JavaScript (uso mínimo)</h2>
+            <p>O projeto prioriza HTML/CSS. O JS aparece apenas onde a interação exige:</p>
+            <ul>
+                <li>Mostrar/ocultar senha no login</li>
+                <li>Atualizar texto de toggles (ex.: “Sim/Não”, “Ativo/Inativo”)</li>
+                <li>Redirecionamento simulado após submit de alguns formulários</li>
+            </ul>
+            <p><strong>Busca de produtos</strong> (filtrar tabela por nome/ID) ainda não implementada — requer JavaScript ou backend.</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="sec-telas">
+            <h2 id="sec-telas">Mapa de telas</h2>
+            <table class="docs-table">
+                <caption class="sr-only">Lista de telas e funções</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Pasta / arquivo</th>
+                        <th scope="col">Função</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>login/</code></td><td>Acesso ao sistema</td></tr>
+                    <tr><td><code>criar-conta/</code></td><td>Cadastro de novo usuário (simulado)</td></tr>
+                    <tr><td><code>index.html</code></td><td>Dashboard com métricas e resumos</td></tr>
+                    <tr><td><code>produtos-lista/</code></td><td>Listagem e busca de produtos</td></tr>
+                    <tr><td><code>produtos-cadastro/</code></td><td>Cadastro/edição de produto</td></tr>
+                    <tr><td><code>fornecedor-cadastro/</code></td><td>Cadastro de fornecedor</td></tr>
+                    <tr><td><code>funcionarios-lista/</code></td><td>Listagem de funcionários</td></tr>
+                    <tr><td><code>funcionario-cadastro/</code></td><td>Cadastro de funcionário</td></tr>
+                    <tr><td><code>movimentacao/</code></td><td>Entrada/saída de estoque</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer class="docs-footer">
+            <p>PharmStock — Projeto acadêmico ADS · Front-end estático · Documentação gerada para o repositório FRONTWORKSPACE</p>
+        </footer>
+    </main>
+</body>
+</html>

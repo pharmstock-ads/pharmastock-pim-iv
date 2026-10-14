@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Lista de Produtos</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+        
+        
+    <!-- SIDEBAR DE NAVEGAÇÃO DO SISTEMA -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+        
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="../index.html" class="nav-link ">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../produtos-lista/index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fornecedor-cadastro/index.html" class="nav-link ">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../funcionarios-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../movimentacao/index.html" class="nav-link ">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="../login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+        
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Lista de Produtos</h1>
+                    <p>Visualize e gerencie os produtos cadastrados</p>
+                </div>
+            </header>
+
+            <section class="filter-actions-row">
+                <div class="search-filters-group">
+                    <div class="search-input-wrapper">
+                        <label class="sr-only" for="busca-nome">Buscar por nome</label>
+                        <span class="search-icon-inside" aria-hidden="true">🔍</span>
+                        <input type="search" id="busca-nome" class="filter-input" placeholder="Buscar por nome" autocomplete="off">
+                    </div>
+                    <div class="search-input-wrapper">
+                        <label class="sr-only" for="busca-id">ID do produto</label>
+                        <input type="search" id="busca-id" class="filter-input no-icon" placeholder="ID do produto" inputmode="numeric" autocomplete="off">
+                    </div>
+                </div>
+                <div>
+                    <a href="../produtos-cadastro/index.html" class="btn-primary"><span>➕</span> Novo produto</a>
+                </div>
+            </section>
+
+            <section class="data-panel">
+                <div class="table-container">
+                    <table class="custom-table">
+                        <caption class="sr-only">Tabela com a lista de produtos cadastrados</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome do Produto</th>
+                                <th scope="col">Fornecedor</th>
+                                <th scope="col">Preço Venda</th>
+                                <th scope="col">Estoque</th>
+                                <th scope="col">Validade</th>
+                                <th scope="col" class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1001</td>
+                                <td>Paracetamol 750mg</td>
+                                <td>FarmaBrasil</td>
+                                <td>R$ 12,50</td>
+                                <td><span class="status-badge success-text">200</span></td>
+                                <td>20/05/2025</td>
+                                <td class="text-center">
+                                    <a href="../produtos-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button class="btn-action delete">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1002</td>
+                                <td>Amoxicilina 500mg</td>
+                                <td>MedCenter</td>
+                                <td>R$ 18,90</td>
+                                <td><span class="status-badge success-text">150</span></td>
+                                <td>19/05/2025</td>
+                                <td class="text-center">
+                                    <a href="../produtos-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button class="btn-action delete">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1003</td>
+                                <td>Dipirona 500mg</td>
+                                <td>UniFarma</td>
+                                <td>R$ 9,80</td>
+                                <td><span class="status-badge danger-text">8</span></td>
+                                <td>22/05/2025</td>
+                                <td class="text-center">
+                                    <a href="../produtos-cadastro/index.html" class="btn-action edit" title="Editar">✏️</a>
+                                    <button class="btn-action delete">🗑️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <nav class="pagination-container" aria-label="Paginação da lista de produtos">
+                    <span class="page-link" aria-disabled="true">‹ Anterior</span>
+                    <span class="page-link active" aria-current="page">1</span>
+                    <span class="page-link" aria-disabled="true">2</span>
+                    <span class="page-link" aria-disabled="true">3</span>
+                    <span class="page-link" aria-disabled="true">Próximo ›</span>
+                </nav>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Login</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="auth-page">
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="auth-card">
+        <div class="auth-card-side">
+            <div class="auth-logo">💊</div>
+            <h1>PharmStock</h1>
+            <p>Gestão inteligente para sua farmácia</p>
+            <div class="auth-shield">🛡️</div>
+        </div>
+
+        <div id="conteudo-principal" class="auth-card-main" tabindex="-1">
+            <h2>Acesse sua conta</h2>
+            <p class="auth-subtitle">Digite seu e-mail e senha para acessar o sistema</p>
+
+            <form action="../index.html" method="get">
+                <div class="auth-input-wrap">
+                    <span class="auth-input-icon">✉️</span>
+                    <input type="email" class="form-control" placeholder="E-mail" required>
+                </div>
+                <div class="auth-input-wrap">
+                    <span class="auth-input-icon">🔒</span>
+                    <input type="password" id="senha" class="form-control" placeholder="Senha" required>
+                    <span class="auth-input-icon-right" onclick="toggleSenha()" role="button" tabindex="0" aria-label="Mostrar senha">👁️</span>
+                </div>
+                <div class="auth-remember">
+                    <input type="checkbox" id="lembrar">
+                    <label for="lembrar">Lembrar</label>
+                </div>
+                <button type="submit" class="btn-primary auth-submit">ENTRAR</button>
+                <p class="auth-alt-link">Não tem uma conta? <a href="../criar-conta/index.html">Criar conta</a></p>
+            </form>
+
+            <div class="auth-features">
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">✅</div>
+                    <span>Segurança dos dados</span>
+                </div>
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">😊</div>
+                    <span>Fácil de usar</span>
+                </div>
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">☁️</div>
+                    <span>Cadastro rápido</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSenha() {
+            const input = document.getElementById('senha');
+            const icone = document.querySelector('.auth-input-icon-right');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icone.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                icone.textContent = '👁️';
+            }
+        }
+    </script>
+</body>
+</html>

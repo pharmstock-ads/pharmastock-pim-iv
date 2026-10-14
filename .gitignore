@@ -1,0 +1,25 @@
+# Pastas de compilação (Arquivos que o dotnet gera ao rodar o código)
+[Bb]in/
+[Oo]bj/
+publish/
+docs/caps/
+
+# Arquivos de configuração do VS Code e Visual Studio
+.vscode/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+
+
+# Banco de Dados Local
+*.db
+*.mdf
+*.ldf
+
+# Pasta de pacotes do NuGet (O dotnet baixa tudo de novo se precisar)
+packages/
+
+# Arquivos de sistema e temporários
+Thumbs.db
+.DS_Store

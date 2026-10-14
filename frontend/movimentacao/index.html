@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Movimentação de Estoque</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="../index.html" class="nav-link ">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../produtos-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fornecedor-cadastro/index.html" class="nav-link ">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../funcionarios-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../movimentacao/index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="../login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Movimentação de Estoque</h1>
+                    <p>Registre a entrada e saída de produtos</p>
+                </div>
+            </header>
+
+            <div class="movimentacao-layout">
+                <section class="form-panel">
+                    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Movimentação registrada!');">
+                        <div class="form-group mb-20">
+                            <label class="form-label" for="mov_tipo">Tipo de movimentação</label>
+                            <select id="mov_tipo" name="mov_tipo" class="form-control" required>
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <option>Entrada</option>
+                                <option>Saída</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-20">
+                            <label class="form-label" for="mov_produto">Produto</label>
+                            <select id="mov_produto" name="mov_produto" class="form-control" required>
+                                <option value="" disabled selected>Selecione o produto</option>
+                                <option>Paracetamol 750mg</option>
+                                <option>Ibuprofeno 600mg</option>
+                                <option>Amoxicilina 500mg</option>
+                                <option>Omeprazol 20mg</option>
+                            </select>
+                        </div>
+
+                        <div class="form-grid-layout">
+                            <div class="form-group">
+                                <label class="form-label" for="mov_quantidade">Quantidade</label>
+                                <input type="number" id="mov_quantidade" name="mov_quantidade" class="form-control" value="0" min="0" inputmode="numeric" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="mov_data">Data</label>
+                                <input type="date" id="mov_data" name="mov_data" class="form-control" value="2026-05-27" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-24">
+                            <label class="form-label" for="mov_obs">Observação (opcional)</label>
+                            <textarea id="mov_obs" name="mov_obs" class="form-control" placeholder="Digite uma observação"></textarea>
+                        </div>
+
+                        <div class="form-footer-actions">
+                            <a href="../index.html" class="btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn-primary btn-form-save">Registrar</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="data-panel">
+                    <div class="panel-header">
+                        <h2>Últimas movimentações</h2>
+                        <a href="../movimentacao/index.html" class="view-all-link">Ver todas</a>
+                    </div>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <caption class="sr-only">Tabela com as últimas movimentações de estoque</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col">Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="mov-entrada">Entrada</span></td>
+                                    <td>Paracetamol 750mg</td>
+                                    <td>200</td>
+                                    <td>20/05/2026 10:30</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="mov-saida">Saída</span></td>
+                                    <td>Ibuprofeno 600mg</td>
+                                    <td>50</td>
+                                    <td>20/05/2026 09:15</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="mov-entrada">Entrada</span></td>
+                                    <td>Amoxicilina 500mg</td>
+                                    <td>150</td>
+                                    <td>19/05/2026 16:45</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="mov-saida">Saída</span></td>
+                                    <td>Omeprazol 20mg</td>
+                                    <td>100</td>
+                                    <td>18/05/2026 10:30</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

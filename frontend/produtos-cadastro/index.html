@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Cadastro de Produto</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+        
+        
+    <!-- SIDEBAR DE NAVEGAÇÃO DO SISTEMA -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+        
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="../index.html" class="nav-link ">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../produtos-lista/index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fornecedor-cadastro/index.html" class="nav-link ">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../funcionarios-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../movimentacao/index.html" class="nav-link ">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="../login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+        
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Cadastro de Produto</h1>
+                    <p>Preencha os dados do produto</p>
+                </div>
+            </header>
+
+            <section class="form-panel">
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Produto cadastrado (Simulação Acadêmica)');">
+                    <div class="form-grid-layout three-cols">
+                        <div class="form-group">
+                            <label class="form-label" for="produto_nome">Nome do produto</label>
+                            <input type="text" id="produto_nome" name="produto_nome" class="form-control" placeholder="Digite o nome do produto" autocomplete="off" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="produto_preco_venda">Preço de venda (R$)</label>
+                            <input type="text" id="produto_preco_venda" name="produto_preco_venda" class="form-control" placeholder="0,00" inputmode="decimal" autocomplete="off" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="produto_preco_custo">Preço de custo (R$)</label>
+                            <input type="text" id="produto_preco_custo" name="produto_preco_custo" class="form-control" placeholder="0,00" inputmode="decimal" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label" for="fornecedor_id">ID do fornecedor</label>
+                            <select id="fornecedor_id" name="fornecedor_id" class="form-control" required>
+                                <option value="" disabled selected>Selecione o fornecedor</option>
+                                <option value="1">FarmaBrasil</option>
+                                <option value="2">MedCenter</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="produto_codigo_barras">Código de barras</label>
+                            <input type="text" id="produto_codigo_barras" name="produto_codigo_barras" class="form-control" placeholder="Digite o código de barras" inputmode="numeric" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-10">
+                        <label class="form-label">Requer receita</label>
+                        <div class="toggle-wrapper">
+                            <label class="switch-component">
+                                <input type="checkbox" id="req_receita" name="req_receita" aria-describedby="lbl_receita">
+                                <span class="slider-round"></span>
+                            </label>
+                            <span class="toggle-label-text" id="lbl_receita" aria-live="polite">Não</span>
+                        </div>
+                    </div>
+
+                    <div class="form-footer-actions">
+                        <a href="../produtos-lista/index.html" class="btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn-primary btn-form-save">Salvar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('req_receita').addEventListener('change', function() {
+            document.getElementById('lbl_receita').textContent = this.checked ? 'Sim' : 'Não';
+        });
+    </script>
+</body>
+</html>

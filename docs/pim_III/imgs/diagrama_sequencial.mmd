@@ -1,0 +1,69 @@
+sequenceDiagram
+    autonumber
+    actor U as Usuário
+    participant VUI as VendaUI
+    participant VS as VendaService
+    participant E as Estoque
+    participant LS as LoteService
+    participant PS as ProdutoService
+
+    Note over U,PS: UC10 — Registrar Venda (cenário principal)
+
+    U->>VUI: Seleciona opção [3] Controle de Venda
+    VUI->>PS: ListarTodos()
+    PS-->>VUI: lista de Produtos
+
+    Note over U,VUI: Fase 1 — Adicionar produto ao carrinho
+
+    U->>VUI: Busca por ID / código de barras / nome
+    VUI->>E: ObterDisponivel(idProduto)
+    E->>LS: ObterQuantidadeDisponivel(idProduto)
+    LS-->>E: decimal disponivel (soma dos lotes)
+    E-->>VUI: disponivel
+
+    alt Estoque insuficiente
+        VUI-->>U: "Estoque insuficiente. Disponível: X"
+    else Estoque OK
+        VUI->>E: TemEstoque(idProduto, quantidade)
+        E-->>VUI: true
+        VUI->>VUI: _carrinho.Add(new ItemVenda)
+        VUI-->>U: "Produto adicionado ao carrinho"
+    end
+
+    Note over U,VUI: Fase 2 — Finalizar venda
+
+    U->>VUI: Informa desconto e confirma
+    VUI->>VS: Finalizar(_carrinho, desconto)
+
+    loop Para cada ItemVenda no carrinho
+        VS->>E: TemEstoque(idProduto, quantidade)
+        E->>LS: ObterQuantidadeDisponivel(idProduto)
+        LS-->>E: disponivel
+        E-->>VS: bool
+    end
+
+    alt Algum item sem estoque
+        VS-->>VUI: false + UltimoErro
+        VUI-->>U: Mensagem de erro em vermelho
+    else Todos os itens com estoque
+        loop Baixa FIFO por validade
+            VS->>E: Baixar(idProduto, quantidade)
+            E->>LS: BaixarEstoque(idProduto, quantidade)
+            LS->>LS: Ordena lotes por Validade (FIFO)
+            LS->>LS: Desconta quantidade dos lotes
+            LS->>LS: Remove lotes zerados
+            LS-->>E: true
+            E-->>VS: true
+        end
+        VS->>VS: Cria Venda + calcula total
+        VS->>VS: Vendas.Add(venda)
+        VS-->>VUI: true
+        VUI->>VUI: _carrinho.Clear()
+        VUI-->>U: "Venda #N registrada. Total: R$ X"
+    end
+
+    Note over U,VUI: Cenário alternativo — produto não encontrado
+
+    U->>VUI: Busca com texto inválido
+    VUI->>VUI: FirstOrDefault retorna null
+    VUI-->>U: "Produto não encontrado"

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Cadastro de Funcionário</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+        
+        
+    <!-- SIDEBAR DE NAVEGAÇÃO DO SISTEMA -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+        
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="../index.html" class="nav-link ">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../produtos-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fornecedor-cadastro/index.html" class="nav-link ">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../funcionarios-lista/index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../movimentacao/index.html" class="nav-link ">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="../login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+        
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Cadastro de Funcionário</h1>
+                    <p>Preencha os dados do funcionário</p>
+                </div>
+            </header>
+
+            <section class="form-panel">
+                <form action="../funcionarios-lista/index.html" method="get" onsubmit="event.preventDefault(); window.location.href='../funcionarios-lista/index.html';">
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label" for="func_nome">Nome completo</label>
+                            <input type="text" id="func_nome" name="func_nome" class="form-control" placeholder="Digite o nome completo" autocomplete="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="func_cpf">CPF</label>
+                            <input type="text" id="func_cpf" name="func_cpf" class="form-control" placeholder="000.000.000-00" inputmode="numeric" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label" for="func_cargo">Cargo</label>
+                            <select id="func_cargo" name="func_cargo" class="form-control" required>
+                                <option value="" disabled selected>Selecione o cargo</option>
+                                <option value="gerente">Gerente</option>
+                                <option value="farmaceutico">Farmacêutico</option>
+                                <option value="atendente">Atendente de Caixa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="func_email">E-mail</label>
+                            <input type="email" id="func_email" name="func_email" class="form-control" placeholder="email@dominio.com" autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-layout">
+                        <div class="form-group">
+                            <label class="form-label" for="func_senha">Senha</label>
+                            <div class="password-input-container">
+                                <input type="password" id="func_senha" name="func_senha" class="form-control" placeholder="Digite a senha" autocomplete="new-password" required>
+                                <span class="password-toggle-icon" aria-hidden="true">👁️</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="func_senha_confirmar">Confirmar senha</label>
+                            <div class="password-input-container">
+                                <input type="password" id="func_senha_confirmar" name="func_senha_confirmar" class="form-control" placeholder="Confirme a senha" autocomplete="new-password" required>
+                                <span class="password-toggle-icon" aria-hidden="true">👁️</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-10">
+                        <label class="form-label" for="status_ativo">Status</label>
+                        <div class="toggle-wrapper">
+                            <label class="switch-component">
+                                <input type="checkbox" id="status_ativo" name="status_ativo" checked aria-describedby="lbl_status">
+                                <span class="slider-round"></span>
+                            </label>
+                            <span class="toggle-label-text" id="lbl_status" aria-live="polite">Ativo</span>
+                        </div>
+                    </div>
+
+                    <div class="form-footer-actions">
+                        <a href="../funcionarios-lista/index.html" class="btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn-primary btn-form-save">Salvar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('status_ativo').addEventListener('change', function() {
+            document.getElementById('lbl_status').textContent = this.checked ? 'Ativo' : 'Inativo';
+        });
+    </script>
+</body>
+</html>

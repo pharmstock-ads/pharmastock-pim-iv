@@ -1,0 +1,153 @@
+/* Documentação PharmStock — estilos locais da pasta docs */
+.docs-page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+}
+
+.docs-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.docs-header h1 {
+    font-size: 1.85rem;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.docs-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.docs-nav-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.docs-nav-top a {
+    font-size: 0.88rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+}
+
+.docs-nav-top a:hover {
+    background: rgba(30, 79, 143, 0.06);
+}
+
+.docs-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+}
+
+.docs-section h2 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.docs-section h3 {
+    font-size: 1rem;
+    margin: 18px 0 8px;
+    color: var(--primary-color);
+}
+
+.docs-section p,
+.docs-section li {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+.docs-section ul {
+    padding-left: 22px;
+    margin-bottom: 12px;
+}
+
+.docs-section li {
+    margin-bottom: 6px;
+}
+
+.docs-tree {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.85rem;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-top: 10px;
+}
+
+.docs-table th,
+.docs-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.docs-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.docs-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 6px;
+    margin-bottom: 4px;
+}
+
+.docs-badge.html { background: #e8f5e9; color: #166534; }
+.docs-badge.css { background: #eff6ff; color: #1e4f8f; }
+.docs-badge.a11y { background: #fef3c7; color: #92400e; }
+.docs-badge.resp { background: #f3e8ff; color: #6b21a8; }
+
+.docs-footer {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+    .docs-page {
+        padding: 20px 16px 32px;
+    }
+
+    .docs-section {
+        padding: 18px 16px;
+    }
+
+    .docs-table {
+        font-size: 0.8rem;
+    }
+}

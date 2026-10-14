@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmStock - Cadastro de Fornecedor</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+
+    <div class="app-container">
+        
+        
+    <!-- SIDEBAR DE NAVEGAÇÃO DO SISTEMA -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-box">
+                <span class="logo-icon">💊</span>
+            </div>
+            <span class="logo-text">PharmStock</span>
+        </div>
+        
+        <nav class="nav-menu" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="../index.html" class="nav-link ">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../produtos-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fornecedor-cadastro/index.html" class="nav-link active" aria-current="page">
+                        <span class="nav-icon">🚛</span>
+                        <span class="nav-label">Fornecedor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../funcionarios-lista/index.html" class="nav-link ">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-label">Funcionários</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../movimentacao/index.html" class="nav-link ">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Movimentação</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="../login/index.html" class="nav-link logout-link">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Sair</span>
+            </a>
+        </div>
+    </aside>
+        
+        <main id="conteudo-principal" class="main-content" tabindex="-1">
+            <header class="content-header">
+                <div class="header-title-block">
+                    <h1>Cadastro do Fornecedor</h1>
+                    <p>Preencha os dados do fornecedor</p>
+                </div>
+            </header>
+
+            <section class="form-panel">
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Fornecedor cadastrado!');">
+                    <div class="form-group full-width mb-20">
+                        <label class="form-label" for="fornecedor_nome">Nome da empresa</label>
+                        <input type="text" id="fornecedor_nome" name="fornecedor_nome" class="form-control" placeholder="Digite o nome da empresa" autocomplete="organization" required>
+                    </div>
+                    <div class="form-group full-width mb-20">
+                        <label class="form-label" for="fornecedor_cnpj">CNPJ</label>
+                        <input type="text" id="fornecedor_cnpj" name="fornecedor_cnpj" class="form-control" placeholder="00.000.000/0000-00" inputmode="numeric" autocomplete="off" required>
+                    </div>
+                    <div class="form-group full-width mb-35">
+                        <label class="form-label" for="fornecedor_telefone">Telefone</label>
+                        <input type="tel" id="fornecedor_telefone" name="fornecedor_telefone" class="form-control" placeholder="(00) 00000-0000" inputmode="tel" autocomplete="tel" required>
+                    </div>
+
+                    <div class="form-footer-actions">
+                        <a href="../index.html" class="btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn-primary btn-form-save">Salvar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

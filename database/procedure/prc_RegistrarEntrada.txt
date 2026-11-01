@@ -1,0 +1,15 @@
+CREATE OR ALTER PROCEDURE prc_RegistrarEntrada
+    @pIdFuncionario INT,
+    @pIdEntrada INT OUTPUT
+AS
+BEGIN
+    set nocount on;
+
+    insert into dbo.entrada
+        (id_funcionario, data_entrada, valor_total)
+    values
+        (@pIdFuncionario, sysdatetime(), 0);
+
+    set @pIdEntrada = convert(int, scope_identity());
+END;
+GO

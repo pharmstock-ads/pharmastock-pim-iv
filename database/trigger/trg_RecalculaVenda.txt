@@ -1,0 +1,27 @@
+CREATE OR ALTER TRIGGER trg_RecalculaVenda
+ON VendaItem
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    set nocount on;
+
+    declare @vIdVenda int;
+
+    select @vIdVenda = (
+        select id_venda
+        from deleted
+        union
+        select id_venda
+        from inserted
+    );
+
+    update venda
+    set valor_total = (
+        select sum(e.preco_unitario * e.quantidade)
+        from vendaitem e
+        where e.id_venda = @vIdVenda
+    )
+    where id_venda = @vIdVenda;
+
+END;
+GO

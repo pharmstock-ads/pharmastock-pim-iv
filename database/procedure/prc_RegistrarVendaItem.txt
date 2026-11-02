@@ -1,0 +1,36 @@
+CREATE OR ALTER PROCEDURE prc_RegistrarVendaItem
+    @pIdVenda INT,
+    @pIdProduto INT,
+    @pIdLote INT,
+    @pQuantidade DECIMAL(15,2),
+    @pPrecoUnitario DECIMAL(12,2)
+AS
+BEGIN
+    set nocount on;
+
+    declare @pIdVendaItem int;
+    declare @pIdFuncionario int;
+
+    select @pIdFuncionario = id_funcionario
+    from venda
+    where id_venda = @pIdVenda;
+
+    insert into vendaitem
+        (id_venda, id_produto, id_lote,
+         quantidade, preco_unitario)
+    values
+        (@pIdVenda, @pIdProduto, @pIdLote,
+         @pQuantidade, @pPrecoUnitario);
+
+    set @pIdVendaItem = convert(int, scope_identity());
+
+    exec prc_movimentaitens
+        @pIdFuncionario = @pIdFuncionario,
+        @pIdProduto = @pIdProduto,
+        @pIdLote = @pIdLote,
+        @pPrecoUnitario = @pPrecoUnitario,
+        @pQuantidade = @pQuantidade,
+        @pTipoMovimento = 's',
+        @pIdVendaItem = @pIdVendaItem;
+END;
+GO

@@ -1,0 +1,15 @@
+CREATE OR ALTER PROCEDURE prc_RegistrarVenda
+    @pIdFuncionario INT,
+    @pIdVenda INT OUTPUT
+AS
+BEGIN
+    set nocount on;
+
+    insert into venda
+        (id_funcionario, data_venda, valor_total)
+    values
+        (@pIdFuncionario, sysdatetime(), 0);
+
+    set @pIdVenda = convert(int, scope_identity());
+END;
+GO

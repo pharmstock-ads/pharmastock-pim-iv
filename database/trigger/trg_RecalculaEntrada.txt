@@ -1,0 +1,26 @@
+CREATE OR ALTER TRIGGER trg_RecalculaEntrada
+ON EntradaItem
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    set nocount on;
+
+    declare @vIdEntrada int;
+
+    select @vIdEntrada = (
+        select id_entrada
+        from deleted
+        union
+        select id_entrada
+        from inserted
+    );
+
+    update entrada
+    set valor_total = (
+        select sum(e.custo_unitario * e.quantidade)
+        from entradaitem e
+        where e.id_entrada = @vIdEntrada
+    )
+    where id_entrada = @vIdEntrada;
+END;
+GO

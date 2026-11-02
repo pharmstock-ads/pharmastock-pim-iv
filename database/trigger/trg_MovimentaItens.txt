@@ -1,0 +1,33 @@
+CREATE OR ALTER TRIGGER trg_MovimentaItens
+ON Movimentacao
+AFTER INSERT, DELETE
+AS
+BEGIN
+    -- SET NOCOUNT ON;
+
+    -- Aplica movimentações inseridas
+    update l
+       set l.quantidade =
+               l.quantidade +
+               case
+                   when i.tipo_mov = 'e' then i.quantidade
+                   when i.tipo_mov = 's' then -i.quantidade
+               end
+      from dbo.lote l
+     inner join inserted i
+        on i.id_lote = l.id;
+
+    -- desfaz movimentações excluídas
+    update l
+       set l.quantidade =
+               l.quantidade -
+               case
+                   when d.tipo_mov = 'e' then d.quantidade
+                   when d.tipo_mov = 's' then -d.quantidade
+               end
+      from dbo.lote l
+     inner join deleted d
+        on d.id_lote = l.id;
+
+END;
+GO

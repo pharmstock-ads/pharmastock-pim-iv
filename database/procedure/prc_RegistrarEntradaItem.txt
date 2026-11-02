@@ -1,0 +1,36 @@
+CREATE OR ALTER PROCEDURE prc_RegistrarEntradaItem
+    @pIdEntrada INT,
+    @pIdProduto INT,
+    @pIdLote INT,
+    @pQuantidade DECIMAL(15,2),
+    @pCustoUnitario DECIMAL(12,2)
+AS
+BEGIN
+    set nocount on;
+
+    declare @pIdEntradaItem int;
+    declare @pIdFuncionario int;
+
+    select @pIdFuncionario = id_funcionario
+    from entrada
+    where id_entrada = @pIdEntrada;
+
+    insert into entradaitem
+        (id_entrada, id_produto, id_lote,
+         quantidade, custo_unitario)
+    values
+        (@pIdEntrada, @pIdProduto, @pIdLote,
+         @pQuantidade, @pCustoUnitario);
+
+    set @pIdEntradaItem = convert(int, scope_identity());
+	
+    exec dbo.prc_movimentaitens
+        @pIdFuncionario = @pIdFuncionario,
+        @pIdProduto = @pIdProduto,
+        @pIdLote = @pIdLote,
+        @pPrecoUnitario = @pCustoUnitario,
+        @pQuantidade = @pQuantidade,
+        @pTipoMovimento = 'e',
+        @pIdEntradaItem = @pIdEntradaItem;
+END;
+GO

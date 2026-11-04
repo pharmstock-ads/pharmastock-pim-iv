@@ -3,7 +3,7 @@ CREATE OR ALTER PROCEDURE prc_RegistrarEntradaItem
     @pIdProduto INT,
     @pIdLote INT,
     @pQuantidade DECIMAL(15,2),
-    @pCustoUnitario DECIMAL(12,2)
+    @pPrecoUnitario DECIMAL(12,2)
 AS
 BEGIN
     set nocount on;
@@ -20,7 +20,7 @@ BEGIN
          quantidade, custo_unitario)
     values
         (@pIdEntrada, @pIdProduto, @pIdLote,
-         @pQuantidade, @pCustoUnitario);
+         @pQuantidade, @pPrecoUnitario);
 
     set @pIdEntradaItem = convert(int, scope_identity());
 	
@@ -28,7 +28,7 @@ BEGIN
         @pIdFuncionario = @pIdFuncionario,
         @pIdProduto = @pIdProduto,
         @pIdLote = @pIdLote,
-        @pPrecoUnitario = @pCustoUnitario,
+        @pPrecoUnitario = @pPrecoUnitario,
         @pQuantidade = @pQuantidade,
         @pTipoMovimento = 'e',
         @pIdEntradaItem = @pIdEntradaItem;

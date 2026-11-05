@@ -1,12 +1,12 @@
-create table fornecedor ( -- drop table fornecedor
+create table fornecedor (
     id int identity(1,1) primary key,
     nome_empresa varchar(100) not null,
     cnpj varchar(14) not null unique,
-    telefone varchar(30) null,
+    telefone varchar(30) null
 );
 go
 
-create table funcionario (-- drop table funcionario
+create table funcionario (
     id_funcionario int identity(1,1) primary key,
     nome varchar(100) not null,
     cpf varchar(11) null unique,
@@ -14,17 +14,17 @@ create table funcionario (-- drop table funcionario
     email varchar(50) null,
     senha_hash varchar(25) not null,
     data_admissao date not null default sysdatetime(),
-    ativo char not null check (ativo in ('s', 'n')),
+    ativo char not null check (ativo in ('s', 'n'))
 );
 go
 
-create table dbo.categoria ( -- drop table categoria
+create table dbo.categoria (
     id int identity(1,1) not null primary key,
     nome varchar(50) not null
 );
 go
 
-create table produto ( -- drop table produto
+create table produto (
     id int identity(1,1) not null primary key,
     codigo int not null unique,
     codbarra varchar(25) null unique,
@@ -36,7 +36,7 @@ create table produto ( -- drop table produto
 );
 go
 
-create table lote ( -- drop table lote
+create table lote (
     id int identity(1,1) not null primary key,
     id_produto int not null,
     numero_lote varchar(50) not null,
@@ -46,15 +46,16 @@ create table lote ( -- drop table lote
 );
 go
 
-create table venda( -- drop table venda
-	id_venda int identity(1,1) primary key,
-	id_funcionario int not null,
-	data_venda datetime2 not null default sysdatetime(),
-	valor_total decimal(10,2) default 0,
-	foreign key (id_funcionario) references funcionario (id_funcionario)
-)
+create table venda (
+    id_venda int identity(1,1) primary key,
+    id_funcionario int not null,
+    data_venda datetime2 not null default sysdatetime(),
+    valor_total decimal(10,2) default 0,
+    foreign key (id_funcionario) references funcionario(id_funcionario)
+);
+go
 
-create table vendaitem (-- drop table vendaitem
+create table vendaitem (
     id_venda_item int identity(1,1) primary key,
     id_venda int not null,
     id_produto int not null,
@@ -65,30 +66,31 @@ create table vendaitem (-- drop table vendaitem
     foreign key (id_produto) references produto(id),
     foreign key (id_lote) references lote(id)
 );
+go
 
-create table entrada (--drop table entrada
+create table entrada (
     id_entrada int identity(1,1) primary key,
     id_funcionario int not null,
     data_entrada datetime2 not null default sysdatetime(),
-    valor_total decimal(12,2) default 0 ,
-    foreign key (id_funcionario) references funcionario (id_funcionario),
+    valor_total decimal(12,2) default 0,
+    foreign key (id_funcionario) references funcionario(id_funcionario)
 );
 go
 
-create table entradaitem ( -- drop table entradaitem
+create table entradaitem (
     id_entrada_item int identity(1,1) primary key,
     id_entrada int not null,
     id_produto int not null,
     id_lote int not null,
     quantidade decimal(15,2) not null check (quantidade > 0),
-    custo_unitario decimal(12,2) not null check (custo_unitario >= 0),
+    preco_unitario decimal(12,2) not null check (preco_unitario >= 0),
     foreign key (id_entrada) references entrada(id_entrada),
-	foreign key (id_produto) references produto(id),
-	foreign key (id_lote) references lote(id)
+    foreign key (id_produto) references produto(id),
+    foreign key (id_lote) references lote(id)
 );
 go
 
-create table movimentacao ( -- drop table movimentacao
+create table movimentacao (
     id_movimentacao int identity(1,1) primary key,
     id_funcionario int not null,
     id_produto int not null,
@@ -100,8 +102,7 @@ create table movimentacao ( -- drop table movimentacao
     quantidade int not null,
     data_mov date not null default sysdatetime(),
     pagamento varchar(30),
-    tipo_mov char(1) not null
-    check (tipo_mov in ('e', 's')),
+    tipo_mov char(1) not null check (tipo_mov in ('e', 's')),
     foreign key (id_funcionario) references funcionario(id_funcionario),
     foreign key (id_produto) references produto(id),
     foreign key (id_lote) references lote(id),

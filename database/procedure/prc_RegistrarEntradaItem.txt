@@ -17,7 +17,7 @@ BEGIN
 
     insert into entradaitem
         (id_entrada, id_produto, id_lote,
-         quantidade, custo_unitario)
+         quantidade, preco_unitario)
     values
         (@pIdEntrada, @pIdProduto, @pIdLote,
          @pQuantidade, @pPrecoUnitario);

@@ -16,11 +16,11 @@ BEGIN
     );
 
     update entrada
-    set valor_total = (
-        select sum(e.custo_unitario * e.quantidade)
+    set valor_total = COALESCE((
+        select sum(e.preco_unitario * e.quantidade)
         from entradaitem e
         where e.id_entrada = @vIdEntrada
-    )
+    ), 0)
     where id_entrada = @vIdEntrada;
 END;
 GO

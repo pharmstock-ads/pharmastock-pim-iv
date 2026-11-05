@@ -1,4 +1,4 @@
-# PharmaStock — Divisão de equipe e roteiro de execução (PIM IV)
+﻿# PharmaStock — Divisão de equipe e roteiro de execução (PIM IV)
 
 Documento interno do grupo. Alinha as **10 etapas do Manual do PIM IV** com a divisão de papéis, a ordem de trabalho e o checklist ponto a ponto de cada seção.
 
@@ -7,12 +7,16 @@ Documento interno do grupo. Alinha as **10 etapas do Manual do PIM IV** com a di
 
 ## 1. Visão geral dos papéis (7 pessoas)
 
+**Líder na plataforma UNIP:** Anderson (05/11/2026).
+
+Guias operacionais por pessoa: ver [README.md](./README.md) (pasta `docs/pim_IV`).
+
 | # | Papel | Responsável | Etapas principais | Pastas / projetos |
 |---|--------|-------------|-------------------|-------------------|
-| 1 | **Núcleo C# + API** | Anderson | Etapa 4 (Modelos, Negócio, Repositório, Api) | `src/PharmaStock.Modelos`, `Negocio`, `Repositorio`, `Api` |
+| 1 | **Núcleo C# + API** (+ líder UNIP) | Anderson | Etapa 4 (Modelos, Negócio, Repositório, Api) | `src/PharmaStock.Modelos`, `Negocio`, `Repositorio`, `Api` |
 | 2 | **Banco de dados** | Geovanni | Etapa 3 | `database/` (SQL Server) |
 | 3 | **Web** | Vinicius | Etapa 4 (Web) + Etapa 5 | `src/PharmaStock.Web` |
-| 4 | **Mobile** | Roberto | Etapa 9 | `mobile/` |
+| 4 | **Mobile** | Roberto | Etapa 9 — Flutter: **lotes a vencer + estoque baixo** | `mobile/` |
 | 5 | **Engenharia de Software Ágil** | Geovanna | Etapa 1 (apoio) + Etapa 2 | backlog, board, `docs/pim_IV/` (planejamento) |
 | 6 | **Documentação acadêmica** | _a definir_ | Etapa 10 + montagem ABNT | `docs/pim_IV/` (documento final) |
 | 7 | **UX / UI** | _a definir_ | Etapa 6 | `uiux/` |
@@ -89,8 +93,8 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 
 | Etapa | Dono | Status |
 |-------|------|--------|
-| 1 — Negócio fictício | Geovanna (+ Docs) | ❌ |
-| 2 — Eng. Software Ágil | Geovanna | ❌ |
+| 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
+| 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
 | 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ |
 | 5 — Web responsivo | Vinicius | ❌ |
@@ -104,16 +108,17 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 
 ### Etapa 1 — Definição e caracterização do negócio fictício
 
-**Dono do texto:** Ágil (Geovanna) + Documentação · **Participam:** grupo no kickoff · **Status:** ❌
+**Dono do texto:** Ágil (Geovanna) + Documentação · **Participam:** grupo no kickoff · **Status:** ⚠️  
+**Base:** [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md)
 
 | Item | Status |
 |------|--------|
-| Denominação da empresa (PharmaStock / farmácia) | ❌ |
+| Denominação da empresa (PharmaStock / farmácia) | ⚠️ (decidido; falta texto formal ABNT) |
 | Segmento de atuação | ❌ |
 | Público-alvo | ❌ |
 | Produtos/serviços oferecidos | ❌ |
-| Problemas que justificam o sistema (estoque, validade, vendas) | ❌ |
-| Registrar continuidade do PIM III (citar no doc) | ❌ |
+| Problemas que justificam o sistema (estoque, validade, vendas) | ⚠️ (implícito no MVP/RF; falta prosa) |
+| Registrar continuidade do PIM III (citar no doc) | ⚠️ (citado no relatório; falta cap. ABNT) |
 | 1–2 páginas para introdução/contexto | ❌ |
 
 **Critério de pronto:** qualquer integrante explica o negócio em 1 minuto.
@@ -122,16 +127,17 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 
 ### Etapa 2 — Engenharia de Software Ágil Aplicada
 
-**Dono:** Geovanna · **Apoiam:** Núcleo, UX, Web/Mobile · **Status:** ❌
+**Dono:** Geovanna · **Apoiam:** Núcleo, UX, Web/Mobile · **Status:** ⚠️  
+**Base:** [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) §4
 
 | Item | Status |
 |------|--------|
-| Stakeholders / atores | ❌ |
-| Requisitos funcionais (RF) | ❌ |
-| Requisitos não funcionais (RNF) | ❌ |
-| Backlog priorizado | ❌ |
+| Stakeholders / atores | ⚠️ (atores §4.1; falta lista completa de stakeholders) |
+| Requisitos funcionais (RF) | ⚠️ (RF01–RF22 no relatório; falta prosa/board) |
+| Requisitos não funcionais (RNF) | ⚠️ (RNF01–RNF16 no relatório; falta prosa/board) |
+| Backlog priorizado | ⚠️ (MVP §3 + prioridade Must/Should/Could; falta board) |
 | Iterações/sprints (mín. 2–3) | ❌ |
-| Critérios de aceite (alta prioridade) | ❌ |
+| Critérios de aceite (alta prioridade) | ⚠️ (na tabela RF; falta por sprint) |
 | Board atualizado (Trello) | ❌ |
 | Artefatos para o doc (prints, RF/RNF, sprints) | ❌ |
 
@@ -150,10 +156,10 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | Informações essenciais (≥ 5 entidades) | ⚠️ |
 | Modelo conceitual (DER) | ❌ |
 | Modelo lógico (PK/FK) | ❌ |
-| Modelo físico `schema.sql` | ❌ |
+| Modelo físico (`tabelas.txt` → `schema.sql`) | ⚠️ |
 | ≥ 1 trigger (`trg_MovimentaItens`, `trg_RecalculaEntrada`, `trg_RecalculaVenda`) | ✅ |
 | ≥ 1 stored procedure (`prc_RegistrarEntrada*`, `prc_RegistrarVenda*`, `prc_MovimentaItens`) | ✅ |
-| `seed.sql` | ❌ |
+| Seed (`inserts/inserts.txt`; falta estoque demo) | ⚠️ |
 | Justificativa técnica (texto ABNT) | ❌ |
 | Principais operações/consultas descritas | ❌ |
 | Prints/diagramas para Documentação | ❌ |

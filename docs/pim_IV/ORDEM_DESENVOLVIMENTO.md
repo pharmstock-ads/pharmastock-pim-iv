@@ -1,4 +1,4 @@
-# Ordem de desenvolvimento — PharmaStock PIM IV
+﻿# Ordem de desenvolvimento — PharmaStock PIM IV
 
 Checklist vivo do time. Atualize a coluna **Status** com:
 
@@ -8,9 +8,9 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 | ⚠️ | Parcial / em andamento / bloqueado por dependência |
 | ❌ | Não feito |
 
-**Atualizado em:** 03/11/2026
+**Atualizado em:** 05/11/2026
 
-**Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_DECISOES_KICKOFF.md](./RELATORIO_DECISOES_KICKOFF.md) · [`database/README.md`](../../database/README.md)
+**Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [guias](./README.md)
 
 ---
 
@@ -18,13 +18,13 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 
 O PharmaStock do PIM IV não deve começar pela API nem pelas telas. A ordem existe para evitar retrabalho: cada camada só faz sentido quando a anterior já está estável o bastante para o próximo papel consumir.
 
-O ponto de partida é o **Ágil** (Geovanna). Sem negócio fictício claro, backlog priorizado e critérios de aceite, o time implementa coisas diferentes com o mesmo nome. Essa etapa não precisa estar 100% “bonita” no documento ABNT para o resto avançar, mas precisa existir um MVP acordado: login, fornecedor/produto, entrada de lote, venda com baixa de estoque, listagens na web e uma funcionalidade complementar no Flutter.
+O ponto de partida é o **Ágil** (Geovanna). Baseline de RF/RNF e gaps do manual estão em [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) (§4–§5). Ainda faltam texto formal do negócio, stakeholders completos, board e 2–3 sprints. O MVP acordado: login, fornecedor/produto, entrada de lote, venda com baixa de estoque (FEFO), listagens na web e Flutter com **lotes a vencer + estoque baixo** (A7).
 
-Em paralelo ao fechamento do backlog — e como próximo bloqueio técnico real — vem o **banco SQL Server** (Geovanni). As procedures e triggers de entrada, venda e movimentação **já estão no repositório**; o que ainda falta é o **schema** (`CREATE TABLE`) e o **seed**. Sem as tabelas físicas, as SPs não podem ser aplicadas de ponta a ponta e o Repositório C# não tem onde gravat. O ideal é: schema → procedures → triggers → seed, testados no SQL Server local. O PostgreSQL do PIM III fica só em `legacy/`, como referência histórica.
+Em paralelo — bloqueio técnico principal — o **banco SQL Server** (Geovanni). Já existem `tabelas/tabelas.txt`, `inserts/inserts.txt`, SPs (incl. `prc_ObterOuCadastrarLote`, entrada com `@pPrecoUnitario`) e triggers. Falta unificar em `schema.sql` / `seed.sql`, ordem de deploy testada e **entrada demo** (lotes do insert estão com qtd 0). Ideal: schema → procedures → triggers → seed. PostgreSQL do III só em `legacy/`.
 
-Enquanto o schema nasce, o **núcleo C#** (Anderson) alinha os **Modelos** às tabelas e aos contratos das SPs — inclusive `Entrada` e `EntradaItem`, que ainda não estão no domínio. Modelos não carregam regra de negócio; só representam os dados. Em seguida entram **Repositório** (chamar as stored procedures, connection string no `appsettings`, acesso simples com EF Core e/ou Dapper) e **Negócio** (validações e FIFO: o Negócio escolhe o lote por validade e só então pede ao Repositório para registrar a venda). Só depois disso a **API** expõe REST + Swagger. Web e Api nunca acessam banco nem Repositório diretamente: tudo passa por Negócio.
+Enquanto isso, o **núcleo C#** (Anderson) alinha **Modelos** a `tabelas.txt` (campo **`PrecoUnitario`** na entrada; `Entrada`/`EntradaItem` ainda faltam). Depois **Repositório** (Dapper proposto + SPs; connection string no `appsettings`) e **Negócio** (validações + **FEFO**). Só então a **API** (contrato em [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7). Web e Api nunca acessam banco/Repositório.
 
-Com a API mínima estável (pelo menos um fluxo completo no Swagger/Postman), **Web** (Vinicius) e **Mobile** (Roberto) avançam em paralelo. O Vinicius monta o MVC Razor responsivo; o Roberto o Flutter consumindo os mesmos endpoints, com ao menos uma funcionalidade complementar ao sistema web. A **UX** pode ter começado cedo (wireframes e protótipos), mas a validação forte acontece quando as telas reais existem.
+Com API mínima estável, **Web** (Vinicius) e **Mobile** (Roberto) em paralelo. Flutter foca A7 via `/api/alertas/...`. UX pode começar cedo; validação forte com telas reais.
 
 Por fim, o time **integra** o caminho feliz ponta a ponta (cadastro → entrada → venda → consulta no app), registra limitações e fecha o **documento ABNT**. Machine Learning e LIBRAS, se cobrados, entram como seções curtas no texto — não como projetos separados que atrapalham essa sequência.
 
@@ -37,10 +37,10 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | # | Bloco | Quem | Status | Nota |
 |---|--------|------|--------|------|
 | 0 | Fundação do repo | Anderson / grupo | ✅ | Solution + docs + Modelos iniciais |
-| 1 | Ágil / backlog | Geovanna | ❌ | RF, backlog, sprints |
-| 2A | Banco — schema + seed | Geovanni | ❌ | `schema.sql` ainda só placeholder |
-| 2B | Banco — SPs / triggers | Geovanni | ✅ | Entrada, venda, movimentação, lote |
-| 3 | Modelos C# | Anderson | ⚠️ | Falta Entrada / EntradaItem + alinhar ao schema |
+| 1 | Ágil / backlog | Geovanna | ⚠️ | RF/RNF no relatório; falta §5 (negócio, board, sprints) |
+| 2A | Banco — schema + seed | Geovanni | ⚠️ | `tabelas.txt` + `inserts.txt`; falta `schema.sql` + estoque demo |
+| 2B | Banco — SPs / triggers | Geovanni | ✅ | Entrada (`@pPrecoUnitario`), ObterOuCadastrarLote, venda, triggers |
+| 3 | Modelos C# | Anderson | ⚠️ | Falta Entrada / EntradaItem + `PrecoUnitario` |
 | 4 | Repositório + Negócio | Anderson | ❌ | — |
 | 5 | API | Anderson | ❌ | — |
 | 6A | Web | Vinicius | ❌ | Template MVC só |
@@ -64,7 +64,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 |------|--------|
 | Repo PIM IV + pastas (`src/`, `database/`, `docs/`, `legacy/`) | ✅ |
 | Solution em camadas (Modelos, Repositório, Negócio, Web, Api, Tests) | ✅ |
-| Docs de divisão e decisões de kickoff | ✅ |
+| Docs de divisão + relatório ágil + contrato + guias | ✅ |
 | SGBD = **SQL Server** (não PostgreSQL) | ✅ |
 | Domínio mínimo inicial em `PharmaStock.Modelos` | ✅ |
 | Testes xUnit básicos (Produto / ItemVenda) | ✅ |
@@ -73,16 +73,18 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ## Bloco 1 — Ágil e escopo
 
-**Quem:** Geovanna · **Status do bloco:** ❌
+**Quem:** Geovanna · **Status do bloco:** ⚠️
 
 | Item | Status |
 |------|--------|
-| Texto curto do negócio fictício (PharmaStock / farmácia) | ❌ |
-| Stakeholders / atores | ❌ |
-| RF e RNF listados | ❌ |
-| Backlog priorizado do MVP | ❌ |
-| Critérios de aceite dos itens de alta prioridade | ❌ |
+| Texto curto do negócio fictício (PharmaStock / farmácia) | ❌ (gap manual §5.1 do relatório ágil) |
+| Stakeholders / atores | ⚠️ (atores no relatório; falta lista completa) |
+| PDF Ágil atualizado no repo | ✅ |
+| RF e RNF (baseline RF01–22 / RNF01–16) | ⚠️ (no relatório; falta board/prosa ABNT) |
+| Backlog priorizado do MVP | ⚠️ (MVP + MoSCoW; falta board) |
+| Critérios de aceite dos itens de alta prioridade | ⚠️ (na tabela RF; falta por sprint) |
 | Board (Trello) + 2–3 sprints propostas | ❌ |
+| Líder UNIP = Anderson | ✅ |
 
 **Critério de saída:** o time sabe o que entra na próxima sprint sem ambiguidade.
 
@@ -90,21 +92,25 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ## Bloco 2 — Banco SQL Server
 
-### 2A — Schema e seed *(bloqueio atual)*
+### 2A — Schema e seed *(bloqueio parcial)*
 
-**Quem:** Geovanni · **Status do bloco:** ❌
+**Quem:** Geovanni · **Status do bloco:** ⚠️
 
-> `database/schema.sql` **não tem** `CREATE TABLE` — só comentários. As SPs já assumem as tabelas.
+> Fonte das tabelas: `database/tabelas/tabelas.txt` (`entradaitem.preco_unitario`).  
+> Seed parcial: `database/inserts/inserts.txt` (lotes com quantidade **0**).  
+> `schema.sql` / `seed.sql` ainda placeholders — consolidar.
 
 | Item | Status |
 |------|--------|
-| `schema.sql` com tabelas, PK, FK, CHECKs | ❌ |
-| Tabelas mínimas das SPs (`entrada`, `entradaitem`, `venda`, `vendaitem`, `movimentacao`, `lote` + cadastros) | ❌ |
-| `seed.sql` com dados de demo | ❌ |
+| CREATE TABLE versionado (`tabelas.txt`) | ✅ |
+| `schema.sql` unificado a partir de `tabelas.txt` | ❌ |
+| Tabelas mínimas das SPs + cadastros | ✅ (em `tabelas.txt`) |
+| Inserts de cadastro / lotes zerados | ✅ (`inserts.txt`) |
+| Entrada demo / estoque para Flutter A7 | ❌ |
 | Ordem aplicável: schema → procedures → triggers → seed | ❌ |
 | DER / modelo lógico para o ABNT | ❌ |
 
-**Critério de saída:** banco local sobe; SPs rodam sem erro de objeto inválido.
+**Critério de saída:** banco local sobe; SPs rodam sem erro de objeto inválido; há estoque demo para alertas.
 
 ### 2B — Procedures e triggers
 
@@ -112,13 +118,15 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 | Item | Status |
 |------|--------|
-| `prc_RegistrarEntrada` / `prc_RegistrarEntradaItem` | ✅ |
+| `prc_ObterOuCadastrarLote` | ✅ |
+| `prc_RegistrarEntrada` / `prc_RegistrarEntradaItem` (`@pPrecoUnitario`) | ✅ |
 | `prc_RegistrarVenda` / `prc_RegistrarVendaItem` | ✅ |
 | `prc_MovimentaItens` | ✅ |
 | `trg_MovimentaItens` (atualiza `lote`) | ✅ |
-| `trg_RecalculaEntrada` / `trg_RecalculaVenda` | ✅ |
+| `trg_RecalculaEntrada` (`preco_unitario` + COALESCE) / `trg_RecalculaVenda` | ✅ |
 | Homogeneizar scripts (CREATE vs CREATE OR ALTER) | ⚠️ |
 | Testar SPs+triggers em cima do schema real | ⚠️ |
+| Doc Service (orientações Negócio) em `database/` | ✅ |
 
 ---
 
@@ -129,8 +137,9 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Item | Status |
 |------|--------|
 | Entidades iniciais (Fornecedor, Funcionario, Categoria, Produto, ProdutoPreco, Lote, Movimentacao, UsuarioLog, Venda, ItemVenda) | ✅ |
-| `Entrada` e `EntradaItem` alinhados às SPs | ❌ |
-| Revisar Venda / itens / Movimentacao vs colunas do schema | ❌ |
+| `Entrada` e `EntradaItem` alinhados às SPs (`PrecoUnitario`) | ❌ |
+| Revisar Venda / itens / Movimentacao vs `tabelas.txt` | ❌ |
+| Remover/ignorar `ProdutoPreco` / desconto no MVP (A5/A6) | ⚠️ |
 | Ajustar testes se entidades mudarem | ❌ |
 
 **Critério de saída:** cada tabela essencial do schema tem classe correspondente.
@@ -147,16 +156,17 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 |------|--------|
 | Connection string em `appsettings.json` | ❌ |
 | Acesso a dados (EF Core e/ou Dapper) — simples | ❌ |
-| Wrappers das procedures de entrada/venda | ❌ |
+| Wrappers: ObterOuCadastrarLote + entrada/venda | ❌ |
 | CRUD básico dos cadastros (conforme backlog) | ❌ |
+| Preferência Dapper (proposta no contrato) | ⚠️ |
 | `HasTrigger` se usar EF Core 7+ | ❌ |
 
 ### 4B — Negócio
 
 | Item | Status |
 |------|--------|
-| Validações (fornecedor, código de barras, etc.) | ❌ |
-| FIFO (escolher lote por validade) | ❌ |
+| Validações (Service: funcionário, produto, qtd, preço) | ❌ |
+| FEFO (escolher lote por validade ASC) | ❌ |
 | Orquestrar: Negócio escolhe lote → Repo chama SP | ❌ |
 | Testes xUnit das regras críticas | ❌ |
 
@@ -171,9 +181,10 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Item | Status |
 |------|--------|
 | Controllers REST + DTOs | ❌ |
-| Endpoints do MVP | ❌ |
+| Endpoints do MVP (contrato §7, incl. alertas A7) | ❌ |
+| Auth MVP sem JWT (`funcionarioId`) | ❌ |
 | Swagger/OpenAPI | ❌ |
-| Lista de rotas para Roberto e Vinicius | ❌ |
+| Lista de rotas para Roberto e Vinicius | ⚠️ (proposta no CONTRATO_TECNICO) |
 | DI no `Program.cs` | ❌ |
 
 **Critério de saída:** Swagger/Postman executa ≥ 1 fluxo completo.
@@ -201,7 +212,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 |------|--------|
 | App Flutter em `mobile/` | ❌ |
 | Consumir a API | ❌ |
-| ≥ 1 funcionalidade complementar | ❌ |
+| A7: lotes a vencer + estoque baixo | ❌ |
 | Capturas para o documento | ❌ |
 
 ### 6C — UX
@@ -229,7 +240,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Limitações e evolução futura | ❌ |
 | Documento ABNT (20–30 págs) | ❌ |
 | Seções curtas ML / LIBRAS (se cobrarem) | ❌ |
-| Postagem UNIP (líder; ≤ 6 integrantes) | ❌ |
+| Postagem UNIP (líder = Anderson; ≤ 6 integrantes) | ❌ |
 
 ---
 
@@ -242,4 +253,4 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ---
 
-*Próximo foco: **2A schema.sql** ❌ + **1 backlog** ❌ + Anderson **Entrada/EntradaItem** ❌*
+*Próximo foco: **2A** `schema.sql` + entrada demo ⚠️ · **1** gaps §5 do relatório ágil (board/sprints) ⚠️ · Anderson **Entrada/EntradaItem** + FEFO + SPs ❌*

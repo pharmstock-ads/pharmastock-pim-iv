@@ -1,4 +1,4 @@
-# PharmaStock — PIM IV
+﻿# PharmaStock — PIM IV
 
 Sistema de gestão de estoque farmacêutico — **continuidade** do [PIM III](https://github.com/pimIII/pimIII).
 
@@ -103,7 +103,7 @@ Ver detalhe em [`database/README.md`](database/README.md).
 6. Funcionalidade complementar no Flutter  
 
 Roteiro: [`docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md`](docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md)  
-Decisões: [`docs/pim_IV/RELATORIO_DECISOES_KICKOFF.md`](docs/pim_IV/RELATORIO_DECISOES_KICKOFF.md)
+Eng. Software Ágil: [`docs/pim_IV/RELATORIO_ENG_SOFTWARE_AGIL.md`](docs/pim_IV/RELATORIO_ENG_SOFTWARE_AGIL.md)
 
 ---
 

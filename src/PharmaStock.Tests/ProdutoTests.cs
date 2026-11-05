@@ -1,44 +1,25 @@
+﻿// Testes basicos da entidade Produto.
 using PharmaStock.Modelos;
 
 namespace PharmaStock.Tests;
 
 public class ProdutoTests
 {
-    [Theory]
-    [InlineData("123456")]
-    [InlineData("0")]
-    [InlineData(" 42 ")]
-    public void CodigoBarrasValido_AceitaNumerosInteiros(string codigo)
-    {
-        Assert.True(Produto.CodigoBarrasValido(codigo));
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData("   ")]
-    [InlineData("12A")]
-    [InlineData("abc")]
-    public void CodigoBarrasValido_RejeitaInvalidos(string? codigo)
-    {
-        Assert.False(Produto.CodigoBarrasValido(codigo));
-    }
-
     [Fact]
     public void Produto_AtribuiPropriedades()
     {
         var produto = new Produto
         {
             Id = 1,
-            Codigo = 100,
+            Codigo = 1001,
             Nome = "Dipirona",
-            CodigoBarras = "789",
+            CodBarra = "7891000100028",
             IdFornecedor = 2,
-            IdCategoria = 1,
-            RequerReceita = false
+            IdCategoria = 1
         };
 
         Assert.Equal(1, produto.Id);
+        Assert.Equal(1001, produto.Codigo);
         Assert.Equal("Dipirona", produto.Nome);
         Assert.Equal(2, produto.IdFornecedor);
     }

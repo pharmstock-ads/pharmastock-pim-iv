@@ -30,7 +30,9 @@ Fonte da verdade: `database/` (Geovanni). Orientação de fluxo: `database/-- Or
 | Tema | Decisão |
 |------|---------|
 | SGBD | SQL Server |
-| Acesso a dados (proposta) | **Dapper** (CRUD + `CommandType.StoredProcedure`) |
+| Acesso a dados (**C1/C2 FECHADO**) | **Dapper** (CRUD + SPs); **sem** EF Migrations |
+| Cadastros (**C3 FECHADO**) | SQL parametrizado no Repositório |
+| `POST /api/lotes` (**C4 FECHADO**) | **Fora do MVP** — lote via entrada + `prc_ObterOuCadastrarLote` |
 | FIFO/FEFO | No **Negócio** (ordenar lotes por `validade ASC` com qtd > 0) |
 | Auth MVP | Login retorna `funcionarioId`; sem JWT por enquanto (A2 adiado) |
 | Feature Flutter (API) | Endpoints de **lotes a vencer** e **estoque baixo** (A7) |
@@ -87,8 +89,8 @@ Base `/api`, JSON, Swagger em Development.
 | POST | `/api/auth/login` | `{ cpfOuEmail, senha }` → `{ funcionarioId, nome, cargo }` |
 | GET/POST | `/api/fornecedores` | Cadastro |
 | GET/POST | `/api/produtos` | Cadastro / listagem |
-| GET | `/api/lotes?produtoId=` | Listagem |
-| POST | `/api/entradas` | Orquestra Negócio |
+| GET | `/api/lotes?produtoId=` | Listagem (**sem** POST lotes — C4) |
+| POST | `/api/entradas` | Orquestra Negócio (cria lote se preciso) |
 | POST | `/api/vendas` | Sem `loteId` no body do cliente |
 | GET | `/api/vendas` · `/api/vendas/{id}` | Histórico |
 | GET | `/api/alertas/lotes-a-vencer?dias=` | **A7** Flutter |

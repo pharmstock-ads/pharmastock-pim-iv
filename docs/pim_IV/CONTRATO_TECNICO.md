@@ -2,8 +2,8 @@
 
 Documento de referência compartilhada: decisões de arquitetura, fronteiras entre papéis e contratos reutilizados por Banco, Núcleo/API, Web e Mobile.
 
-**Atualizado em:** 05/11/2026 (fechados C13–C16; §11 = o que ainda falta decidir)  
-**Status:** rascunho vivo — ver **§11** para pendências de decisão explícitas
+**Atualizado em:** 05/11/2026 (fechados **C1–C4** e C13–C16; §11 = o que ainda falta)  
+**Status:** rascunho vivo — ver **§11** para pendências restantes (banco/grupo)
 
 **Complementares:** [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [`database/README.md`](../../database/README.md) · [guias por papel](./README.md)
 
@@ -95,22 +95,19 @@ O C# (`PharmaStock.Modelos` e Repositório) **se adapta** ao que o Geovanni vers
 
 ---
 
-## 4. Acesso a dados (PROPOSTA — alinhada ao manual)
+## 4. Acesso a dados (FECHADO — C1 / C2)
 
-O manual permite EF Core, Dapper ou **combinação**.
+O manual permite EF Core, Dapper ou combinação. O grupo fechou:
 
-**Proposta acadêmica (simples de explicar):**
+> **Dapper** no Repositório para CRUD de cadastros **e** para stored procedures (`CommandType.StoredProcedure`).  
+> **Sem EF Core Migrations** — modelo físico só via scripts em `database/`.
 
-> **Dapper** no Repositório para CRUD de cadastros **e** para stored procedures (`CommandType.StoredProcedure`).
-
-Motivos: SPs de entrada/venda já são o caminho principal de escrita; evita `HasTrigger` no começo; trecho da chamada da procedure fica claro no documento.
-
-**Alternativa também válida (manual):** EF Core nos cadastros + Dapper nas SPs.
+Motivos: SPs de entrada/venda são o caminho principal de escrita; evita `HasTrigger` no começo; trecho da chamada da procedure fica claro no ABNT.
 
 | Item | Status |
 |------|--------|
-| Tecnologia do Repositório | **PROPOSTA:** Dapper (confirmar com Anderson) |
-| Migrations EF | **ABERTO** (se for 100% Dapper + scripts em `database/`, não precisa) |
+| Tecnologia do Repositório (**C1**) | **FECHADO → Dapper** |
+| Migrations EF (**C2**) | **FECHADO → não usar** |
 
 ---
 
@@ -196,7 +193,7 @@ Cliente guarda `funcionarioId` e envia nas operações.
 | GET | `/api/produtos/{id}` | Detalhe |
 | POST | `/api/produtos` | Criar |
 | GET | `/api/lotes?produtoId=` | Listar lotes (validade/qtd) |
-| POST | `/api/lotes` | Opcional — preferir criar lote via entrada + `prc_ObterOuCadastrarLote` (B4 **FECHADO**) |
+| ~~POST `/api/lotes`~~ | — | **Fora do MVP (C4)** — lote nasce na entrada via `prc_ObterOuCadastrarLote` |
 
 ### 7.3 Entrada
 
@@ -234,18 +231,18 @@ Cliente **não** envia `loteId`; Negócio escolhe lote(s) FEFO e pode gerar **v�
 
 ### 7.7 Fora de escopo do MVP (não fazer)
 
-GraphQL, MediatR/CQRS, versionamento `/v2`, microsserviços.
+GraphQL, MediatR/CQRS, versionamento `/v2`, microsserviços, **`POST /api/lotes`** (C4), JWT, desconto.
 
 ---
 
-## 8. Cadastros fora das SPs (ABERTO / PROPOSTA)
+## 8. Cadastros fora das SPs (FECHADO — C3)
 
-SPs cobrem entrada/venda. Cadastros (fornecedor, produto, funcionário, lote):
+SPs cobrem entrada/venda (e ObterOuCadastrarLote). Cadastros (fornecedor, produto, funcionário):
 
 | Opção | Status |
 |-------|--------|
-| SQL parametrizado via Dapper no Repositório | **PROPOSTA** |
-| Novas procedures de cadastro | ABERTO (só se Geovanni quiser) |
+| SQL parametrizado via **Dapper** no Repositório (**C3**) | **FECHADO** |
+| Novas procedures de cadastro | Fora do MVP (só se Geovanni quiser depois, para nota) |
 
 ---
 
@@ -259,6 +256,10 @@ SPs cobrem entrada/venda. Cadastros (fornecedor, produto, funcionário, lote):
 | P-Flutter | Feature complementar do app | **FECHADO → lotes a vencer + estoque baixo** | Roberto + Anderson |
 | P-Auth | JWT vs funcionarioId | **FECHADO no MVP → funcionarioId**; JWT depois (A2) | Anderson |
 | P-Desconto | Campo desconto na venda | **Adiado (A5/A6)** | Depois |
+| C1 | Repositório = Dapper | **FECHADO** | Anderson |
+| C2 | Sem EF Migrations | **FECHADO** | Anderson |
+| C3 | Cadastros via SQL/Dapper | **FECHADO** | Anderson |
+| C4 | Sem `POST /api/lotes` no MVP | **FECHADO** — lote só via entrada | Anderson |
 | C13 | Multilote na venda (FEFO) | **FECHADO** — N `vendaitem` | Anderson |
 | C14 | Defaults alertas A7 | **FECHADO** — `dias=30`, `limite=10` | Anderson + Roberto |
 | C15 | Transação multi-item | **FECHADO** — 1 transação no Repositório | Anderson |
@@ -268,9 +269,9 @@ SPs cobrem entrada/venda. Cadastros (fornecedor, produto, funcionário, lote):
 
 ## 10. Como usar este documento
 
-1. Fechar itens da **§11** (Anderson e/ou Geovanni) antes de codar em cima de dúvida.  
+1. Núcleo/API seguem C1–C4 e C13–C16 (já fechados).  
 2. Geovanni entrega/executa o que for **execução** na §5.4 (B1–B3, B5, B7–B8) e avisa Anderson.  
-3. Anderson adapta Modelos/Repositório e implementa as rotas da seção **7**.  
+3. Anderson adapta Modelos/Repositório (Dapper) e implementa as rotas da seção **7** (sem `POST /lotes`).  
 4. Roberto e Vinicius tratam a seção **7** como contrato de integração.  
 5. Qualquer mudança de rota/campo: atualizar este arquivo **antes** de codar em cima.
 
@@ -281,14 +282,9 @@ SPs cobrem entrada/venda. Cadastros (fornecedor, produto, funcionário, lote):
 Lista viva do que **ainda é decisão** (não confundir com tarefa de implementação já acordada).  
 Quando fechar: mudar status aqui + refletir na seção correspondente.
 
-### 11.1 Anderson pode fechar sozinho (recomendado — ainda PROPOSTA/ABERTO)
+### 11.1 Anderson — núcleo/API
 
-| ID | Tema | Onde no doc | Recomendação | Status |
-|----|------|-------------|--------------|--------|
-| **C1** | Tecnologia do Repositório | §4 | **Dapper** 100% (CRUD + SPs) | **PROPOSTA** — confirmar |
-| **C2** | Migrations EF | §4 | **Não usar** — schema só em `database/` | **ABERTO** (segue C1) |
-| **C3** | Cadastros fora das SPs | §8 | **SQL parametrizado no Repositório**; SPs de cadastro só se Geovanni quiser | **PROPOSTA** — confirmar |
-| **C4** | `POST /api/lotes` no MVP | §7.2 | **Não implementar** — lote via entrada + `prc_ObterOuCadastrarLote` | **PROPOSTA** — confirmar |
+**Nada pendente de decisão.** C1–C4 e C13–C16 fechados (05/11/2026).
 
 ### 11.2 Alinhar com Geovanni (banco / ambiente)
 
@@ -312,8 +308,8 @@ Quando fechar: mudar status aqui + refletir na seção correspondente.
 
 ### 11.4 Já fechado (não reabrir)
 
-Arquitetura em camadas · SQL Server · FEFO · A7 · auth sem JWT · `preco_unitario` · B4 ObterOuCadastrarLote · desconto adiado · **C13–C16** (multilote, defaults alerta, transação, senha demo).
+Arquitetura em camadas · SQL Server · FEFO · A7 · auth sem JWT · `preco_unitario` · B4 ObterOuCadastrarLote · desconto adiado · **C1–C4** (Dapper, sem migrations, cadastros SQL, sem POST lotes) · **C13–C16** (multilote, defaults alerta, transação, senha demo).
 
 ---
 
-*Vivo: C13–C16 fechados nesta revisão. Próximo: Anderson confirma C1–C4; Geovanni avança B1–B3/B5–B8.*
+*Vivo: C1–C4 e C13–C16 fechados. Próximo do contrato: Geovanni avança B1–B3/B5–B8; Anderson implementa núcleo/API.*

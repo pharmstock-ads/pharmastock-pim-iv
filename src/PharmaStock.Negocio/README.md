@@ -1,3 +1,3 @@
 # PharmaStock.Negocio
 
-Regras de negócio. Consome o Repositório; é consumida por Web e Api. Controllers não devem acessar o banco diretamente.
+Regras (FEFO, validações). Consome só interfaces de `PharmaStock.Repositorio.Abstracoes`.

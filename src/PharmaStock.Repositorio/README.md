@@ -1,3 +1,4 @@
 # PharmaStock.Repositorio
 
-Única camada que acessa o SQL Server (EF Core e/ou Dapper). Interfaces + implementações de repositório e chamada de stored procedures.
+Etapa 1: só interfaces em `Abstracoes/`.
+Etapa 2: implementação Dapper + SPs.

@@ -158,7 +158,8 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Acesso a dados (EF Core e/ou Dapper) — simples | ❌ |
 | Wrappers: ObterOuCadastrarLote + entrada/venda | ❌ |
 | CRUD básico dos cadastros (conforme backlog) | ❌ |
-| Preferência Dapper (proposta no contrato) | ⚠️ |
+| Dapper + sem Migrations (**C1/C2 FECHADO**) | ✅ (decisão; implementação ❌) |
+| Cadastros SQL no Repo (**C3 FECHADO**) | ✅ (decisão; implementação ❌) |
 | `HasTrigger` se usar EF Core 7+ | ❌ |
 
 ### 4B — Negócio
@@ -181,7 +182,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Item | Status |
 |------|--------|
 | Controllers REST + DTOs | ❌ |
-| Endpoints do MVP (contrato §7, incl. alertas A7) | ❌ |
+| Endpoints do MVP (contrato §7, alertas A7; **sem** POST /lotes — C4) | ❌ |
 | Auth MVP sem JWT (`funcionarioId`) | ❌ |
 | Swagger/OpenAPI | ❌ |
 | Lista de rotas para Roberto e Vinicius | ⚠️ (proposta no CONTRATO_TECNICO) |

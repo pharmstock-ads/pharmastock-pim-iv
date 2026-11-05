@@ -252,8 +252,9 @@ Tabelas principais: `fornecedor`, `funcionario`, `categoria`, `produto`, `lote`,
 
 ### 6.3 Núcleo C# / API (Anderson)
 
-- Solution criada; Modelos esboçados; Repositório/Negócio/API ainda em construção em cima das SPs.  
-- Contrato de rotas proposto em [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7.
+- Solution criada.  
+- **Etapa 1** (`feature/nucleo-modelos-negocio`): Modelos alinhados a `tabelas.txt`, `Entrada`/`EntradaItem`, interfaces do Repositório, Negócio (FEFO, Auth, Entrada, Venda, Alerta) + testes.  
+- **Etapa 2** (próxima): Dapper + SPs + API REST ([CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7).
 
 ### 6.4 Web / Mobile
 
@@ -372,7 +373,7 @@ Detalhe com checkboxes: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md).
 |------|------------------------|
 | **Geovanna** | Fechar gaps §5 (negócio + stakeholders + board + sprints); cruzar PDF |
 | **Geovanni** | Virar `tabelas.txt` → `schema.sql`; seed + entrada demo — [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md) |
-| **Anderson** | Modelos alinhados ao schema; wrappers das SPs; Negócio FEFO; API — [GUIA_NUCLEO_API_ANDERSON.md](./GUIA_NUCLEO_API_ANDERSON.md) |
+| **Anderson** | Etapa 1 ✅; próxima = Dapper + API — [GUIA_NUCLEO_API_ANDERSON.md](./GUIA_NUCLEO_API_ANDERSON.md) |
 | **Vinicius** | Preparar ambiente Web; esperar Negócio mínimo — [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md) |
 | **Roberto** | Preparar Flutter; consumir API quando login + RF16/RF17 existirem — [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md) |
 

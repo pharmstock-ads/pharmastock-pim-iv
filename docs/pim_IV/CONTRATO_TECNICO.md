@@ -154,16 +154,18 @@ Documentos: `entrada` / `entradaitem`, `venda` / `vendaitem` · Estoque: `movime
 
 ---
 
-## 6. Modelos C# (orientação)
+## 6. Modelos C# (FECHADO na etapa 1)
 
-| Situação | Ação |
-|----------|------|
-| Classes atuais (Produto, Lote, Venda, …) | Base; **ajustar** quando schema fechar |
-| `Entrada` / `EntradaItem` | **Criar** (ainda não existem) |
-| `ItemVenda` sem `IdLote` | Incluir lote no fluxo interno do Negócio/Repo (API pública pode não expor lote) |
-| `Desconto` em `Venda` | **Adiado (A5/A6)** — fora do MVP; schema atual sem desconto |
-| `EntradaItem.PrecoUnitario` (não Custo) | **FECHADO** — alinhar Modelos/DTOs ao schema |
-| Quantidades `int` vs `decimal` | Seguir `tabelas.txt` (lote/`entradaitem` decimal; `vendaitem`/mov. int) |
+Branch: `feature/nucleo-modelos-negocio` (05/11/2026).
+
+| Situação | Status |
+|----------|--------|
+| Classes alinhadas a `tabelas.txt` | **FECHADO** |
+| `Entrada` / `EntradaItem` + `PrecoUnitario` | **FECHADO** |
+| `ItemVenda` com `IdLote` (uso interno FEFO) | **FECHADO** |
+| `Desconto` / `ProdutoPreco` | **Adiado (A5/A6)** — não usados no Negócio |
+| Quantidades `int` vs `decimal` | Segue `tabelas.txt` |
+| Negócio FEFO + serviços + interfaces Repo | **FECHADO** (etapa 1; Dapper = etapa 2) |
 
 ---
 
@@ -312,4 +314,4 @@ Arquitetura em camadas · SQL Server · FEFO · A7 · auth sem JWT · `preco_uni
 
 ---
 
-*Vivo: C1–C4 e C13–C16 fechados. Próximo do contrato: Geovanni avança B1–B3/B5–B8; Anderson implementa núcleo/API.*
+*Vivo: C1–C4/C13–C16 fechados; Modelos+Negócio etapa 1 no código. Próximo: Geovanni B1–B3/B5–B8; Anderson etapa 2 (Dapper+API).*

@@ -8,7 +8,7 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 | ⚠️ | Parcial / em andamento / bloqueado por dependência |
 | ❌ | Não feito |
 
-**Atualizado em:** 05/11/2026
+**Atualizado em:** 05/11/2026 (Etapa 1 núcleo: Modelos + Negócio FEFO na branch `feature/nucleo-modelos-negocio`)
 
 **Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [guias](./README.md)
 
@@ -22,7 +22,7 @@ O ponto de partida é o **Ágil** (Geovanna). Baseline de RF/RNF e gaps do manua
 
 Em paralelo — bloqueio técnico principal — o **banco SQL Server** (Geovanni). Já existem `tabelas/tabelas.txt`, `inserts/inserts.txt`, SPs (incl. `prc_ObterOuCadastrarLote`, entrada com `@pPrecoUnitario`) e triggers. Falta unificar em `schema.sql` / `seed.sql`, ordem de deploy testada e **entrada demo** (lotes do insert estão com qtd 0). Ideal: schema → procedures → triggers → seed. PostgreSQL do III só em `legacy/`.
 
-Enquanto isso, o **núcleo C#** (Anderson) alinha **Modelos** a `tabelas.txt` (campo **`PrecoUnitario`** na entrada; `Entrada`/`EntradaItem` ainda faltam). Depois **Repositório** (Dapper proposto + SPs; connection string no `appsettings`) e **Negócio** (validações + **FEFO**). Só então a **API** (contrato em [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7). Web e Api nunca acessam banco/Repositório.
+O **núcleo C#** (Anderson) já avançou a **Etapa 1** na branch `feature/nucleo-modelos-negocio`: Modelos alinhados a `tabelas.txt` (`Entrada`/`EntradaItem` + `PrecoUnitario`), interfaces do Repositório, Negócio (FEFO multilote, Auth, Entrada, Venda, Alerta) e testes xUnit. **Próximo:** Etapa 2 — Dapper + SPs + API ([CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7). Web e Api nunca acessam banco/Repositório.
 
 Com API mínima estável, **Web** (Vinicius) e **Mobile** (Roberto) em paralelo. Flutter foca A7 via `/api/alertas/...`. UX pode começar cedo; validação forte com telas reais.
 
@@ -40,9 +40,9 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 1 | Ágil / backlog | Geovanna | ⚠️ | RF/RNF no relatório; falta §5 (negócio, board, sprints) |
 | 2A | Banco — schema + seed | Geovanni | ⚠️ | `tabelas.txt` + `inserts.txt`; falta `schema.sql` + estoque demo |
 | 2B | Banco — SPs / triggers | Geovanni | ✅ | Entrada (`@pPrecoUnitario`), ObterOuCadastrarLote, venda, triggers |
-| 3 | Modelos C# | Anderson | ⚠️ | Falta Entrada / EntradaItem + `PrecoUnitario` |
-| 4 | Repositório + Negócio | Anderson | ❌ | — |
-| 5 | API | Anderson | ❌ | — |
+| 3 | Modelos C# | Anderson | ✅ | Alinhados a `tabelas.txt` (branch etapa 1) |
+| 4 | Repositório + Negócio | Anderson | ⚠️ | Negócio+FEFO+interfaces ✅; Dapper/SPs = etapa 2 |
+| 5 | API | Anderson | ❌ | Etapa 2 (`feature/nucleo-repo-api`) |
 | 6A | Web | Vinicius | ❌ | Template MVC só |
 | 6B | Mobile | Roberto | ❌ | — |
 | 6C | UX | _a definir_ | ⚠️ | Protótipos do III em `uiux/` |
@@ -132,15 +132,16 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ## Bloco 3 — Modelos C#
 
-**Quem:** Anderson · **Status do bloco:** ⚠️
+**Quem:** Anderson · **Status do bloco:** ✅  
+**Branch:** `feature/nucleo-modelos-negocio`
 
 | Item | Status |
 |------|--------|
-| Entidades iniciais (Fornecedor, Funcionario, Categoria, Produto, ProdutoPreco, Lote, Movimentacao, UsuarioLog, Venda, ItemVenda) | ✅ |
-| `Entrada` e `EntradaItem` alinhados às SPs (`PrecoUnitario`) | ❌ |
-| Revisar Venda / itens / Movimentacao vs `tabelas.txt` | ❌ |
-| Remover/ignorar `ProdutoPreco` / desconto no MVP (A5/A6) | ⚠️ |
-| Ajustar testes se entidades mudarem | ❌ |
+| Entidades alinhadas a `tabelas.txt` | ✅ |
+| `Entrada` e `EntradaItem` (`PrecoUnitario`) | ✅ |
+| `ItemVenda` com `IdLote` | ✅ |
+| `ProdutoPreco` / desconto fora do MVP (A5/A6) | ✅ (não usados no Negócio) |
+| Testes de entidades atualizados | ✅ |
 
 **Critério de saída:** cada tabela essencial do schema tem classe correspondente.
 
@@ -148,30 +149,32 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ## Bloco 4 — Repositório + Negócio
 
-**Quem:** Anderson · **Status do bloco:** ❌
+**Quem:** Anderson · **Status do bloco:** ⚠️
 
 ### 4A — Repositório
 
 | Item | Status |
 |------|--------|
-| Connection string em `appsettings.json` | ❌ |
-| Acesso a dados (EF Core e/ou Dapper) — simples | ❌ |
-| Wrappers: ObterOuCadastrarLote + entrada/venda | ❌ |
-| CRUD básico dos cadastros (conforme backlog) | ❌ |
-| Dapper + sem Migrations (**C1/C2 FECHADO**) | ✅ (decisão; implementação ❌) |
-| Cadastros SQL no Repo (**C3 FECHADO**) | ✅ (decisão; implementação ❌) |
-| `HasTrigger` se usar EF Core 7+ | ❌ |
+| Interfaces em `Repositorio/Abstracoes` | ✅ |
+| Connection string em `appsettings.json` | ❌ (etapa 2) |
+| Implementação Dapper + SPs | ❌ (etapa 2) |
+| Wrappers: ObterOuCadastrarLote + entrada/venda | ❌ (etapa 2) |
+| CRUD cadastros (SQL) | ❌ (etapa 2) |
+| Dapper + sem Migrations (**C1/C2**) | ✅ decisão |
+| Cadastros SQL no Repo (**C3**) | ✅ decisão |
+| `HasTrigger` (EF) | — (não se aplica; Dapper) |
 
 ### 4B — Negócio
 
 | Item | Status |
 |------|--------|
-| Validações (Service: funcionário, produto, qtd, preço) | ❌ |
-| FEFO (escolher lote por validade ASC) | ❌ |
-| Orquestrar: Negócio escolhe lote → Repo chama SP | ❌ |
-| Testes xUnit das regras críticas | ❌ |
+| Validações (funcionário, produto, qtd, preço) | ✅ |
+| FEFO multilote (`FefoAlocador`, C13) | ✅ |
+| Serviços Auth / Cadastro / Entrada / Venda / Alerta | ✅ |
+| Orquestrar via interfaces (Repo real = etapa 2) | ⚠️ |
+| Testes xUnit (FEFO, Auth, entidades) | ✅ |
 
-**Critério de saída:** registrar entrada/venda sem UI, só via Negócio.
+**Critério de saída do bloco completo:** registrar entrada/venda sem UI, via Negócio + Dapper (fecha na etapa 2).
 
 ---
 
@@ -254,4 +257,4 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ---
 
-*Próximo foco: **2A** `schema.sql` + entrada demo ⚠️ · **1** gaps §5 do relatório ágil (board/sprints) ⚠️ · Anderson **Entrada/EntradaItem** + FEFO + SPs ❌*
+*Próximo foco: Anderson **etapa 2** (`feature/nucleo-repo-api` — Dapper + API) · **2A** `schema.sql` + estoque demo ⚠️ · Ágil gaps §5 (board/sprints) ⚠️*

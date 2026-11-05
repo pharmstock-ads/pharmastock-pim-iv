@@ -5,8 +5,8 @@ Sistema de gestão de estoque farmacêutico — **continuidade** do [PIM III](ht
 **Curso:** Análise e Desenvolvimento de Sistemas — UNIP Ribeirão Preto, 2026  
 **Repositório:** [pharmstock-ads/pharmastock-pim-iv](https://github.com/pharmstock-ads/pharmastock-pim-iv)
 
-No III entregamos Console + WinForms (dados em memória), scripts PostgreSQL de referência e protótipo HTML.  
-Neste semestre o foco é **finalizar o sistema integrado**: ASP.NET Core MVC + Web API, banco com trigger/procedure, app Flutter e documentação ABNT.
+No III: Console + WinForms (memória), scripts PostgreSQL só de referência e protótipo HTML.  
+No IV: ASP.NET Core MVC + Web API, **SQL Server** (trigger + procedure), app Flutter e documentação ABNT.
 
 ---
 
@@ -18,7 +18,7 @@ Neste semestre o foco é **finalizar o sistema integrado**: ASP.NET Core MVC + W
 | Web | ASP.NET Core MVC (Razor) |
 | API | ASP.NET Core Web API (REST + Swagger) |
 | Camadas | Modelos → Repositório → Negócio → Web / Api |
-| Banco | Relacional — **SQL Server no manual**; time avalia PostgreSQL (ver docs de decisão) |
+| Banco | **SQL Server** (LocalDB / Express / full) |
 | Mobile | Flutter consumindo a API |
 | Testes | xUnit |
 
@@ -30,7 +30,7 @@ Neste semestre o foco é **finalizar o sistema integrado**: ASP.NET Core MVC + W
 Web ──┐
       ├──► Negocio ──► Repositorio ──► Modelos
 Api ──┘                      │
-                             └──► Banco (trigger + stored procedure)
+                             └──► SQL Server (trigger + stored procedure)
 Flutter ──► Api
 ```
 
@@ -49,20 +49,20 @@ Regras importantes:
 pharmastock-pim-iv/
 ├── src/                         ← Solution principal (entrega do IV)
 │   ├── PharmaStock.sln
-│   ├── PharmaStock.Modelos      ← Entidades de domínio
-│   ├── PharmaStock.Repositorio  ← Acesso a dados
-│   ├── PharmaStock.Negocio      ← Regras de negócio
-│   ├── PharmaStock.Web          ← MVC Razor
-│   ├── PharmaStock.Api          ← Web API (Flutter)
+│   ├── PharmaStock.Modelos
+│   ├── PharmaStock.Repositorio
+│   ├── PharmaStock.Negocio
+│   ├── PharmaStock.Web
+│   ├── PharmaStock.Api
 │   └── PharmaStock.Tests
 ├── mobile/                      ← App Flutter
-├── database/                    ← Scripts SQL (schema, trigger, procedure, seed)
+├── database/                    ← SQL Server (schema, procedure/, trigger/, seed)
 ├── docs/
-│   ├── manual/                  ← Manual do PIM IV
-│   ├── pim_IV/                  ← Roteiro, decisões, doc acadêmico
-│   └── pim_III/                 ← Diagramas/material útil do semestre passado
-├── uiux/                        ← Casos de uso e protótipos
-└── legacy/                      ← Console, WinForms, HTML e PG do PIM III
+│   ├── manual/
+│   ├── pim_IV/
+│   └── pim_III/
+├── uiux/
+└── legacy/                      ← Console, WinForms, HTML e PG do PIM III (só referência)
 ```
 
 ---
@@ -72,52 +72,61 @@ pharmastock-pim-iv/
 | Área | Situação |
 |------|----------|
 | Estrutura do repo + solution | Pronta |
-| Domínio (`Modelos`) | MVP criado (entidades do III adaptadas) |
-| Testes de domínio | 10 testes xUnit (código de barras, subtotal) |
-| Repositório / Negócio / API | A iniciar |
-| Web / Mobile / Banco físico | A cargo dos respectivos papéis |
-| Docs de equipe | Roteiro + relatório de kickoff em `docs/pim_IV/` |
+| Domínio (`Modelos`) | MVP criado (adaptar `Entrada`/`EntradaItem` ao SQL novo) |
+| Testes de domínio | 10 testes xUnit |
+| Banco — procedures/triggers | **Entregues** (entrada, venda, movimentação, lote) |
+| Banco — `schema.sql` / seed | Pendente |
+| Repositório / Negócio / API | A iniciar (já há contrato das SPs) |
+| Web / Mobile | Vinicius (Web) / Roberto (Mobile) |
+| Docs de equipe | Atualizados em `docs/pim_IV/` |
 
-### Entidades em `PharmaStock.Modelos`
+### Entidades em `PharmaStock.Modelos` (hoje)
 
 `Fornecedor`, `Funcionario`, `Categoria`, `Produto`, `ProdutoPreco`, `Lote`, `Movimentacao`, `TipoMovimentacao`, `UsuarioLog`, `Venda`, `ItemVenda`
 
+### Procedures / triggers (resumo)
+
+Ver detalhe em [`database/README.md`](database/README.md).
+
+- SPs: `prc_RegistrarEntrada`, `prc_RegistrarEntradaItem`, `prc_RegistrarVenda`, `prc_RegistrarVendaItem`, `prc_MovimentaItens`
+- Triggers: `trg_MovimentaItens`, `trg_RecalculaEntrada`, `trg_RecalculaVenda`
+
 ---
 
-## MVP funcional (partida do backlog)
+## MVP funcional
 
 1. Login / funcionário  
 2. Fornecedor e produto  
 3. Entrada de lote  
-4. Venda com baixa FIFO por validade  
+4. Venda com baixa de estoque (FIFO no Negócio + SPs/triggers)  
 5. Listagens na Web  
-6. Uma funcionalidade complementar no Flutter  
+6. Funcionalidade complementar no Flutter  
 
-Detalhes e checklists: [`docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md`](docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md)  
-Decisões do kickoff (para Ágil): [`docs/pim_IV/RELATORIO_DECISOES_KICKOFF.md`](docs/pim_IV/RELATORIO_DECISOES_KICKOFF.md)
+Roteiro: [`docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md`](docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md)  
+Decisões: [`docs/pim_IV/RELATORIO_DECISOES_KICKOFF.md`](docs/pim_IV/RELATORIO_DECISOES_KICKOFF.md)
 
 ---
 
 ## Papéis (resumo)
 
-| Papel | Foco |
-|-------|------|
-| Núcleo C# + API | Modelos, Negócio, Repositório, Api |
-| Banco | Schema, trigger, procedure, seed |
-| Web | MVC + responsivo |
-| Mobile | Flutter |
-| Eng. Software Ágil | RF/RNF, backlog, sprints |
-| Documentação | ABNT / consolidação |
-| UX/UI | Personas, fluxos, protótipos |
+| Papel | Quem | Foco |
+|-------|------|------|
+| Núcleo C# + API | Anderson | Modelos, Negócio, Repositório, Api |
+| Banco | Geovanni | Schema, trigger, procedure, seed — **SQL Server** |
+| Web | Vinicius | MVC + responsivo |
+| Mobile | Roberto | Flutter |
+| Eng. Software Ágil | Geovanna | RF/RNF, backlog, sprints |
+| Documentação | _a definir_ | ABNT / consolidação |
+| UX/UI | _a definir_ | Personas, fluxos, protótipos |
 
-Ordem de trabalho: **Ágil → Banco + Modelos → Negócio/Repositório → API → Web/Mobile**.
+Ordem: **Ágil → Banco + Modelos → Negócio/Repositório → API → Web/Mobile**.
 
 ---
 
 ## Pré-requisitos
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download) — `dotnet --version`
-- Banco relacional (SQL Server LocalDB/Express **ou** PostgreSQL, conforme decisão do grupo/professor)
+- **SQL Server** (LocalDB, Express ou full)
 - Flutter SDK (app mobile)
 - Windows recomendado para desenvolvimento local
 
@@ -132,32 +141,28 @@ cd pharmastock-pim-iv/src
 dotnet restore PharmaStock.sln
 dotnet build PharmaStock.sln
 
-# Testes
 dotnet test PharmaStock.Tests
-
-# Web (MVC)
 dotnet run --project PharmaStock.Web
-
-# API (+ Swagger em Development)
 dotnet run --project PharmaStock.Api
 ```
 
-Manual oficial: `docs/manual/Manual_PIM_IV_2026.docx`
+Scripts de banco: pasta `database/` (aplicar procedures/triggers após o schema).  
+Manual: `docs/manual/Manual_PIM_IV_2026.docx`
 
 ---
 
 ## Legado (PIM III)
 
-Em `legacy/`: console, WinForms, protótipo HTML e scripts PostgreSQL.  
-Útil como referência de domínio e regras (ex.: FIFO) — **não** é a entrega principal do IV.
+Em `legacy/`: console, WinForms, HTML e PostgreSQL antigo.  
+Só referência de domínio — a entrega do IV usa **SQL Server** em `database/`.
 
 ---
 
 ## Pendências conhecidas
 
-- Confirmar com o professor: **SQL Server (manual) vs PostgreSQL** (preferência do time / reaproveitamento do III)
-- Alinhar com o time de banco: trigger, procedure e se `Venda` vira tabela própria ou só `movimentacao`
-- Grupo na plataforma UNIP: manual limita a **até 6** integrantes
+- Completar `database/schema.sql` e `seed.sql`
+- Núcleo chamar as SPs no Repositório + entidades `Entrada`/`EntradaItem`
+- Grupo na plataforma UNIP: limite de **até 6** integrantes
 
 ---
 

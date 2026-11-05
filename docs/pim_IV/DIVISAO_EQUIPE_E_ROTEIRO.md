@@ -96,7 +96,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
 | 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
-| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ |
+| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo etapa 1 ✅) |
 | 5 — Web responsivo | Vinicius | ❌ |
 | 6 — UX/UI | _a definir_ | ⚠️ |
 | 7 — ML / dados (curta) | Documentação | ❌ |
@@ -175,24 +175,25 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 4 — Desenvolvimento C# (POO, MVC e Web API)
 
-**Status geral:** ⚠️ (Modelos parciais; Repo/Negócio/API/Web ainda ❌)
+**Status geral:** ⚠️ (núcleo etapa 1 ✅; Dapper/API/Web ainda ❌)
 
 #### 4.A — Núcleo (Modelos + Negócio + Repositório) — Anderson
 
 | Item | Status |
 |------|--------|
-| Classes em `PharmaStock.Modelos` | ⚠️ |
+| Classes em `PharmaStock.Modelos` (alinhadas a `tabelas.txt`) | ✅ |
+| `Entrada` / `EntradaItem` / FEFO no Negócio | ✅ |
+| Interfaces do Repositório (`Abstracoes/`) | ✅ |
+| Acesso a dados (Dapper) | ❌ (etapa 2) |
+| Executar stored procedure pelo Repositório | ❌ (etapa 2) |
+| Regras em `PharmaStock.Negocio` (serviços) | ✅ |
 | Encapsulamento / herança / polimorfismo (evidenciar no doc) | ❌ |
-| Interfaces e repositórios | ❌ |
-| Acesso a dados (EF Core e/ou Dapper) | ❌ |
-| Executar stored procedure pelo Repositório | ❌ |
-| Regras em `PharmaStock.Negocio` | ❌ |
-| DI nos `Program.cs` (Web e Api) | ❌ |
-| Web/Api **não** referenciam Repositório | ❌ |
-| Testes básicos (`PharmaStock.Tests`) | ⚠️ |
+| DI nos `Program.cs` (Web e Api) | ❌ (etapa 2) |
+| Web/Api **não** referenciam Repositório | ❌ (validar na etapa 2) |
+| Testes básicos (`PharmaStock.Tests`) | ✅ |
 | Trechos comentados para o doc (repo + negócio) | ❌ |
 
-**Critério de pronto:** cadastro + 1 fluxo de negócio sem UI.
+**Critério de pronto:** cadastro + 1 fluxo de negócio sem UI (fecha com Dapper na etapa 2).
 
 #### 4.B — API — Anderson
 
@@ -354,7 +355,7 @@ Fazer depois que houver seed/dados reais.
 | Fase | Quando | Foco | Status |
 |------|--------|------|--------|
 | A — Fundação | sem. 1–2 | Kickoff Ágil, entidades, esqueleto do doc | ⚠️ |
-| B — Dados e núcleo | sem. 3–5 | Schema/seed, Modelos, Repo, Negócio | ⚠️ |
+| B — Dados e núcleo | sem. 3–5 | Schema/seed, Modelos ✅, Negócio ✅, Repo Dapper | ⚠️ |
 | C — Interfaces | sem. 5–8 | API, Web, Mobile, UX | ❌ |
 | D — Fechamento | sem. 8–fim | Integração, ABNT, postagem | ❌ |
 

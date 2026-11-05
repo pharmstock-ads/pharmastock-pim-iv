@@ -1,6 +1,6 @@
 ﻿# Guia — Núcleo C# + API (Anderson)
 
-**Atualizado:** 05/11/2026 (pós-merge: `preco_unitario` + inserts)  
+**Atualizado:** 05/11/2026 (etapa 1 entregue na branch `feature/nucleo-modelos-negocio`)  
 **Papéis:** Líder UNIP · Modelos · Negócio · Repositório · Api  
 **Complementares:** [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md)
 
@@ -43,15 +43,20 @@ Fonte da verdade: `database/` (Geovanni). Orientação de fluxo: `database/-- Or
 
 ## 3. Passo a passo de desenvolvimento
 
-### Fase A — Alinhar Modelos ao schema
+### Status das etapas (branches)
 
-1. Ler `database/tabelas/tabelas.txt` (e `schema.sql` quando Geovanni unificar).  
-2. Ajustar `PharmaStock.Modelos` para bater com colunas reais — em item de entrada usar **`PrecoUnitario`** (não `CustoUnitario`).  
-3. Incluir entidades faltantes: `Entrada`, `EntradaItem`, `Movimentacao`, `Categoria` se ainda não existirem.  
-4. Seed de referência para testes: `database/inserts/inserts.txt` (logins demo; lotes começam com qtd 0).  
-5. Testes unitários leves de construção de objetos (opcional mas útil na nota).
+| Etapa | Branch | Status |
+|-------|--------|--------|
+| 1 — Modelos + Negócio + interfaces | `feature/nucleo-modelos-negocio` | **Feito** (push 05/11) |
+| 2 — Dapper + API + SQL | `feature/nucleo-repo-api` | **Próxima** |
 
-### Fase B — Repositório (SPs + consultas)
+### Fase A — Alinhar Modelos ao schema — **FEITO**
+
+1. ~~Ler `tabelas.txt` / criar `Entrada`+`EntradaItem`~~ ✅  
+2. ~~Ajustar entidades (`PrecoUnitario`, `IdLote` em item venda)~~ ✅  
+3. ~~Testes de entidades~~ ✅  
+
+### Fase B — Repositório (SPs + consultas) — etapa 2
 
 Implementar wrappers (Dapper), um método por SP:
 
@@ -67,20 +72,12 @@ Mais CRUDs simples: listar/obter fornecedor, produto, lote, funcionário (login 
 
 Connection string só em `appsettings.json` (Api e Web).
 
-### Fase C — Negócio (Service)
+### Fase C — Negócio (Service) — **FEITO** (sem SQL)
 
-Seguir o doc do Geovanni:
+Já no código: `FefoAlocador`, `AuthServico`, `CadastroServico`, `EntradaServico`, `VendaServico`, `AlertaServico` + testes.  
+Persistência real fica na fase B (Dapper).
 
-1. Validar funcionário ativo, produto existente, qtd > 0, `precoUnitario` ≥ 0.  
-2. **Entrada:** para cada item → `ObterOuCadastrarLote` → `RegistrarEntrada` → itens (campo **`precoUnitario`**).  
-3. **Venda:**  
-   - receber só `produtoId` + `quantidade` (+ preço unitário no MVP);  
-   - escolher lote(s) por validade crescente;  
-   - se estoque insuficiente → exceção de domínio (API vira 400);  
-   - chamar `RegistrarVenda` + `RegistrarVendaItem` **com** `id_lote`.  
-4. **Não** atualizar `lote.quantidade` no C# — trigger faz isso.
-
-### Fase D — API
+### Fase D — API — etapa 2
 
 Base `/api`, JSON, Swagger em Development.
 
@@ -110,9 +107,11 @@ Quando login + 1 fluxo (entrada ou venda) + alertas estiverem no Swagger:
 
 ## 4. Checklist pessoal
 
-- [ ] Modelos = schema  
-- [ ] Repositório chama ≥ 1 SP de verdade  
-- [ ] Negócio: FIFO + validações do doc Service  
+- [x] Modelos = schema (`tabelas.txt`)  
+- [x] Interfaces do Repositório  
+- [x] Negócio: FEFO + validações + serviços  
+- [x] Testes xUnit (FEFO, Auth, entidades)  
+- [ ] Repositório Dapper chama ≥ 1 SP de verdade  
 - [ ] API: login, cadastros, entrada, venda, alertas A7  
 - [ ] Swagger documentado  
 - [ ] Sem referência de Api → Repositorio  

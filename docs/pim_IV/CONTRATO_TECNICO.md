@@ -2,7 +2,7 @@
 
 Documento de referência compartilhada: decisões de arquitetura, fronteiras entre papéis e contratos reutilizados por Banco, Núcleo/API, Web e Mobile.
 
-**Atualizado em:** 05/11/2026 (fechados **C1–C4** e C13–C16; §11 = o que ainda falta)  
+**Atualizado em:** 06/11/2026 (C1–C4 / C13–C16; alinhamento template: DTOs Modelos, DI Web+Api, `Padrao`, Scalar, `*Negocio`)  
 **Status:** rascunho vivo — ver **§11** para pendências restantes (banco/grupo)
 
 **Complementares:** [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [`database/README.md`](../../database/README.md) · [guias por papel](./README.md)
@@ -33,19 +33,23 @@ Flutter ──► Api
 
 | Camada | Responsabilidade |
 |--------|------------------|
-| Modelos | Entidades; sem dependência de outras camadas |
-| Repositório | **Única** que acessa o banco; CRUD + **execução de stored procedures** |
-| Negócio | Regras (**FEFO**/validade, validações, disponibilidade); consumido por Web e Api |
-| Web | MVC Razor; controller só chama Negócio |
-| Api | REST para Flutter; DTOs + Swagger; controller só chama Negócio |
+| Modelos | Entidades **e DTOs** (`Modelos/Dtos/`); sem dependência de outras camadas |
+| Repositório | **Única** que acessa o banco; CRUD + **execução de stored procedures** (Dapper) |
+| Negócio | Regras (**FEFO**/validade, validações, disponibilidade); classes `*Negocio`; consumido por Web e Api |
+| Web | MVC Razor; controller só chama Negócio; DI no `Program.cs` |
+| Api | REST para Flutter; DTOs de Modelos + OpenAPI/**Scalar**; controller só chama Negócio; DI no `Program.cs` |
 
-### 1.2 Regras obrigatórias (manual)
+### 1.2 Regras obrigatórias (manual + molde do professor)
 
 - Web e Api **não** acessam banco nem Repositório diretamente  
 - Regras de negócio **não** ficam em controller/view  
-- Connection string em `appsettings.json` (nunca hardcoded)  
-- Consultas parametrizadas  
+- Controllers recebem só classes de **Negócio** (injeção de dependência)  
+- **DI idêntica** nos dois `Program.cs` (Web e Api): `AddScoped` de repositórios + `*Negocio`  
+- Connection string **só** em `appsettings.json`, chave **`Padrao`**, nos dois hosts (nunca hardcoded)  
+- Entidade **não** sai para JSON/Views — sai **DTO** definido em `PharmaStock.Modelos/Dtos/` (Api e Web só consomem)  
+- Consultas parametrizadas (Dapper)  
 - ≥ 1 trigger e ≥ 1 procedure; procedure chamada pelo **Repositório**  
+- Sem EF Core → **não** há `HasTrigger` no C#; triggers vivem só nos scripts SQL em `database/`
 
 ### 1.3 SGBD (FECHADO)
 
@@ -95,19 +99,21 @@ O C# (`PharmaStock.Modelos` e Repositório) **se adapta** ao que o Geovanni vers
 
 ---
 
-## 4. Acesso a dados (FECHADO — C1 / C2)
+## 4. Acesso a dados (FECHADO — C1 / C2 — opção B)
 
-O manual permite EF Core, Dapper ou combinação. O grupo fechou:
+O manual permite EF Core, Dapper ou combinação. O grupo fechou **Dapper puro** (não o molde EF+Dapper do template didático):
 
 > **Dapper** no Repositório para CRUD de cadastros **e** para stored procedures (`CommandType.StoredProcedure`).  
-> **Sem EF Core Migrations** — modelo físico só via scripts em `database/`.
+> **Sem EF Core** e **sem Migrations** — modelo físico e triggers só via scripts versionados em `database/`.  
+> **Sem `HasTrigger`** no C#: não se aplica sem Entity Framework.
 
-Motivos: SPs de entrada/venda são o caminho principal de escrita; evita `HasTrigger` no começo; trecho da chamada da procedure fica claro no ABNT.
+**Justificativa (ABNT / defesa):** o caminho principal de escrita é SP (entrada/venda/lote); o schema e as triggers já estão versionados em `database/`; Dapper parametrizado atende o manual; evita duplicar o modelo em Migrations/`AppDbContext`.
 
 | Item | Status |
 |------|--------|
 | Tecnologia do Repositório (**C1**) | **FECHADO → Dapper** |
 | Migrations EF (**C2**) | **FECHADO → não usar** |
+| Opção B (só Dapper + `database/`) | **FECHADO** (06/11/2026) |
 
 ---
 
@@ -149,12 +155,14 @@ Documentos: `entrada` / `entradaitem`, `venda` / `vendaitem` · Estoque: `movime
 | B4 | Lote na entrada | **FECHADO** — `prc_ObterOuCadastrarLote` (+ inserts já criam lotes zerados) |
 | B5 | Assinatura final das SPs (casing, CREATE OR ALTER) | ABERTO (entrada item já usa `preco_unitario`) |
 | B6 | Banco impede estoque negativo? (CHECK/trigger) ou só Negócio? | ABERTO |
-| B7 | Connection string Dev (LocalDB/Express) — nome do banco | ABERTO |
+| B7 | Connection string Dev — chave **`Padrao`**; `Database=PharmaStock`; Server por máquina (ex. `localhost\SQLEXPRESS` ou LocalDB) | **PARCIAL** — chave + nome FECHADOS; cada máquina ajusta `Server=` |
 | B8 | Homogeneizar scripts e testar SPs no schema real | ABERTO |
 
 ---
 
-## 6. Modelos C# (FECHADO na etapa 1)
+## 6. Modelos e Negócio C#
+
+### 6.1 Entidades (FECHADO — etapa 1)
 
 Branch: `feature/nucleo-modelos-negocio` (05/11/2026).
 
@@ -165,14 +173,38 @@ Branch: `feature/nucleo-modelos-negocio` (05/11/2026).
 | `ItemVenda` com `IdLote` (uso interno FEFO) | **FECHADO** |
 | `Desconto` / `ProdutoPreco` | **Adiado (A5/A6)** — não usados no Negócio |
 | Quantidades `int` vs `decimal` | Segue `tabelas.txt` |
-| Negócio FEFO + serviços + interfaces Repo | **FECHADO** (etapa 1; Dapper = etapa 2) |
+| Negócio FEFO + interfaces Repo | **FECHADO** (etapa 1; Dapper = etapa 2) |
+
+### 6.2 DTOs compartilhados (FECHADO — padrão etapa 2)
+
+| Item | Decisão |
+|------|---------|
+| Pasta | `PharmaStock.Modelos/Dtos/` |
+| Uso | Request/response da Api **e** ViewModels/mapeamentos da Web |
+| Regra | Api e Web **só consomem** — não criam DTOs locais duplicados |
+| Regra | **Não** expor entidade de domínio crua em JSON ou Views |
+
+### 6.3 Nomes das classes de Negócio (FECHADO — 06/11/2026)
+
+Alinhar ao molde do professor (`ClienteNegocio`). Renomear na etapa 2 (só C#; **não** conflita com tabelas/SPs do banco):
+
+| Classe | Papel |
+|--------|--------|
+| `AuthNegocio` | Login MVP |
+| `CadastroNegocio` | Fornecedor / produto |
+| `EntradaNegocio` | Orquestra entrada + lote |
+| `VendaNegocio` | FEFO + venda |
+| `AlertaNegocio` | Lotes a vencer / estoque baixo |
+
+Exceção de domínio: `DominioException` (equivalente didático a `RegraDeNegocioException` do template).
 
 ---
 
 ## 7. Contrato da API HTTP (PROPOSTA)
 
-Base: `/api` · JSON · Swagger em Development · Controllers → **Negócio** apenas.  
-Consumidores: **Roberto (Flutter)** e, se útil, ferramentas de teste do Vinicius.
+Base: `/api` · JSON · **OpenAPI + Scalar** em Development (`/scalar`) · Controllers → **Negócio** apenas · DTOs em **Modelos**.  
+DI: mesmo registro de Repositório + `*Negocio` no `Program.cs` da Api (e o **mesmo bloco** no da Web).  
+Consumidores: **Roberto (Flutter)** e, se útil, ferramentas de teste do Vinicius / Scalar.
 
 ### 7.1 Autenticação (MVP didático)
 
@@ -271,10 +303,10 @@ SPs cobrem entrada/venda (e ObterOuCadastrarLote). Cadastros (fornecedor, produt
 
 ## 10. Como usar este documento
 
-1. Núcleo/API seguem C1–C4 e C13–C16 (já fechados).  
+1. Núcleo/API seguem C1–C4, C13–C16 e §1.2 / §6.2–6.3 (Dapper puro, DTOs Modelos, DI, `Padrao`, Scalar, `*Negocio`).  
 2. Geovanni entrega/executa o que for **execução** na §5.4 (B1–B3, B5, B7–B8) e avisa Anderson.  
-3. Anderson adapta Modelos/Repositório (Dapper) e implementa as rotas da seção **7** (sem `POST /lotes`).  
-4. Roberto e Vinicius tratam a seção **7** como contrato de integração.  
+3. Anderson: etapa 2 = Dapper + rotas §7 + DTOs em Modelos + DI Web/Api + Scalar (sem `POST /lotes`).  
+4. Roberto e Vinicius tratam a seção **7** como contrato de integração (DTOs em Modelos).  
 5. Qualquer mudança de rota/campo: atualizar este arquivo **antes** de codar em cima.
 
 ---
@@ -286,7 +318,7 @@ Quando fechar: mudar status aqui + refletir na seção correspondente.
 
 ### 11.1 Anderson — núcleo/API
 
-**Nada pendente de decisão.** C1–C4 e C13–C16 fechados (05/11/2026).
+**Nada pendente de decisão nem de implementação do MVP núcleo/API.** C1–C4, C13–C16 e alinhamento template fechados; etapa 2 entregue em `feature/nucleo-repo-api` (Dapper + API + Scalar; fluxo 2.D validado).
 
 ### 11.2 Alinhar com Geovanni (banco / ambiente)
 
@@ -297,7 +329,7 @@ Quando fechar: mudar status aqui + refletir na seção correspondente.
 | **B3** | Ordem de deploy | §5.4 | schema → procedures → triggers → inserts → entrada demo | **ABERTO** |
 | **B5** | Casing / `CREATE OR ALTER` das SPs | §5.4 | Padronizar `CREATE OR ALTER` + `dbo.prc_...` | **ABERTO** |
 | **B6** | Estoque negativo no SQL? | §5.4 | MVP: só **Negócio** valida; CHECK/trigger no banco = nice-to-have | **ABERTO** |
-| **B7** | Connection string Dev + nome do banco | §5.4 | Ex.: LocalDB, `Database=PharmaStock`, Trusted_Connection | **ABERTO** |
+| **B7** | Connection string Dev | §5.4 | Chave **`Padrao`**; `Database=PharmaStock`; `Server=` por máquina (Express/LocalDB) | **PARCIAL** — padrão FECHADO; valor local de cada dev |
 | **B8** | Homogeneizar e testar SPs no schema real | §5.4 | Rodar entrada/venda no SSMS e avisar o núcleo | **ABERTO** |
 | **P10** | Tamanho de `senha_hash` (varchar 25) | schema | Ampliar (ex. 128) **ou** manter demo curto alinhado ao C16 | **ABERTO** |
 
@@ -310,8 +342,8 @@ Quando fechar: mudar status aqui + refletir na seção correspondente.
 
 ### 11.4 Já fechado (não reabrir)
 
-Arquitetura em camadas · SQL Server · FEFO · A7 · auth sem JWT · `preco_unitario` · B4 ObterOuCadastrarLote · desconto adiado · **C1–C4** (Dapper, sem migrations, cadastros SQL, sem POST lotes) · **C13–C16** (multilote, defaults alerta, transação, senha demo).
+Arquitetura em camadas · SQL Server · FEFO · A7 · auth sem JWT · `preco_unitario` · B4 ObterOuCadastrarLote · desconto adiado · **C1–C4** (Dapper puro / opção B, sem migrations, cadastros SQL, sem POST lotes) · **C13–C16** · **DTOs em Modelos** · **DI Web+Api** · chave **`Padrao`** · **Scalar** · classes **`*Negocio`**.
 
 ---
 
-*Vivo: C1–C4/C13–C16 fechados; Modelos+Negócio etapa 1 no código. Próximo: Geovanni B1–B3/B5–B8; Anderson etapa 2 (Dapper+API).*
+*Vivo: núcleo/API MVP ✅ (Dapper + Scalar + DTOs Modelos + DI). Próximo: Geovanni B1–B3/B5–B8; Vinicius Web; Roberto Flutter.*

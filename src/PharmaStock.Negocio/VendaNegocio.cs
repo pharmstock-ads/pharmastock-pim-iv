@@ -1,20 +1,20 @@
-﻿// Orquestra venda com escolha de lote FEFO.
+// Orquestra venda com escolha de lote FEFO.
 using PharmaStock.Negocio.Excecoes;
 using PharmaStock.Negocio.Fefo;
 using PharmaStock.Repositorio.Abstracoes;
 
-namespace PharmaStock.Negocio.Servicos;
+namespace PharmaStock.Negocio;
 
 public record VendaItemPedido(int IdProduto, int Quantidade, decimal PrecoUnitario);
 
-public class VendaServico
+public class VendaNegocio
 {
     private readonly IFuncionarioRepositorio _funcionarios;
     private readonly IProdutoRepositorio _produtos;
     private readonly ILoteRepositorio _lotes;
     private readonly IVendaRepositorio _vendas;
 
-    public VendaServico(
+    public VendaNegocio(
         IFuncionarioRepositorio funcionarios,
         IProdutoRepositorio produtos,
         ILoteRepositorio lotes,
@@ -66,4 +66,8 @@ public class VendaServico
 
         return await _vendas.RegistrarVendaCompletaAsync(idFuncionario, registros, ct);
     }
+
+    public Task<IReadOnlyList<(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal)>> ListarAsync(
+        CancellationToken ct = default)
+        => _vendas.ListarAsync(ct);
 }

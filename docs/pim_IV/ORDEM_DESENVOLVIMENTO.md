@@ -22,9 +22,9 @@ O ponto de partida é o **Ágil** (Geovanna). Baseline de RF/RNF e gaps do manua
 
 Em paralelo — bloqueio técnico principal — o **banco SQL Server** (Geovanni). Já existem `tabelas/tabelas.txt`, `inserts/inserts.txt`, SPs (incl. `prc_ObterOuCadastrarLote`, entrada com `@pPrecoUnitario`) e triggers. Falta unificar em `schema.sql` / `seed.sql`, ordem de deploy testada e **entrada demo** (lotes do insert estão com qtd 0). Ideal: schema → procedures → triggers → seed. PostgreSQL do III só em `legacy/`.
 
-O **núcleo C#** (Anderson) já avançou a **Etapa 1** na branch `feature/nucleo-modelos-negocio`: Modelos alinhados a `tabelas.txt` (`Entrada`/`EntradaItem` + `PrecoUnitario`), interfaces do Repositório, Negócio (FEFO multilote, Auth, Entrada, Venda, Alerta) e testes xUnit. **Próximo:** Etapa 2 — Dapper + SPs + API ([CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7). Web e Api nunca acessam banco/Repositório.
+O **núcleo C#** (Anderson) fechou a **Etapa 2** na branch `feature/nucleo-repo-api`: Dapper + SPs + DTOs em Modelos + DI Web/Api + API REST + Scalar; fluxo login → produtos → entrada → venda → alertas validado. Web e Api não acessam banco/Repositório nos controllers (só Negócio). Connection string chave **`Padrao`** (ajuste `Server=` por máquina — ver README).
 
-Com API mínima estável, **Web** (Vinicius) e **Mobile** (Roberto) em paralelo. Flutter foca A7 via `/api/alertas/...`. UX pode começar cedo; validação forte com telas reais.
+**Próximo foco de UI:** **Web** (Vinicius) e **Mobile** (Roberto) em paralelo. Flutter foca A7 via `/api/alertas/...`. UX pode começar cedo; validação forte com telas reais.
 
 Por fim, o time **integra** o caminho feliz ponta a ponta (cadastro → entrada → venda → consulta no app), registra limitações e fecha o **documento ABNT**. Machine Learning e LIBRAS, se cobrados, entram como seções curtas no texto — não como projetos separados que atrapalham essa sequência.
 
@@ -41,8 +41,8 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 2A | Banco — schema + seed | Geovanni | ⚠️ | `tabelas.txt` + `inserts.txt`; falta `schema.sql` + estoque demo |
 | 2B | Banco — SPs / triggers | Geovanni | ✅ | Entrada (`@pPrecoUnitario`), ObterOuCadastrarLote, venda, triggers |
 | 3 | Modelos C# | Anderson | ✅ | Alinhados a `tabelas.txt` (branch etapa 1) |
-| 4 | Repositório + Negócio | Anderson | ⚠️ | Negócio+FEFO+interfaces ✅; Dapper/SPs = etapa 2 |
-| 5 | API | Anderson | ❌ | Etapa 2 (`feature/nucleo-repo-api`) |
+| 4 | Repositório + Negócio | Anderson | ✅ | Dapper + SPs + `*Negocio` + FEFO |
+| 5 | API | Anderson | ✅ | REST + Scalar + DTOs Modelos (`feature/nucleo-repo-api`) |
 | 6A | Web | Vinicius | ❌ | Template MVC só |
 | 6B | Mobile | Roberto | ❌ | — |
 | 6C | UX | _a definir_ | ⚠️ | Protótipos do III em `uiux/` |
@@ -149,19 +149,19 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ## Bloco 4 — Repositório + Negócio
 
-**Quem:** Anderson · **Status do bloco:** ⚠️
+**Quem:** Anderson · **Status do bloco:** ✅
 
 ### 4A — Repositório
 
 | Item | Status |
 |------|--------|
 | Interfaces em `Repositorio/Abstracoes` | ✅ |
-| Connection string em `appsettings.json` | ❌ (etapa 2) |
-| Implementação Dapper + SPs | ❌ (etapa 2) |
-| Wrappers: ObterOuCadastrarLote + entrada/venda | ❌ (etapa 2) |
-| CRUD cadastros (SQL) | ❌ (etapa 2) |
-| Dapper + sem Migrations (**C1/C2**) | ✅ decisão |
-| Cadastros SQL no Repo (**C3**) | ✅ decisão |
+| Connection string em `appsettings.json` (chave **`Padrao`**) | ✅ |
+| Implementação Dapper + SPs | ✅ |
+| Wrappers: ObterOuCadastrarLote + entrada/venda (transação C15) | ✅ |
+| CRUD cadastros (SQL) | ✅ |
+| Dapper + sem Migrations (**C1/C2**) | ✅ |
+| Cadastros SQL no Repo (**C3**) | ✅ |
 | `HasTrigger` (EF) | — (não se aplica; Dapper) |
 
 ### 4B — Negócio
@@ -170,28 +170,28 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 |------|--------|
 | Validações (funcionário, produto, qtd, preço) | ✅ |
 | FEFO multilote (`FefoAlocador`, C13) | ✅ |
-| Serviços Auth / Cadastro / Entrada / Venda / Alerta | ✅ |
-| Orquestrar via interfaces (Repo real = etapa 2) | ⚠️ |
+| Classes `AuthNegocio` / `CadastroNegocio` / `EntradaNegocio` / `VendaNegocio` / `AlertaNegocio` | ✅ |
+| Orquestrar via interfaces + Repo Dapper | ✅ |
 | Testes xUnit (FEFO, Auth, entidades) | ✅ |
 
-**Critério de saída do bloco completo:** registrar entrada/venda sem UI, via Negócio + Dapper (fecha na etapa 2).
+**Critério de saída:** registrar entrada/venda via Negócio + Dapper — **atendido**.
 
 ---
 
 ## Bloco 5 — API
 
-**Quem:** Anderson · **Status do bloco:** ❌
+**Quem:** Anderson · **Status do bloco:** ✅
 
 | Item | Status |
 |------|--------|
-| Controllers REST + DTOs | ❌ |
-| Endpoints do MVP (contrato §7, alertas A7; **sem** POST /lotes — C4) | ❌ |
-| Auth MVP sem JWT (`funcionarioId`) | ❌ |
-| Swagger/OpenAPI | ❌ |
-| Lista de rotas para Roberto e Vinicius | ⚠️ (proposta no CONTRATO_TECNICO) |
-| DI no `Program.cs` | ❌ |
+| Controllers REST + DTOs em `Modelos/Dtos` | ✅ |
+| Endpoints do MVP (contrato §7, alertas A7; **sem** POST /lotes — C4) | ✅ |
+| Auth MVP sem JWT (`funcionarioId`) | ✅ |
+| OpenAPI + **Scalar** (`/scalar`) | ✅ |
+| Lista de rotas para Roberto e Vinicius | ✅ (CONTRATO §7 + Scalar) |
+| DI no `Program.cs` (Api **e** Web) | ✅ |
 
-**Critério de saída:** Swagger/Postman executa ≥ 1 fluxo completo.
+**Critério de saída:** Scalar executa fluxo completo (login → entrada → venda → alertas) — **atendido**.
 
 ---
 
@@ -257,4 +257,4 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ---
 
-*Próximo foco: Anderson **etapa 2** (`feature/nucleo-repo-api` — Dapper + API) · **2A** `schema.sql` + estoque demo ⚠️ · Ágil gaps §5 (board/sprints) ⚠️*
+*Próximo foco: Vinicius (Web) + Roberto (Flutter) · Geovanni **2A** `schema.sql` + estoque demo ⚠️ · Ágil gaps §5 (board/sprints) ⚠️ · Núcleo C#/API ✅ etapa 2*

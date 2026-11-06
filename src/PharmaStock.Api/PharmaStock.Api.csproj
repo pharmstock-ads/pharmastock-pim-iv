@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.19.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PharmaStock.Negocio\PharmaStock.Negocio.csproj" />
+    <ProjectReference Include="..\PharmaStock.Modelos\PharmaStock.Modelos.csproj" />
+    <ProjectReference Include="..\PharmaStock.Repositorio\PharmaStock.Repositorio.csproj" />
   </ItemGroup>
 
 </Project>

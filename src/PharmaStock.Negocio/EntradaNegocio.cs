@@ -1,8 +1,8 @@
-﻿// Orquestra registro de entrada de estoque.
+// Orquestra registro de entrada de estoque.
 using PharmaStock.Negocio.Excecoes;
 using PharmaStock.Repositorio.Abstracoes;
 
-namespace PharmaStock.Negocio.Servicos;
+namespace PharmaStock.Negocio;
 
 public record EntradaItemPedido(
     int IdProduto,
@@ -11,13 +11,13 @@ public record EntradaItemPedido(
     decimal Quantidade,
     decimal PrecoUnitario);
 
-public class EntradaServico
+public class EntradaNegocio
 {
     private readonly IFuncionarioRepositorio _funcionarios;
     private readonly IProdutoRepositorio _produtos;
     private readonly IEntradaRepositorio _entradas;
 
-    public EntradaServico(
+    public EntradaNegocio(
         IFuncionarioRepositorio funcionarios,
         IProdutoRepositorio produtos,
         IEntradaRepositorio entradas)

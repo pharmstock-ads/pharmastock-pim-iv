@@ -1,8 +1,8 @@
 ﻿# Guia — Núcleo C# + API (Anderson)
 
-**Atualizado:** 05/11/2026 (etapa 1 entregue na branch `feature/nucleo-modelos-negocio`)  
+**Atualizado:** 06/11/2026 (etapa 2 entregue na branch `feature/nucleo-repo-api`)  
 **Papéis:** Líder UNIP · Modelos · Negócio · Repositório · Api  
-**Complementares:** [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md)
+**Complementares:** [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md) · [README.md](../../README.md)
 
 ---
 
@@ -11,17 +11,18 @@
 Solution: `src/PharmaStock.sln`
 
 ```
-PharmaStock.Modelos  →  entidades
-PharmaStock.Repositorio  →  único acesso ao SQL Server (CRUD + SPs)
-PharmaStock.Negocio  →  regras (FIFO, validações)  ← “Service” do doc do Geovanni
-PharmaStock.Api  →  REST + Swagger (Flutter)
-PharmaStock.Web  →  Vinicius (só chama Negócio)
+PharmaStock.Modelos  →  entidades + Dtos/
+PharmaStock.Repositorio  →  único acesso ao SQL Server (Dapper: CRUD + SPs)
+PharmaStock.Negocio  →  regras (FEFO, validações) — classes *Negocio
+PharmaStock.Api  →  REST + OpenAPI + Scalar (Flutter)
+PharmaStock.Web  →  Vinicius (só chama Negócio; DI já registrada)
 PharmaStock.Tests
 ```
 
-Regra do manual: **Web e Api não acessam Repositório/DB**.
+Regra do manual: **Web e Api não acessam Repositório/DB** nos controllers.
 
-Fonte da verdade: `database/` (Geovanni). Orientação de fluxo: `database/-- Orientações para a camada Service.pas` (Service = **Negócio**).
+Fonte da verdade: `database/` (Geovanni). Orientação de fluxo: `database/-- Orientações para a camada Service.pas` (Service = **Negócio**).  
+Setup local do banco + `Padrao`: ver README do repositório.
 
 ---
 
@@ -47,8 +48,8 @@ Fonte da verdade: `database/` (Geovanni). Orientação de fluxo: `database/-- Or
 
 | Etapa | Branch | Status |
 |-------|--------|--------|
-| 1 — Modelos + Negócio + interfaces | `feature/nucleo-modelos-negocio` | **Feito** (push 05/11) |
-| 2 — Dapper + API + SQL | `feature/nucleo-repo-api` | **Próxima** |
+| 1 — Modelos + Negócio + interfaces | `feature/nucleo-modelos-negocio` | **Feito** |
+| 2 — Dapper + API + SQL + Scalar | `feature/nucleo-repo-api` | **Feito** (fluxo 2.D validado) |
 
 ### Fase A — Alinhar Modelos ao schema — **FEITO**
 
@@ -56,9 +57,9 @@ Fonte da verdade: `database/` (Geovanni). Orientação de fluxo: `database/-- Or
 2. ~~Ajustar entidades (`PrecoUnitario`, `IdLote` em item venda)~~ ✅  
 3. ~~Testes de entidades~~ ✅  
 
-### Fase B — Repositório (SPs + consultas) — etapa 2
+### Fase B — Repositório (SPs + consultas) — **FEITO**
 
-Implementar wrappers (Dapper), um método por SP:
+Wrappers (Dapper), um método por SP:
 
 | Método sugerido | SP |
 |-----------------|----|
@@ -70,16 +71,16 @@ Implementar wrappers (Dapper), um método por SP:
 
 Mais CRUDs simples: listar/obter fornecedor, produto, lote, funcionário (login por CPF/e-mail).
 
-Connection string só em `appsettings.json` (Api e Web).
+Connection string só em `appsettings.json` (Api e Web), chave **`Padrao`**.  
+`Server=` muda por máquina (ex. `localhost\SQLEXPRESS` ou `(localdb)\mssqllocaldb`); o código só lê `GetConnectionString("Padrao")`.
 
-### Fase C — Negócio (Service) — **FEITO** (sem SQL)
+### Fase C — Negócio — **FEITO**
 
-Já no código: `FefoAlocador`, `AuthServico`, `CadastroServico`, `EntradaServico`, `VendaServico`, `AlertaServico` + testes.  
-Persistência real fica na fase B (Dapper).
+No código: `FefoAlocador`, `AuthNegocio`, `CadastroNegocio`, `EntradaNegocio`, `VendaNegocio`, `AlertaNegocio` + testes + Repo Dapper.
 
-### Fase D — API — etapa 2
+### Fase D — API — **FEITO**
 
-Base `/api`, JSON, Swagger em Development.
+Base `/api`, JSON, OpenAPI + **Scalar** em Development (`/scalar`).
 
 | Método | Rota | Notas |
 |--------|------|-------|

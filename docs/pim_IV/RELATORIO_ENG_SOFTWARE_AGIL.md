@@ -3,7 +3,7 @@
 **Para:** Geovanna (Engenharia de Software Ágil)  
 **De:** Anderson (Líder UNIP · Núcleo C# + API)  
 **Criado:** 14/10/2026  
-**Atualizado:** 05/11/2026 (renomeado; RF/RNF baseline a partir do banco + decisões)  
+**Atualizado:** 06/11/2026 (status técnico: núcleo/API etapa 2 ✅; UX = Daniel; Scalar; gaps Ágil §5 para alinhar com Geovanna)  
 **Objetivo:** artefato de apoio às **Etapas 1 e 2** do manual — decisões, caracterização do negócio, **RF/RNF**, backlog/MVP e checklist para sprints e aceite.
 
 **Guias por papel (encaminhar aos donos):**
@@ -14,8 +14,12 @@
 | Núcleo + API (Anderson) | [GUIA_NUCLEO_API_ANDERSON.md](./GUIA_NUCLEO_API_ANDERSON.md) |
 | Web (Vinicius) | [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md) |
 | Mobile (Roberto) | [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md) |
+| UX (Daniel) | [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
 
 **Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`../../database/README.md`](../../database/README.md)
+
+**Board Trello (PIM IV):** [https://trello.com/b/9ifnCGAL/pim-iv](https://trello.com/b/9ifnCGAL/pim-iv)  
+Listas: BACKLOG · A FAZER · FAZENDO · FEITO · FUTUROS — cards alinhados aos RF/MVP e ao status técnico (06/11).
 
 ---
 
@@ -52,6 +56,9 @@ Manual exige, em resumo: **Modelos → Repositório → Negócio → Web (MVC) +
 | A7 | Feature Flutter (complementar) | **Lotes a vencer + estoque baixo** (consultas via API) | **Confirmado** |
 | A2 | JWT / auth avançada | **Adiar** — MVP com `funcionarioId` no body | Depois |
 | A5 / A6 | Itens abertos de polish (preço de tabela, desconto, etc.) | **Adiar** — fora do primeiro MVP | Depois |
+| D10 | Papel UX/UI | **Daniel** — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) | **Confirmado** (06/11) |
+| D11 | Persistência (C1/C2) | **Dapper puro** (sem EF/Migrations/`HasTrigger`); schema em `database/` | **Confirmado** |
+| D12 | Docs API | OpenAPI + **Scalar** (`/scalar`), chave connection string **`Padrao`** | **Confirmado** |
 
 ### Material Ágil já no repo (A3 / A4)
 
@@ -62,7 +69,7 @@ Pasta `docs/pim_IV/gerenciamentodeprojetos/`:
 | `Gerenciamento_Projetos_Ageis_ATUALIZADO.pdf.pdf` | **Versão atualizada** (preferir esta) |
 | `projetos-ageis-geovanna.pdf.pdf` | Cópia / versão anterior (mesmo conteúdo após merge) |
 
-**Ação sua:** cruzar o PDF **ATUALIZADO** com a **§4 (RF/RNF)** deste relatório; levar os IDs para o board (Trello/Jira) como User Stories. O baseline técnico já está aqui — não precisa reinventar a partir do zero.
+**Ação sua:** cruzar o PDF **ATUALIZADO** com a **§4 (RF/RNF)** deste relatório; manter/refinar User Stories no board Trello ([pim-iv](https://trello.com/b/9ifnCGAL/pim-iv)). O baseline técnico e os cards iniciais já estão lá — não precisa reinventar a partir do zero.
 
 ---
 
@@ -133,7 +140,7 @@ Prioridade: **Must** = MVP · **Should** = desejável no semestre · **Could** =
 | **RNF06** | Usabilidade | Mensagens de erro compreensíveis na UI (sem stack/SQL cru para o usuário) | Must | Service §6 |
 | **RNF07** | Confiabilidade | Entrada/venda com vários itens em **transação** (commit/rollback); sem gravação parcial | Must | Service §6 |
 | **RNF08** | Manutenibilidade | Fonte da verdade dos dados = schema + SPs versionados; C# adapta-se ao banco | Must | Contrato §1.4 |
-| **RNF09** | API | REST JSON + Swagger em Development; status HTTP coerentes (200/201/400/401/404) | Must | Contrato §7 |
+| **RNF09** | API | REST JSON + OpenAPI/**Scalar** em Development; status HTTP coerentes (200/201/400/401/404) | Must | Contrato §7 · `/scalar` |
 | **RNF10** | Cliente Web | Interface **responsiva** (desktop + mobile browser) | Must | Manual Etapa 5 · guia Web |
 | **RNF11** | Cliente Mobile | App **Flutter** consumindo apenas a Api (sem SQL no Dart) | Must | Manual Etapa 9 · A7 |
 | **RNF12** | Desempenho | Operações de entrada/venda adequadas a demo acadêmica (sem meta numérica rígida no MVP) | Should | Contexto PIM |
@@ -166,7 +173,17 @@ Use §4 como backlog inicial; refine a redação acadêmica no PDF/board **sem c
 ## 5. O que falta vs Manual do PIM IV (Etapas 1 e 2)
 
 Fonte: `docs/manual/Manual_PIM_IV_2026.docx`.  
-Este relatório **ainda não fecha sozinho** as Etapas 1–2: o §4 cobre o baseline de RF/RNF; o que está abaixo é o gap acadêmico/operacional que a Geovanna (Ágil) precisa entregar.
+Este relatório **ainda não fecha sozinho** as Etapas 1–2 do **manual** (texto de negócio + board/sprints): o §4 já cobre o baseline de RF/RNF. O que está abaixo é o **gap acadêmico/operacional da Geovanna** — alinhar na conversa e marcar ✅ aqui quando fechar.
+
+**Para alinhar com a Geovanna (checklist curto):**
+
+1. Texto formal do negócio fictício (segmento, público, problemas) — §5.1  
+2. Stakeholders completos  
+3. Board Trello ([pim-iv](https://trello.com/b/9ifnCGAL/pim-iv)) — cards Must já criados; refinar sprints/labels  
+
+4. 2–3 sprints (datas + donos + quais RF)  
+5. Definition of Done (sugerido: Scalar + SP no SSMS + tela ou app)  
+6. Cruzar §4 com o PDF ATUALIZADO em `gerenciamentodeprojetos/`
 
 ### 5.1 Etapa 1 — Definição e caracterização do negócio fictício
 
@@ -195,7 +212,7 @@ O manual exige apresentar: stakeholders; RF; RNF; backlog; priorização; itera�
 | Partes interessadas (stakeholders) | ⚠️ | Lista nominada além dos atores §4.1 (ex.: farmacêutico, estoquista, gerente, atendente, sponsor acadêmico) + interesse de cada um |
 | Levantamento e descrição dos RF | ⚠️ | §4.2 = baseline técnico; falta redação acadêmica (descrição por RF) e/ou User Stories no board alinhadas aos IDs RF01–RF22 |
 | Levantamento e descrição dos RNF | ⚠️ | §4.3 = baseline; falta prosa no ABNT/PDF e vínculo aos critérios de qualidade da sprint |
-| Organização em backlog | ⚠️ | Transformar RF **Must** em cards no Trello/Jira (1 card ≈ 1 RF ou 1 história) |
+| Organização em backlog | ⚠️ | Board [Trello PIM IV](https://trello.com/b/9ifnCGAL/pim-iv) criado com cards Must/Should; falta organizar sprints/labels |
 | Priorização das funcionalidades | ⚠️ | MVP §3 + Must/Should/Could existem; falta ordenação visível no board (rank / MoSCoW no card) |
 | Definição de iterações (sprints) | ❌ | Definir **2–3 sprints**: objetivo, janela de datas, quais RF entram, dono |
 | Critérios de aceite | ⚠️ | Aceite na tabela RF; falta **aceite por sprint** e DoD do time |
@@ -250,16 +267,18 @@ pharmastock-pim-iv/
 
 Tabelas principais: `fornecedor`, `funcionario`, `categoria`, `produto`, `lote`, `entrada`/`entradaitem`, `venda`/`vendaitem`, `movimentacao`.
 
-### 6.3 Núcleo C# / API (Anderson)
+### 6.3 Núcleo C# / API (Anderson) — **atualizado 06/11**
 
 - Solution criada.  
-- **Etapa 1** (`feature/nucleo-modelos-negocio`): Modelos alinhados a `tabelas.txt`, `Entrada`/`EntradaItem`, interfaces do Repositório, Negócio (FEFO, Auth, Entrada, Venda, Alerta) + testes.  
-- **Etapa 2** (próxima): Dapper + SPs + API REST ([CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7).
+- **Etapa 1** ✅: Modelos, interfaces Repo, Negócio FEFO + testes.  
+- **Etapa 2** ✅ (`feature/nucleo-repo-api` / PR): Dapper + SPs + DTOs em `Modelos/Dtos` + DI Web/Api + API REST + **Scalar**; fluxo login → entrada → venda → alertas validado.  
+- Detalhe: [GUIA_NUCLEO_API_ANDERSON.md](./GUIA_NUCLEO_API_ANDERSON.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) §7.
 
-### 6.4 Web / Mobile
+### 6.4 Web / Mobile / UX
 
-- Web: projeto `PharmaStock.Web` existe (esqueleto).  
-- Mobile: pasta `mobile/` pronta para o Flutter; feature A7 definida.
+- Web: `PharmaStock.Web` com DI pronta; **telas MVC ainda a fazer** (Vinicius) — [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md).  
+- Mobile: pasta `mobile/` (criar app Flutter); API A7 pronta — [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md).  
+- UX: Daniel — evoluir `uiux/` (base III) — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md).
 
 ---
 
@@ -268,13 +287,13 @@ Tabelas principais: `fornecedor`, `funcionario`, `categoria`, `produto`, `lote`,
 | Papel | Responsável | Entrega principal |
 |-------|-------------|-------------------|
 | **Líder UNIP** | **Anderson** | Postagem na plataforma, coordenação, núcleo + API |
-| Núcleo C# + API | Anderson | Camadas + endpoints REST + Swagger |
-| Banco | Geovanni | Schema unificado, SPs, triggers, seed |
+| Núcleo C# + API | Anderson | Camadas + REST + Scalar (**etapa 2 ✅**) |
+| Banco | Geovanni | Tabelas/SPs/triggers ✅; unificar schema/seed demo opcional |
 | Web (MVC + responsivo) | Vinicius | Telas Razor via Negócio |
 | Mobile (Flutter) | Roberto | App via API (alertas A7) |
-| Eng. Software Ágil | **Geovanna** | Negócio fictício, RF/RNF, backlog, sprints, aceite |
+| Eng. Software Ágil | **Geovanna** | Negócio fictício, RF/RNF, backlog, sprints, aceite (**gaps §5**) |
 | Documentação ABNT | _a definir_ | Doc final |
-| UX/UI | _a definir_ | Personas / fluxos / protótipos |
+| UX/UI | **Daniel** | Personas / fluxos / protótipos — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
 
 **ML e LIBRAS:** seções curtas no ABNT (Documentação), sem dono dedicado de código.
 
@@ -302,12 +321,12 @@ Auth MVP: `POST /api/auth/login` → `{ funcionarioId, nome, cargo }`; cliente r
 ## 9. Ordem de trabalho (macro)
 
 ```
-[1] Negócio fictício + Ágil — fechar §5 + RF/RNF §4 → board (+ cruzar PDF)
-[2] Banco (schema.sql + seed) + Modelos C# em paralelo
-[3] Negócio + Repositório (chamar SPs)
-[4] API (contratos estáveis)
-[5] Web e Mobile em paralelo
-[6] UX acompanha (não bloqueia núcleo)
+[1] Negócio fictício + Ágil — fechar §5 + RF/RNF §4 → board (+ cruzar PDF)   ← Geovanna (em aberto)
+[2] Banco mínimo ✅ (tabelas/SP/trigger); polish schema/seed demo opcional
+[3] Negócio + Repositório (Dapper) ✅
+[4] API + Scalar ✅
+[5] Web e Mobile em paralelo                                              ← foco atual UI
+[6] UX (Daniel) acompanha
 [7] Integração + documento ABNT
 ```
 
@@ -330,8 +349,9 @@ Detalhe com checkboxes: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md).
 - [ ] Stakeholders
 - [ ] Backlog priorizado no board (1 card por RF Must; RNF como DoD / restrições)
 - [ ] 2–3 sprints propostas (datas + donos)
-- [ ] Definition of Done mínima (ex.: SP testada no SSMS + endpoint Swagger + tela ou app)
-- [ ] Board atualizado (Trello/Jira) com cards por história
+- [ ] Definition of Done mínima (ex.: SP no SSMS + endpoint no Scalar + tela Web ou app)
+- [x] Board Trello criado: [https://trello.com/b/9ifnCGAL/pim-iv](https://trello.com/b/9ifnCGAL/pim-iv) (cards FEITO / A FAZER / BACKLOG / FUTUROS)
+- [ ] Board com sprints/labels e aceite por card (Geovanna)
 - [x] SGBD = SQL Server (não reabrir debate Postgres)
 - [ ] Feature Flutter A7 no backlog: RF16 + RF17 (+ RF18)
 - [ ] Limite de 6 na UNIP + nomes/RAs na divisão
@@ -355,7 +375,7 @@ Detalhe com checkboxes: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md).
 | P1 | Postgres vs SQL Server | **Fechado → SQL Server** | — |
 | P2 | Procedures/triggers iniciais | **Feito** (refinar + unificar schema) | Geovanni |
 | P3 | Venda vs movimentação | **Fechado** (documentos + movimentacao) | — |
-| P4 | Nomes Docs / UX | Parcial | Líder + Geovanna |
+| P4 | Nomes Docs / UX | **UX = Daniel** ✅; Docs ABNT ainda aberto | Grupo |
 | P5 | Feature Flutter | **Fechado → lotes a vencer + estoque baixo** (RF16–RF18) | Roberto + Anderson |
 | P6 | Limite de 6 na UNIP | Aberto | Anderson + Geovanna |
 | P7 | `schema.sql` unificado + seed completo | **Parcial** — `inserts.txt` ok; falta schema.sql + estoque demo (entrada) | Geovanni |
@@ -371,11 +391,12 @@ Detalhe com checkboxes: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md).
 
 | Quem | Próximo passo concreto |
 |------|------------------------|
-| **Geovanna** | Fechar gaps §5 (negócio + stakeholders + board + sprints); cruzar PDF |
-| **Geovanni** | Virar `tabelas.txt` → `schema.sql`; seed + entrada demo — [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md) |
-| **Anderson** | Etapa 1 ✅; próxima = Dapper + API — [GUIA_NUCLEO_API_ANDERSON.md](./GUIA_NUCLEO_API_ANDERSON.md) |
-| **Vinicius** | Preparar ambiente Web; esperar Negócio mínimo — [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md) |
-| **Roberto** | Preparar Flutter; consumir API quando login + RF16/RF17 existirem — [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md) |
+| **Geovanna** | **Prioridade:** fechar gaps §5 (texto negócio + stakeholders + board + 2–3 sprints); cruzar PDF ATUALIZADO; DoD com Scalar |
+| **Geovanni** | Manual mínimo ✅; opcional: `schema.sql` / entrada demo — [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md) |
+| **Anderson** | Núcleo/API ✅; coordenar UNIP; suporte a Web/Mobile/UX |
+| **Vinicius** | **Implementar telas MVC** (Negócio já pluggável) — [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md) |
+| **Roberto** | **Criar app Flutter** e consumir login + RF16/RF17 — [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md) |
+| **Daniel** | Personas, fluxos, protótipos IV — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
 
 ---
 
@@ -395,4 +416,4 @@ Detalhe com checkboxes: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md).
 
 ---
 
-*Atualizar este arquivo quando os itens da §5 forem fechados (e P4/P6/P7). §4 = IDs de RF/RNF; §5 = gaps do manual; guias por papel = operação do dia a dia.*
+*Atualizar quando §5 (Geovanna) fechar. §4 = RF/RNF; §5 = gaps Ágil do manual; §6/§12 = status técnico. Guias por papel = operação do dia a dia.*

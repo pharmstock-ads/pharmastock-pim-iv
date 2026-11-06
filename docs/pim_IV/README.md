@@ -4,11 +4,12 @@
 
 | Arquivo | Para quem |
 |---------|-----------|
-| [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) | **Geovanna** (Ágil) — Etapas 1–2: negócio, RF/RNF, MVP, checklist |
+| [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) | **Geovanna** (Ágil) — Etapas 1–2: negócio, RF/RNF, MVP, checklist · Board: [Trello PIM IV](https://trello.com/b/9ifnCGAL/pim-iv) |
 | [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md) | **Geovanni** — schema, SPs, triggers, seed |
 | [GUIA_NUCLEO_API_ANDERSON.md](./GUIA_NUCLEO_API_ANDERSON.md) | **Anderson** — Modelos, Negócio, Repositório, API |
 | [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md) | **Vinicius** — MVC responsivo passo a passo |
 | [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md) | **Roberto** — Flutter (lotes a vencer + estoque baixo) |
+| [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) | **Daniel** — personas, fluxos, protótipos, usabilidade (Etapa 6) |
 
 ## Referência técnica e progresso
 

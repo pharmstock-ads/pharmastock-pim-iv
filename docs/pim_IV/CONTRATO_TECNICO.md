@@ -70,8 +70,9 @@ O C# (`PharmaStock.Modelos` e Repositório) **se adapta** ao que o Geovanni vers
 | Banco | Geovanni | Schema, seed, SPs, triggers, integridade SQL |
 | Web | Vinicius | Telas MVC / ViewModels (consome Negócio) |
 | Mobile | Roberto | Flutter: login + **lotes a vencer** + **estoque baixo** (A7) |
-| Eng. Software Ágil | Geovanna | Backlog, RF/RNF, aceite |
-| Documentação / UX | _a definir_ | — |
+| Eng. Software Ágil | Geovanna | Backlog, RF/RNF, aceite · [Trello PIM IV](https://trello.com/b/9ifnCGAL/pim-iv) |
+| UX / UI | Daniel | Personas, fluxos, protótipos — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
+| Documentação ABNT | _a definir_ | — |
 
 ---
 
@@ -173,7 +174,7 @@ Branch: `feature/nucleo-modelos-negocio` (05/11/2026).
 | `ItemVenda` com `IdLote` (uso interno FEFO) | **FECHADO** |
 | `Desconto` / `ProdutoPreco` | **Adiado (A5/A6)** — não usados no Negócio |
 | Quantidades `int` vs `decimal` | Segue `tabelas.txt` |
-| Negócio FEFO + interfaces Repo | **FECHADO** (etapa 1; Dapper = etapa 2) |
+| Negócio FEFO + interfaces Repo + Dapper/API | **FECHADO** (etapas 1 e 2) |
 
 ### 6.2 DTOs compartilhados (FECHADO — padrão etapa 2)
 
@@ -186,7 +187,7 @@ Branch: `feature/nucleo-modelos-negocio` (05/11/2026).
 
 ### 6.3 Nomes das classes de Negócio (FECHADO — 06/11/2026)
 
-Alinhar ao molde do professor (`ClienteNegocio`). Renomear na etapa 2 (só C#; **não** conflita com tabelas/SPs do banco):
+Alinhado ao molde do professor (`ClienteNegocio`). Classes no código (só C#; **não** conflita com tabelas/SPs):
 
 | Classe | Papel |
 |--------|--------|
@@ -285,7 +286,7 @@ SPs cobrem entrada/venda (e ObterOuCadastrarLote). Cadastros (fornecedor, produt
 | ID | Tema | Status | Dono |
 |----|------|--------|------|
 | P-Docs | Nome do responsável por Documentação ABNT | **ABERTO** | Grupo |
-| P-UX | Nome do responsável por UX | **ABERTO** | Grupo |
+| P-UX | Nome do responsável por UX | **FECHADO → Daniel** | — |
 | P-Líder | Líder da postagem UNIP | **FECHADO → Anderson** | — |
 | P-Flutter | Feature complementar do app | **FECHADO → lotes a vencer + estoque baixo** | Roberto + Anderson |
 | P-Auth | JWT vs funcionarioId | **FECHADO no MVP → funcionarioId**; JWT depois (A2) | Anderson |
@@ -338,7 +339,7 @@ Quando fechar: mudar status aqui + refletir na seção correspondente.
 | ID | Tema | Status |
 |----|------|--------|
 | P-Docs | Quem redige o ABNT | **ABERTO** |
-| P-UX | Quem fecha UX/UI | **ABERTO** |
+| P-UX | Quem fecha UX/UI | **FECHADO → Daniel** |
 
 ### 11.4 Já fechado (não reabrir)
 

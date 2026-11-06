@@ -245,9 +245,9 @@ Eng. Software Ágil: [`docs/pim_IV/RELATORIO_ENG_SOFTWARE_AGIL.md`](docs/pim_IV/
 | Banco | Geovanni | Schema, trigger, procedure, seed — **SQL Server** |
 | Web | Vinicius | MVC + responsivo |
 | Mobile | Roberto | Flutter |
-| Eng. Software Ágil | Geovanna | RF/RNF, backlog, sprints |
+| Eng. Software Ágil | Geovanna | RF/RNF, backlog, sprints · [Trello](https://trello.com/b/9ifnCGAL/pim-iv) |
 | Documentação | _a definir_ | ABNT / consolidação |
-| UX/UI | _a definir_ | Personas, fluxos, protótipos |
+| UX/UI | Daniel | Personas, fluxos, protótipos |
 
 ---
 

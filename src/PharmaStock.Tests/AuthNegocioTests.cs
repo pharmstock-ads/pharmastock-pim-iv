@@ -1,7 +1,7 @@
-﻿// Testes de login com repositorio fake.
+// Testes de login com repositorio fake.
 using PharmaStock.Modelos;
+using PharmaStock.Negocio;
 using PharmaStock.Negocio.Excecoes;
-using PharmaStock.Negocio.Servicos;
 using PharmaStock.Repositorio.Abstracoes;
 
 namespace PharmaStock.Tests;
@@ -26,7 +26,7 @@ file class FuncionarioRepoFake : IFuncionarioRepositorio
             : null);
 }
 
-public class AuthServicoTests
+public class AuthNegocioTests
 {
     private static Funcionario AnaAtiva() => new()
     {
@@ -41,17 +41,17 @@ public class AuthServicoTests
     [Fact]
     public async Task Login_Ok()
     {
-        var servico = new AuthServico(new FuncionarioRepoFake(AnaAtiva()));
-        var user = await servico.LoginAsync("ana.souza@pharmastock.local", "hash_demo_ana");
+        var negocio = new AuthNegocio(new FuncionarioRepoFake(AnaAtiva()));
+        var user = await negocio.LoginAsync("ana.souza@pharmastock.local", "hash_demo_ana");
         Assert.Equal(1, user.IdFuncionario);
     }
 
     [Fact]
     public async Task Login_SenhaErrada_Lanca()
     {
-        var servico = new AuthServico(new FuncionarioRepoFake(AnaAtiva()));
+        var negocio = new AuthNegocio(new FuncionarioRepoFake(AnaAtiva()));
         await Assert.ThrowsAsync<DominioException>(() =>
-            servico.LoginAsync("ana.souza@pharmastock.local", "errada"));
+            negocio.LoginAsync("ana.souza@pharmastock.local", "errada"));
     }
 
     [Fact]
@@ -59,8 +59,8 @@ public class AuthServicoTests
     {
         var ana = AnaAtiva();
         ana.Ativo = 'n';
-        var servico = new AuthServico(new FuncionarioRepoFake(ana));
+        var negocio = new AuthNegocio(new FuncionarioRepoFake(ana));
         await Assert.ThrowsAsync<DominioException>(() =>
-            servico.LoginAsync("ana.souza@pharmastock.local", "hash_demo_ana"));
+            negocio.LoginAsync("ana.souza@pharmastock.local", "hash_demo_ana"));
     }
 }

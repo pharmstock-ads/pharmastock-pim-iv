@@ -1,15 +1,15 @@
-﻿// Login de funcionario (MVP sem JWT).
+// Login de funcionario (MVP sem JWT).
 using PharmaStock.Modelos;
 using PharmaStock.Negocio.Excecoes;
 using PharmaStock.Repositorio.Abstracoes;
 
-namespace PharmaStock.Negocio.Servicos;
+namespace PharmaStock.Negocio;
 
-public class AuthServico
+public class AuthNegocio
 {
     private readonly IFuncionarioRepositorio _funcionarios;
 
-    public AuthServico(IFuncionarioRepositorio funcionarios)
+    public AuthNegocio(IFuncionarioRepositorio funcionarios)
     {
         _funcionarios = funcionarios;
     }

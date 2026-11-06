@@ -1,17 +1,17 @@
-﻿// Consultas de lotes a vencer e estoque baixo.
+// Consultas de lotes a vencer e estoque baixo.
 using PharmaStock.Modelos;
 using PharmaStock.Repositorio.Abstracoes;
 
-namespace PharmaStock.Negocio.Servicos;
+namespace PharmaStock.Negocio;
 
-public class AlertaServico
+public class AlertaNegocio
 {
     public const int DiasPadrao = 30;
     public const decimal LimiteEstoquePadrao = 10;
 
     private readonly IAlertaRepositorio _alertas;
 
-    public AlertaServico(IAlertaRepositorio alertas)
+    public AlertaNegocio(IAlertaRepositorio alertas)
     {
         _alertas = alertas;
     }

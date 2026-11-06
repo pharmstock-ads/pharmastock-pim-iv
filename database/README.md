@@ -79,6 +79,16 @@ Além do domínio do III, os scripts assumem:
 ## Regras do manual
 
 - Connection string em `appsettings.json` (Web e Api), nunca no código-fonte
-- Procedure executada pela camada `PharmaStock.Repositorio`
+- Chave oficial: **`Padrao`**. O valor de `Server=` muda por máquina (ex. `localhost\SQLEXPRESS`, `(localdb)\mssqllocaldb`)
+- Procedure executada pela camada `PharmaStock.Repositorio` (Dapper; sem EF/`HasTrigger`)
 - Consultas parametrizadas (evitar SQL Injection)
-- Com EF Core 7+: mapear `HasTrigger` nas entidades que têm trigger
+
+### Connection string (Dev)
+
+```json
+"ConnectionStrings": {
+  "Padrao": "Server=localhost\\SQLEXPRESS;Database=PharmaStock;Trusted_Connection=True;TrustServerCertificate=True"
+}
+```
+
+Troque só o `Server=` se usar LocalDB ou outro host. Banco: criar `PharmaStock` e rodar `tabelas` → `procedure` → `trigger` → `inserts` (nessa ordem).

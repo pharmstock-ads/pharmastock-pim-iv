@@ -1,19 +1,24 @@
-﻿// Cadastro de fornecedor e produto.
+// Cadastro de fornecedor e produto.
 using PharmaStock.Modelos;
 using PharmaStock.Negocio.Excecoes;
 using PharmaStock.Repositorio.Abstracoes;
 
-namespace PharmaStock.Negocio.Servicos;
+namespace PharmaStock.Negocio;
 
-public class CadastroServico
+public class CadastroNegocio
 {
     private readonly IFornecedorRepositorio _fornecedores;
     private readonly IProdutoRepositorio _produtos;
+    private readonly ILoteRepositorio _lotes;
 
-    public CadastroServico(IFornecedorRepositorio fornecedores, IProdutoRepositorio produtos)
+    public CadastroNegocio(
+        IFornecedorRepositorio fornecedores,
+        IProdutoRepositorio produtos,
+        ILoteRepositorio lotes)
     {
         _fornecedores = fornecedores;
         _produtos = produtos;
+        _lotes = lotes;
     }
 
     public Task<IReadOnlyList<Fornecedor>> ListarFornecedoresAsync(CancellationToken ct = default)
@@ -49,4 +54,7 @@ public class CadastroServico
 
         return await _produtos.InserirAsync(produto, ct);
     }
+
+    public Task<IReadOnlyList<Lote>> ListarLotesPorProdutoAsync(int idProduto, CancellationToken ct = default)
+        => _lotes.ListarPorProdutoAsync(idProduto, ct);
 }

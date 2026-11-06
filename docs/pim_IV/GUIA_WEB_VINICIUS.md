@@ -2,168 +2,295 @@
 
 **Para:** Vinicius  
 **De:** Anderson (Líder · Núcleo/API)  
-**Atualizado:** 05/11/2026  
+**Atualizado:** 06/11/2026  
 **Projeto:** `src/PharmaStock.Web`  
-**Contexto:** [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md)
+**Status:** núcleo + API + banco **já prontos** — você pode integrar de verdade agora
 
 ---
 
-## 1. O que você entrega
+## Documentos de referência (leia nesta ordem)
 
-Aplicação **ASP.NET Core MVC** (Razor), **responsiva**, que usa a farmácia PharmaStock no navegador.
+| Doc | Por quê |
+|-----|---------|
+| [README.md](../../README.md) | Como subir o SQL Server + connection string `Padrao` |
+| [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) | Regras FEFO, auth MVP, o que é fora do escopo |
+| [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) | Seu bloco = **6A Web** |
+| [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md) | Só se precisar entender seed / scripts |
+| Template do professor | Views Razor + DI no `Program.cs` (molde visual) |
+| Código em `src/PharmaStock.Negocio/*Negocio.cs` | Métodos que você vai chamar |
 
-Fluxos prioritários do MVP (mesma ordem do Ágil):
-
-1. Login de funcionário  
-2. Cadastro / listagem de fornecedor e produto  
-3. Registrar **entrada** (lote + validade + **preço unitário**)  
-4. Registrar **venda** (produto + quantidade; sistema escolhe o lote)  
-5. Consultas: produtos, lotes, histórico de entradas/vendas  
-
-Você **não** implementa o app Flutter (Roberto) nem as stored procedures (Geovanni).
+**Não invente SQL na Web.** Se faltar um método no Negócio, peça ao Anderson.
 
 ---
 
-## 2. Arquitetura — regra que não pode quebrar
+## 1. O que você entrega (MVP Web)
+
+Aplicação **ASP.NET Core MVC (Razor)**, **responsiva**, no navegador.
+
+| # | Fluxo | Prioridade |
+|---|--------|------------|
+| 1 | Login de funcionário | Obrigatório |
+| 2 | Listar / cadastrar fornecedor | Obrigatório |
+| 3 | Listar / cadastrar / detalhar produto | Obrigatório |
+| 4 | Registrar **entrada** (lote + validade + preço unitário) | Obrigatório |
+| 5 | Registrar **venda** (produto + qtd + preço; **sem** escolher lote) | Obrigatório |
+| 6 | Listar lotes de um produto (consulta) | Recomendado |
+| 7 | Listar vendas | Recomendado |
+
+Flutter (alertas A7) = Roberto. SPs/triggers = Geovanni. Você = telas MVC.
+
+---
+
+## 2. Arquitetura (regra que não quebra)
 
 ```
-Browser → Controllers (Web) → Negocio → Repositorio → SQL Server
+Browser → Controllers (Web) → *Negocio → Repositorio (Dapper) → SQL Server
 ```
 
 | Pode | Não pode |
 |------|----------|
-| Injetar / chamar classes de `PharmaStock.Negocio` | Referenciar `PharmaStock.Repositorio` |
-| Usar ViewModels + Views Razor | Abrir `SqlConnection` / Dapper / EF no controller |
-| Connection string só se a Web hospedar o Negócio (via DI) | Hardcode de senha/servidor no código |
-| Layout responsivo (Bootstrap ou similar do template) | Duplicar regra FIFO na View |
+| Injetar `AuthNegocio`, `CadastroNegocio`, `EntradaNegocio`, `VendaNegocio`, `AlertaNegocio` no controller | Usar `I*Repositorio` / `SqlConnection` / Dapper no controller ou na View |
+| ViewModels + Views Razor | Hardcode de connection string no código C# |
+| Layout Bootstrap (ou similar) responsivo | Mostrar “escolha de lote” na tela de venda |
+| Usar DTOs de `PharmaStock.Modelos.Dtos` se quiser | Duplicar regra FEFO na View |
 
-A **Api** é irmã da Web: os dois consomem o **mesmo Negócio**. Você não precisa chamar HTTP da própria Api (a menos que queira para testes).
+**DI já está no `Program.cs` da Web** (igual à Api). Não apague esse bloco. Só use as classes de Negócio nos controllers.
 
----
-
-## 3. Contexto do domínio (resumo)
-
-- Farmácia com **lotes** e **validade**.  
-- **Entrada** aumenta estoque; **venda** diminui.  
-- Estoque do lote é atualizado por **trigger** no banco.  
-- Na venda, o usuário **não escolhe lote** — o Negócio faz FIFO/FEFO.  
-- Auth MVP: sessão/cookie ou campo escondido com `funcionarioId` após login (JWT adiado).
-
-Tabelas (Geovanni): fornecedor, funcionario, categoria, produto, lote, entrada/entradaitem, venda/vendaitem, movimentacao.
+Connection string: chave **`Padrao`** em `appsettings.json` (mesmo banco do Anderson). Como ajustar `Server=`: [README.md](../../README.md).
 
 ---
 
-## 4. O que esperar antes de “começar de verdade”
+## 3. Preparar o ambiente (checklist)
 
-### Já pode fazer agora (preparação)
+Faça **nesta ordem**:
 
-- [ ] Clonar o repo e abrir `src/PharmaStock.sln` no Visual Studio / Rider / VS Code  
-- [ ] Rodar `dotnet restore` + garantir que `PharmaStock.Web` sobe (`dotnet run --project src/PharmaStock.Web`)  
-- [ ] Estudar pastas: `Controllers`, `Views`, `ViewModels` (criar se não existirem)  
-- [ ] Definir layout base (`_Layout.cshtml`) + menu: Produtos, Fornecedores, Entradas, Vendas, Logout  
-- [ ] Wireframes simples (ou alinhar com UX se houver dono)  
-- [ ] Ler [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) e marcar seus itens quando avançar  
+1. [ ] Clonar o repo e abrir `src/PharmaStock.sln`  
+2. [ ] Instalar **.NET 10** SDK (`dotnet --version`)  
+3. [ ] Ter SQL Server + banco `PharmaStock` com scripts de `database/` (tabelas → procedure → trigger → inserts) — ver README  
+4. [ ] Em `PharmaStock.Web/appsettings.json`, conferir:
 
-### Esperar o núcleo (Anderson) para integrar
+```json
+"ConnectionStrings": {
+  "Padrao": "Server=localhost\\SQLEXPRESS;Database=PharmaStock;Trusted_Connection=True;TrustServerCertificate=True"
+}
+```
 
-Você fica **bloqueado de persistir de verdade** até existir Negócio mínimo. Enquanto isso, pode usar ViewModels mockados nas Views.
+(Troque o `Server=` se na sua máquina for LocalDB.)
 
-Sinais de “pode integrar”:
+5. [ ] No terminal:
 
-| Sinal | Significado |
-|-------|-------------|
-| Classes de serviço no `PharmaStock.Negocio` (login, listar produtos, registrar entrada/venda) | Pode plugar os controllers |
-| Banco sobe com tabelas + `inserts/inserts.txt` (+ entrada demo) | Demo com dados reais (logins Ana/Carlos/Mariana) |
-| Anderson avisar no grupo | Contrato estável o bastante |
+```bash
+cd pharmastock-pim-iv/src
+dotnet restore PharmaStock.sln
+dotnet build PharmaStock.sln
+dotnet run --project PharmaStock.Web
+```
 
-Se o Negócio ainda não expuser um método, **não invente SQL na Web** — peça o método ao Anderson.
+6. [ ] Abrir a URL que o terminal mostrar (ex. `https://localhost:7xxx`) — hoje só Home padrão; as telas você cria  
+
+**Opcional:** subir a Api em outro terminal (`dotnet run --project PharmaStock.Api`) e abrir `/scalar` para ver os mesmos fluxos em HTTP — útil para comparar, mas a Web **não precisa** chamar a Api por HTTP; ela chama o Negócio direto.
 
 ---
 
-## 5. Passo a passo de implementação
+## 4. Classes de Negócio que você usa
 
-### Passo 1 — Ambiente
+| Classe | Para quê | Métodos principais |
+|--------|----------|-------------------|
+| `AuthNegocio` | Login | `LoginAsync(cpfOuEmail, senha)` |
+| `CadastroNegocio` | Fornecedor / produto / lotes | `ListarFornecedoresAsync`, `CriarFornecedorAsync`, `ListarProdutosAsync`, `ObterProdutoAsync`, `CriarProdutoAsync`, `ListarLotesPorProdutoAsync` |
+| `EntradaNegocio` | Entrada de estoque | `RegistrarAsync(idFuncionario, itens)` |
+| `VendaNegocio` | Venda FEFO | `RegistrarAsync(idFuncionario, itens)`, `ListarAsync` |
+| `AlertaNegocio` | Opcional na Web | `LotesAVencerAsync`, `EstoqueBaixoAsync` |
 
-1. .NET 8 SDK (ou a versão do `.csproj`).  
-2. SQL Server local (mesmo do Geovanni) — connection string em `appsettings.Development.json`.  
-3. Referência de projeto: Web → Negocio → … (já deve estar na solution).
+Namespace: `PharmaStock.Negocio`.
 
-### Passo 2 — Login
+Exemplo de injeção no controller:
 
-1. `AccountController`: GET login (form), POST valida via Negócio.  
-2. Guardar `funcionarioId` (e nome) em sessão.  
-3. Filtro/`[Authorize]` simples ou checagem manual nas actions protegidas.
+```csharp
+public class ProdutosController : Controller
+{
+    private readonly CadastroNegocio _cadastro;
 
-### Passo 3 — Cadastros
+    public ProdutosController(CadastroNegocio cadastro)
+    {
+        _cadastro = cadastro;
+    }
+}
+```
 
-| Tela | Actions | Observação |
-|------|---------|------------|
-| Fornecedores | Index, Create | Campos: nome, CNPJ, telefone |
-| Produtos | Index, Create, Details | Código, nome, categoria, fornecedor |
+Se `DominioException` for lançada (validação / estoque insuficiente), capture e mostre a mensagem na tela (`ModelState` ou `TempData`).
 
-Validação: Data Annotations no ViewModel + mensagens amigáveis.
+---
 
-### Passo 4 — Entrada de estoque
+## 5. Login de demonstração (seed)
+
+Depois dos `inserts.txt`:
+
+| Campo | Valor |
+|-------|--------|
+| E-mail | `ana.souza@pharmastock.local` |
+| Senha | `hash_demo_ana` |
+
+(Também existem Carlos e Mariana — ver `database/inserts/inserts.txt`.)
+
+MVP **sem JWT**: após login, guarde na **sessão** pelo menos:
+
+- `funcionarioId`  
+- `nome`  
+- `cargo` (opcional)
+
+Nas telas de entrada/venda, use o `funcionarioId` da sessão (não peça de novo no formulário, ou use hidden field).
+
+---
+
+## 6. Passo a passo das telas
+
+### Passo A — Layout e menu
+
+1. Ajuste `Views/Shared/_Layout.cshtml`.  
+2. Menu sugerido: **Home · Fornecedores · Produtos · Entradas · Vendas · Sair**.  
+3. Bootstrap (já costuma vir no template MVC) + navbar responsiva (hambúrguer no celular).
+
+### Passo B — Login (`AccountController` ou `AuthController`)
+
+| Action | O que faz |
+|--------|-----------|
+| GET `/Account/Login` | Mostra o form (e-mail/CPF + senha) |
+| POST `/Account/Login` | Chama `_auth.LoginAsync(...)`; se ok → grava sessão → redirect Home; se erro → mensagem |
+| POST `/Account/Logout` | Limpa sessão |
+
+Proteção simples: nas actions sensíveis, se não houver `funcionarioId` na sessão → redirect para Login.
+
+### Passo C — Fornecedores
+
+| Tela | Action | Negócio |
+|------|--------|---------|
+| Lista | GET Index | `ListarFornecedoresAsync` |
+| Criar | GET Create + POST Create | `CriarFornecedorAsync(nome, cnpj, telefone)` |
+
+Campos: nome da empresa, CNPJ, telefone (opcional).
+
+### Passo D — Produtos
+
+| Tela | Action | Negócio |
+|------|--------|---------|
+| Lista | Index | `ListarProdutosAsync` |
+| Detalhe | Details(id) | `ObterProdutoAsync` |
+| Criar | Create | `CriarProdutoAsync` com `Produto` (`Codigo`, `Nome`, `CodBarra`, `IdCategoria`, `IdFornecedor`) |
+
+`codigo` deve ser **único** e diferente dos seeds (1001–1005).  
+`codBarra` é texto (string), não número.
+
+### Passo E — Entrada de estoque
+
+Formulário (um ou mais itens):
+
+| Campo UI | Vai para |
+|----------|----------|
+| (sessão) funcionário | `idFuncionario` |
+| Produto (select) | `IdProduto` |
+| Número do lote | `NumeroLote` |
+| Validade | `Validade` |
+| Quantidade | `Quantidade` |
+| Preço unitário | `PrecoUnitario` |
+
+Chamada:
+
+```csharp
+var itens = new List<EntradaItemPedido> { /* ... */ };
+var idEntrada = await _entrada.RegistrarAsync(funcionarioId, itens);
+```
+
+**Não** crie lote em tela separada — o lote nasce na entrada (C4).
+
+Depois da entrada, a quantidade do lote sobe (trigger no banco). Confira listando lotes do produto.
+
+### Passo F — Venda
 
 Formulário:
 
-- Funcionário (da sessão)  
-- Itens: produto, **número do lote**, validade, quantidade, **preço unitário** (campo alinhado ao banco: `preco_unitario`)  
+| Campo UI | Vai para |
+|----------|----------|
+| (sessão) funcionário | `idFuncionario` |
+| Produto | `IdProduto` |
+| Quantidade | `Quantidade` |
+| Preço unitário | `PrecoUnitario` |
 
-Controller monta DTO/comando e chama Negócio. Sucesso → redirect para detalhes da entrada. Erro → TempData/ModelState.
+**Sem campo de lote.** O Negócio faz FEFO (pode usar mais de um lote).
 
-Logins de demo (após seed): ver `database/inserts/inserts.txt` (ex.: `ana.souza@pharmastock.local` / hash demo — Anderson define como validar senha no MVP).
+```csharp
+var itens = new List<VendaItemPedido> { /* ... */ };
+var idVenda = await _venda.RegistrarAsync(funcionarioId, itens);
+```
 
-### Passo 5 — Venda
+Se estoque insuficiente → `DominioException` → mostre a mensagem ao usuário (não deixe a tela “quebrar”).
 
-Formulário:
+### Passo G — Consultas extras (recomendado)
 
-- Itens: produto, quantidade, preço unitário (MVP)  
-- **Sem** campo de lote na UI  
-
-Negócio escolhe o lote; se estoque insuficiente, mostrar mensagem clara.
-
-### Passo 6 — Responsivo (Etapa 5 do manual)
-
-- Menu colapsável no mobile  
-- Tabelas com scroll horizontal ou cards em telas estreitas  
-- Testar em 375px e desktop  
-- Capturas para o ABNT / Geovanna  
-
-### Passo 7 — Polimento
-
-- Mensagens de sucesso/erro  
-- Empty states (“nenhum produto”)  
-- Links entre listagem ↔ detalhe  
+- Lotes por produto: `ListarLotesPorProdutoAsync(produtoId)`  
+- Histórico de vendas: `ListarAsync()` no `VendaNegocio`  
 
 ---
 
-## 6. Critérios de aceite (para a Geovanna validar)
+## 7. ViewModels (recomendado)
 
-- Login com funcionário do seed funciona  
-- Dá para cadastrar fornecedor e produto pela UI  
-- Entrada aumenta quantidade do lote (conferir no banco ou tela de lotes)  
-- Venda baixa estoque sem o usuário escolher lote  
-- Layout usável no celular  
-- Nenhum SQL/ADO no projeto Web  
+Não passe entidade crua direto para a View se ficar confuso. Crie ViewModels em `Models/` ou use DTOs de `PharmaStock.Modelos.Dtos`.
 
----
+Exemplo mental: `LoginViewModel`, `FornecedorFormViewModel`, `EntradaFormViewModel` (com lista de itens).
 
-## 7. Fora do seu escopo / depois
-
-- Flutter, SPs, triggers  
-- JWT, desconto, ML, LIBRAS  
-- Telas só de alerta (prioridade do mobile A7) — opcional espelhar na Web se der tempo  
+Validação: Data Annotations + `ModelState.IsValid`.
 
 ---
 
-## 8. Contatos / dependências
+## 8. Responsivo (Etapa 5 do manual)
 
-| Precisa de | Quem |
-|------------|------|
-| Métodos de Negócio estáveis | Anderson |
-| Schema + seed | Geovanni |
-| Prioridade das telas / aceite | Geovanna |
-| Protótipo visual | UX (se definido) |
+- Menu que colapsa no celular  
+- Tabelas com scroll horizontal **ou** cards em telas estreitas  
+- Testar em ~375px de largura e no desktop  
+- Guardar capturas para o ABNT / Geovanna  
 
-Dúvida de regra (“posso mostrar o lote na venda?”) → **não** na UI de venda; alinhar com Anderson.
+---
+
+## 9. Critérios de aceite
+
+- [ ] Login com Ana (seed) funciona  
+- [ ] Cadastra fornecedor e produto pela UI  
+- [ ] Entrada aumenta estoque do lote  
+- [ ] Venda baixa estoque **sem** o usuário escolher lote  
+- [ ] Mensagem clara se estoque insuficiente  
+- [ ] Layout usável no celular  
+- [ ] Nenhum SQL/ADO/Dapper no controller ou View  
+
+---
+
+## 10. Fora do escopo (não fazer agora)
+
+- Flutter, alterar SPs/triggers  
+- JWT, Identity, BCrypt  
+- Desconto, push, ML  
+- Telas de alerta A7 (prioridade do mobile; na Web só se sobrar tempo)
+
+---
+
+## 11. Ordem sugerida de commits / PRs
+
+1. Layout + Login + sessão  
+2. Fornecedores + Produtos  
+3. Entradas  
+4. Vendas + listagens  
+5. Ajustes responsivos  
+
+Branch sugerida: `feature/web-mvc-vinicius` a partir de `main` (depois do merge da API).
+
+---
+
+## 12. Dependências / quem ajuda
+
+| Precisa | Quem |
+|---------|------|
+| Métodos de Negócio / bug no FEFO | Anderson |
+| Banco / seed / scripts | Geovanni |
+| Prioridade de telas / aceite | Geovanna |
+| Visual / protótipos | Daniel — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
+
+Dúvida “posso deixar o usuário escolher o lote na venda?” → **Não** no MVP.

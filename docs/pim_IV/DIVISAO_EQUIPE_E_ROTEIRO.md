@@ -19,7 +19,7 @@ Guias operacionais por pessoa: ver [README.md](./README.md) (pasta `docs/pim_IV`
 | 4 | **Mobile** | Roberto | Etapa 9 — Flutter: **lotes a vencer + estoque baixo** | `mobile/` |
 | 5 | **Engenharia de Software Ágil** | Geovanna | Etapa 1 (apoio) + Etapa 2 | backlog, board, `docs/pim_IV/` (planejamento) |
 | 6 | **Documentação acadêmica** | _a definir_ | Etapa 10 + montagem ABNT | `docs/pim_IV/` (documento final) |
-| 7 | **UX / UI** | _a definir_ | Etapa 6 | `uiux/` |
+| 7 | **UX / UI** | Daniel | Etapa 6 | `uiux/` · [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
 
 ### Fora de papel dedicado
 
@@ -96,9 +96,9 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
 | 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
-| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo etapa 1 ✅) |
+| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API ✅; Web MVC ❌) |
 | 5 — Web responsivo | Vinicius | ❌ |
-| 6 — UX/UI | _a definir_ | ⚠️ |
+| 6 — UX/UI | Daniel | ⚠️ |
 | 7 — ML / dados (curta) | Documentação | ❌ |
 | 8 — Comunicação / LIBRAS (curta) | Documentação | ❌ |
 | 9 — Mobile Flutter | Roberto | ❌ |
@@ -138,7 +138,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | Backlog priorizado | ⚠️ (MVP §3 + prioridade Must/Should/Could; falta board) |
 | Iterações/sprints (mín. 2–3) | ❌ |
 | Critérios de aceite (alta prioridade) | ⚠️ (na tabela RF; falta por sprint) |
-| Board atualizado (Trello) | ❌ |
+| Board Trello ([pim-iv](https://trello.com/b/9ifnCGAL/pim-iv)) | ⚠️ (quadro + cards; falta sprints/aceite) |
 | Artefatos para o doc (prints, RF/RNF, sprints) | ❌ |
 
 **MVP sugerido (alta prioridade):** login → fornecedor/produto → entrada de lote → venda FIFO → listagens web → feature Flutter.
@@ -167,7 +167,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 **Contrato das SPs:** [`database/README.md`](../../database/README.md).  
 Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atualiza `lote` e totais.
 
-**Obs. manual:** connection string só em `appsettings.json`; procedure via Repositório; `HasTrigger` no EF Core 7+ se aplicável.
+**Obs. manual:** connection string só em `appsettings.json` (chave `Padrao`); procedure via Repositório. `HasTrigger` **não se aplica** (Dapper puro, sem EF).
 
 **Critério de pronto:** schema aplicável; SPs/triggers testáveis; Núcleo mapeia entidades.
 
@@ -175,7 +175,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 4 — Desenvolvimento C# (POO, MVC e Web API)
 
-**Status geral:** ⚠️ (núcleo etapa 1 ✅; Dapper/API/Web ainda ❌)
+**Status geral:** ⚠️ (núcleo+API ✅ 06/11; Web MVC ainda ❌)
 
 #### 4.A — Núcleo (Modelos + Negócio + Repositório) — Anderson
 
@@ -184,31 +184,31 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Classes em `PharmaStock.Modelos` (alinhadas a `tabelas.txt`) | ✅ |
 | `Entrada` / `EntradaItem` / FEFO no Negócio | ✅ |
 | Interfaces do Repositório (`Abstracoes/`) | ✅ |
-| Acesso a dados (Dapper) | ❌ (etapa 2) |
-| Executar stored procedure pelo Repositório | ❌ (etapa 2) |
-| Regras em `PharmaStock.Negocio` (serviços) | ✅ |
-| Encapsulamento / herança / polimorfismo (evidenciar no doc) | ❌ |
-| DI nos `Program.cs` (Web e Api) | ❌ (etapa 2) |
-| Web/Api **não** referenciam Repositório | ❌ (validar na etapa 2) |
+| Acesso a dados (Dapper) | ✅ |
+| Executar stored procedure pelo Repositório | ✅ |
+| Regras em `PharmaStock.Negocio` (`*Negocio`) | ✅ |
+| Encapsulamento / herança / polimorfismo (evidenciar no doc) | ❌ (ABNT) |
+| DI nos `Program.cs` (Web e Api) | ✅ |
+| Controllers só Negócio (Repo só no `Program.cs` para DI) | ✅ |
 | Testes básicos (`PharmaStock.Tests`) | ✅ |
-| Trechos comentados para o doc (repo + negócio) | ❌ |
+| Trechos comentados para o doc (repo + negócio) | ❌ (ABNT) |
 
-**Critério de pronto:** cadastro + 1 fluxo de negócio sem UI (fecha com Dapper na etapa 2).
+**Critério de pronto:** cadastro + fluxo entrada/venda via Negócio+Dapper — **atendido**.
 
 #### 4.B — API — Anderson
 
 | Item | Status |
 |------|--------|
-| Controllers REST | ❌ |
-| DTOs | ❌ |
-| Verbos HTTP / status codes | ❌ |
-| Swagger/OpenAPI | ❌ |
-| Endpoints alinhados ao Mobile | ❌ |
-| Autenticação mínima do MVP | ❌ |
-| Trecho de controller para o doc | ❌ |
-| Lista de rotas para Mobile e Docs | ❌ |
+| Controllers REST | ✅ |
+| DTOs em `Modelos/Dtos` | ✅ |
+| Verbos HTTP / status codes | ✅ |
+| OpenAPI + **Scalar** | ✅ |
+| Endpoints alinhados ao Mobile (A7) | ✅ |
+| Autenticação mínima do MVP | ✅ |
+| Trecho de controller para o doc | ❌ (ABNT) |
+| Lista de rotas para Mobile e Docs | ✅ (contrato §7 + Scalar) |
 
-**Critério de pronto:** Mobile consome ≥ 1 fluxo via API.
+**Critério de pronto:** Mobile consome ≥ 1 fluxo via API — **API pronta**; app Flutter ainda ❌.
 
 #### 4.C — Web (MVC) — Vinicius
 
@@ -251,7 +251,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 6 — UX e UI Design
 
-**Dono:** UX/UI (_a definir_) · **Status:** ⚠️
+**Dono:** Daniel · **Status:** ⚠️ · [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md)
 
 | Item | Status |
 |------|--------|
@@ -295,7 +295,7 @@ Fazer depois que houver seed/dados reais.
 
 ### Etapa 9 — Desenvolvimento Mobile (Flutter)
 
-**Dono:** Roberto · **Depende de:** API estável · **Status:** ❌
+**Dono:** Roberto · **Depende de:** API ✅ (pronta) · **Status:** ❌ (app ainda não criado)
 
 | Item | Status |
 |------|--------|
@@ -363,19 +363,19 @@ Fazer depois que houver seed/dados reais.
 
 | Fase | Quem | O que fazer | Status |
 |------|------|-------------|--------|
-| A | Geovanna | Kickoff, RF/RNF, backlog v1, board | ❌ |
-| A | UX | Personas + fluxos + wireframes | ⚠️ |
-| A | Geovanni + Anderson | Lista de entidades alinhada | ⚠️ |
+| A | Geovanna | Kickoff, RF/RNF, backlog v1, board | ⚠️ (RF/RNF no relatório; falta board/sprints) |
+| A | Daniel (UX) | Personas + fluxos + wireframes | ⚠️ |
+| A | Geovanni + Anderson | Lista de entidades alinhada | ✅ |
 | A | Docs | Esqueleto do documento | ❌ |
 | B | Geovanni | Schema, seed (+ SPs/triggers já ✅) | ⚠️ |
-| B | Anderson | Modelos, Negócio, Repositório, testes | ⚠️ |
+| B | Anderson | Modelos, Negócio, Repositório, testes | ✅ |
 | B | Geovanna | Refinar backlog e aceite | ❌ |
-| B | UX | Protótipos alta fidelidade | ⚠️ |
+| B | Daniel (UX) | Protótipos alta fidelidade | ⚠️ |
 | B | Docs | Caps. negócio / ágil / banco | ❌ |
-| C | Anderson | API + Swagger | ❌ |
+| C | Anderson | API + Scalar | ✅ |
 | C | Vinicius | MVC + responsivo | ❌ |
-| C | Roberto | Flutter + 1 feature | ❌ |
-| C | UX | Ajustes de usabilidade | ❌ |
+| C | Roberto | Flutter + A7 | ❌ |
+| C | Daniel (UX) | Ajustes de usabilidade | ❌ |
 | C | Docs | Capturas, diagramas, trechos | ❌ |
 | D | Todos | Integração ponta a ponta | ❌ |
 | D | Docs | Etapas 7–8, 10, PDF final | ❌ |
@@ -388,12 +388,12 @@ Fazer depois que houver seed/dados reais.
 
 | Papel | Quem | “Pronto” significa | Status |
 |-------|------|--------------------|--------|
-| Ágil | Geovanna | Backlog, sprints e aceite documentados | ❌ |
-| Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ |
-| Núcleo + API | Anderson | Camadas + fluxo + Swagger | ⚠️ |
+| Ágil | Geovanna | Backlog, sprints e aceite documentados | ⚠️ (baseline RF/RNF ✅; board/sprints ❌) |
+| Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ (SP/trigger ✅; schema.sql/DER ❌) |
+| Núcleo + API | Anderson | Camadas + fluxo + Scalar | ✅ |
 | Web | Vinicius | Telas prioritárias responsivas | ❌ |
 | Mobile | Roberto | App Flutter com ≥ 1 feature via API | ❌ |
-| UX | _a definir_ | Personas, fluxos e protótipos usados pelo time | ⚠️ |
+| UX | Daniel | Personas, fluxos e protótipos usados pelo time | ⚠️ |
 | Documentação | _a definir_ | Doc ABNT completo com evidências | ❌ |
 
 ---
@@ -408,8 +408,8 @@ Fazer depois que houver seed/dados reais.
 | Mobile | Roberto | | ✅ |
 | Eng. Software Ágil | Geovanna | | ✅ |
 | Documentação | | | ❌ |
-| UX / UI | | | ❌ |
-| Líder (postagem UNIP) | | | ❌ |
+| UX / UI | Daniel | | ✅ |
+| Líder (postagem UNIP) | Anderson | | ✅ |
 
 ---
 

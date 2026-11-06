@@ -18,9 +18,9 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 
 O PharmaStock do PIM IV não deve começar pela API nem pelas telas. A ordem existe para evitar retrabalho: cada camada só faz sentido quando a anterior já está estável o bastante para o próximo papel consumir.
 
-O ponto de partida é o **Ágil** (Geovanna). Baseline de RF/RNF e gaps do manual estão em [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) (§4–§5). Ainda faltam texto formal do negócio, stakeholders completos, board e 2–3 sprints. O MVP acordado: login, fornecedor/produto, entrada de lote, venda com baixa de estoque (FEFO), listagens na web e Flutter com **lotes a vencer + estoque baixo** (A7).
+O ponto de partida acadêmico continua sendo o **Ágil** (Geovanna). Baseline de RF/RNF e gaps estão em [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) (§4–§5) — **alinhar §5 com ela**. Tecnicamente, núcleo/API já liberam Web/Mobile. MVP: login, fornecedor/produto, entrada, venda FEFO, listagens web, Flutter A7.
 
-Em paralelo — bloqueio técnico principal — o **banco SQL Server** (Geovanni). Já existem `tabelas/tabelas.txt`, `inserts/inserts.txt`, SPs (incl. `prc_ObterOuCadastrarLote`, entrada com `@pPrecoUnitario`) e triggers. Falta unificar em `schema.sql` / `seed.sql`, ordem de deploy testada e **entrada demo** (lotes do insert estão com qtd 0). Ideal: schema → procedures → triggers → seed. PostgreSQL do III só em `legacy/`.
+O **banco SQL Server** (Geovanni) já cobre o mínimo do manual (tabelas + SPs + triggers). Opcionais: unificar `schema.sql`, entrada demo (lotes do insert ficam qtd 0). Detalhe: [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md). PostgreSQL do III só em `legacy/`.
 
 O **núcleo C#** (Anderson) fechou a **Etapa 2** na branch `feature/nucleo-repo-api`: Dapper + SPs + DTOs em Modelos + DI Web/Api + API REST + Scalar; fluxo login → produtos → entrada → venda → alertas validado. Web e Api não acessam banco/Repositório nos controllers (só Negócio). Connection string chave **`Padrao`** (ajuste `Server=` por máquina — ver README).
 
@@ -45,7 +45,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 5 | API | Anderson | ✅ | REST + Scalar + DTOs Modelos (`feature/nucleo-repo-api`) |
 | 6A | Web | Vinicius | ❌ | Template MVC só |
 | 6B | Mobile | Roberto | ❌ | — |
-| 6C | UX | _a definir_ | ⚠️ | Protótipos do III em `uiux/` |
+| 6C | UX | Daniel | ⚠️ | Guia pronto; evoluir `uiux/` (III → IV) |
 | 7 | Integração + ABNT | Docs + grupo | ❌ | — |
 
 ```
@@ -83,7 +83,8 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | RF e RNF (baseline RF01–22 / RNF01–16) | ⚠️ (no relatório; falta board/prosa ABNT) |
 | Backlog priorizado do MVP | ⚠️ (MVP + MoSCoW; falta board) |
 | Critérios de aceite dos itens de alta prioridade | ⚠️ (na tabela RF; falta por sprint) |
-| Board (Trello) + 2–3 sprints propostas | ❌ |
+| Board (Trello) [pim-iv](https://trello.com/b/9ifnCGAL/pim-iv) | ⚠️ (cards criados; falta sprints) |
+| 2–3 sprints propostas | ❌ |
 | Líder UNIP = Anderson | ✅ |
 
 **Critério de saída:** o time sabe o que entra na próxima sprint sem ambiguidade.
@@ -221,12 +222,12 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ### 6C — UX
 
-**Quem:** _a definir_ · **Status do bloco:** ⚠️
+**Quem:** Daniel · **Status do bloco:** ⚠️ · Guia: [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md)
 
 | Item | Status |
 |------|--------|
 | Personas e fluxos | ❌ |
-| Wireframes / protótipos atualizados | ⚠️ |
+| Wireframes / protótipos atualizados | ⚠️ (base III em `uiux/`) |
 | Notas de usabilidade | ❌ |
 
 **Critério de saída:** demo web + mobile na mesma API/banco.

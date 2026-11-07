@@ -4,24 +4,20 @@ AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
     set nocount on;
-
-    declare @vIdVenda int;
-
-    select @vIdVenda = (
-        select id_venda
+    update e
+    set valor_total = COALESCE((
+          select sum(ee.preco_unitario * ee.quantidade)
+            from vendaitem ee
+            where ee.id_venda = e.id_venda
+        ), 0)
+    from venda e
+    where e.id_venda in (
+        select 
+            id_venda
         from deleted
         union
-        select id_venda
-        from inserted
-    );
-
-    update venda
-    set valor_total = (
-        select sum(e.preco_unitario * e.quantidade)
-        from vendaitem e
-        where e.id_venda = @vIdVenda
-    )
-    where id_venda = @vIdVenda;
-
+        select 
+            id_venda
+        from inserted)
 END;
 GO

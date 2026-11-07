@@ -1,94 +1,49 @@
-# database — SQL Server (PIM IV)
+# Banco de dados — PharmaStock PIM IV
 
-Scripts do banco **SQL Server** do PharmaStock.
-
-> PostgreSQL do PIM III permanece só em `legacy/database-postgresql/` (referência histórica).  
-> **Decisão do grupo:** SGBD oficial deste semestre = **SQL Server** (alinhado ao manual).
+Scripts do banco de dados oficial do projeto, desenvolvido em **Microsoft SQL Server**.
 
 ## Estrutura
 
-```
-database/
-├── tabelas/tabelas.txt        ← CREATE TABLE (base; consolidar em schema.sql)
-├── inserts/inserts.txt        ← seed parcial (cadastros + lotes qtd 0)
-├── schema.sql                 ← modelo físico unificado (ainda a completar)
-├── seed.sql                   ← placeholder (usar inserts.txt por enquanto)
-├── procedures.sql / triggers.sql  ← placeholders de índice
-├── procedure/                 ← stored procedures (T-SQL)
-│   ├── prc_ObterOuCadastrarLote.txt
-│   ├── prc_RegistrarEntrada.txt
-│   ├── prc_RegistrarEntradaItem.txt   ← @pPrecoUnitario
-│   ├── prc_RegistrarVenda.txt
-│   ├── prc_RegistrarVendaItem.txt
-│   └── prc_MovimentaItens.txt
-├── trigger/
-│   ├── trg_MovimentaItens.txt
-│   ├── trg_RecalculaEntrada.txt       ← SUM(preco_unitario * quantidade)
-│   └── trg_RecalculaVenda.txt
-└── -- Orientações para a camada Service.pas  ← regras p/ Negócio C#
-```
+- `schema.sql`: criação de todas as tabelas.
+- `seed.sql`: dados demonstrativos iniciais.
+- `procedures.sql`: procedures de lote, entrada, venda e movimentação.
+- `triggers.sql`: triggers de atualização do estoque e dos totais.
+- `tabelas/`, `inserts/`, `procedure/` e `trigger/`: scripts individuais, separados por responsabilidade.
 
-Guia do dono: [`docs/pim_IV/GUIA_BANCO_GEOVANNI.md`](../docs/pim_IV/GUIA_BANCO_GEOVANNI.md).
+Os arquivos consolidados são destinados à instalação inicial. Os arquivos individuais facilitam a manutenção pontual. Ao alterar um script individual, atualize também o arquivo consolidado correspondente para manter ambos sincronizados.
 
-## Status
+## Ordem de execução
 
-| Entrega | Situação |
-|---------|----------|
-| CREATE TABLE em `tabelas/tabelas.txt` | Entregue (`entradaitem.preco_unitario`) |
-| Procedures de entrada/venda/movimentação/lote | Entregues (Geovanni) |
-| Triggers de estoque e totais | Entregues (Geovanni) |
-| Inserts de demo | **Parcial** — `inserts/inserts.txt` (sem estoque ainda) |
-| `schema.sql` unificado | Pendente |
-| `seed.sql` formal | Pendente (espelhar inserts + entrada demo) |
+1. Crie/seleciona o banco `PharmaStock`.
+2. Execute `schema.sql`.
+3. Execute `procedures.sql`.
+4. Execute `triggers.sql`.
+5. Execute `seed.sql`.
 
-## Procedures (contrato para o Repositório C#)
+Execute os scripts no SQL Server Management Studio ou ferramenta compatível com o separador `GO`.
 
-| Procedure | Função | Parâmetros principais |
-|-----------|--------|------------------------|
-| `prc_ObterOuCadastrarLote` | Localiza ou cria lote; devolve `@pIdLote` | produto, número, validade |
-| `prc_RegistrarEntrada` | Abre cabeçalho de entrada | `@pIdFuncionario`, `@pIdEntrada OUTPUT` |
-| `prc_RegistrarEntradaItem` | Item de entrada + mov. tipo `'e'` | entrada, produto, lote, qtd, **`@pPrecoUnitario`** |
-| `prc_RegistrarVenda` | Abre cabeçalho de venda | `@pIdFuncionario`, `@pIdVenda OUTPUT` |
-| `prc_RegistrarVendaItem` | Item de venda + chama movimentação tipo `'s'` | venda, produto, lote, qtd, preço |
-| `prc_MovimentaItens` | Insere em `movimentacao` | funcionário, produto, lote, preço, qtd, tipo, FKs opcionais |
+## Quantidades
 
-Fluxo típico:
+As quantidades de `EntradaItem`, `VendaItem`, `Movimentacao` e `Lote` utilizam `DECIMAL(15,2)`, permitindo registrar quantidades fracionárias. Os parâmetros correspondentes das procedures também utilizam `DECIMAL(15,2)`.
 
-1. `prc_RegistrarEntrada` / `prc_RegistrarVenda` → obtém o id  
-2. Para cada item → `prc_RegistrarEntradaItem` / `prc_RegistrarVendaItem`  
-3. Essas procedures chamam `prc_MovimentaItens`  
-4. Triggers atualizam `lote.quantidade` e `valor_total` do cabeçalho  
+## Procedures
+
+- `prc_ObterOuCadastrarLote`: localiza um lote existente ou cadastra um novo e devolve seu identificador.
+- `prc_MovimentaItens`: registra uma movimentação de entrada (`e`) ou saída (`s`).
+- `prc_RegistrarEntrada`: cria o cabeçalho da entrada.
+- `prc_RegistrarEntradaItem`: registra o item da entrada e gera a movimentação de estoque.
+- `prc_RegistrarVenda`: cria o cabeçalho da venda.
+- `prc_RegistrarVendaItem`: registra o item da venda e gera a movimentação de estoque.
 
 ## Triggers
 
-| Trigger | Tabela | Efeito |
-|---------|--------|--------|
-| `trg_MovimentaItens` | `Movimentacao` (AFTER INSERT/DELETE) | Soma/subtrai quantidade no `lote` (`e` = entrada, `s` = saída) |
-| `trg_RecalculaEntrada` | `EntradaItem` (AFTER INSERT/UPDATE/DELETE) | Recalcula `entrada.valor_total` com `preco_unitario` (+ `COALESCE` 0) |
-| `trg_RecalculaVenda` | `VendaItem` (AFTER INSERT/UPDATE/DELETE) | Recalcula `venda.valor_total` |
+- `trg_MovimentaItens`: atualiza a quantidade do lote após inserção ou exclusão de movimentações.
+- `trg_RecalculaEntrada`: recalcula o valor total da entrada após inserção, atualização ou exclusão de itens.
+- `trg_RecalculaVenda`: recalcula o valor total da venda após inserção, atualização ou exclusão de itens.
 
-## Tabelas inferidas pelos scripts (schema ainda não versionado)
+## Observações
 
-Além do domínio do III, os scripts assumem:
-
-- `entrada` / `entradaitem`
-- `venda` / `vendaitem`
-- `movimentacao` (com `id_entrada_item`, `id_venda_item`)
-- `lote` (campo `quantidade` atualizado pela trigger)
-
-## Regras do manual
-
-- Connection string em `appsettings.json` (Web e Api), nunca no código-fonte
-- Chave oficial: **`Padrao`**. O valor de `Server=` muda por máquina (ex. `localhost\SQLEXPRESS`, `(localdb)\mssqllocaldb`)
-- Procedure executada pela camada `PharmaStock.Repositorio` (Dapper; sem EF/`HasTrigger`)
-- Consultas parametrizadas (evitar SQL Injection)
-
-### Connection string (Dev)
-
-```json
-"ConnectionStrings": {
-  "Padrao": "Server=localhost\\SQLEXPRESS;Database=PharmaStock;Trusted_Connection=True;TrustServerCertificate=True"
-}
-```
-
-Troque só o `Server=` se usar LocalDB ou outro host. Banco: criar `PharmaStock` e rodar `tabelas` → `procedure` → `trigger` → `inserts` (nessa ordem).
+- Os lotes inseridos pelo `seed.sql` começam com quantidade zero. O estoque é alterado por movimentações.
+- As triggers de recálculo consideram todos os IDs de entrada/venda afetados pelo comando, sem depender de uma variável escalar única.
+- A trigger `trg_MovimentaItens` foi mantida conforme a implementação atual do projeto. Antes de utilizar inserções/exclusões em lote que afetem várias movimentações do mesmo lote em um único comando, recomenda-se ampliar e testar sua lógica para agregação multi-linha.
+- As regras de negócio, como validação de estoque disponível, devem permanecer na camada de serviço da aplicação, conforme a divisão de responsabilidades adotada pelo projeto.

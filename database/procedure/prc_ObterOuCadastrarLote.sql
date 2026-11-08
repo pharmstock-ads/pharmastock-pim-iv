@@ -1,0 +1,25 @@
+CREATE OR ALTER PROCEDURE dbo.prc_ObterOuCadastrarLote
+    @pIdProduto INT,
+    @pNumeroLote VARCHAR(50),
+    @pValidade DATE,
+    @pIdLote INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SET @pIdLote = NULL;
+
+    SELECT @pIdLote = id
+    FROM dbo.Lote
+    WHERE id_produto = @pIdProduto
+      AND numero_lote = @pNumeroLote;
+
+    IF @pIdLote IS NULL
+    BEGIN
+        INSERT INTO dbo.Lote (id_produto, numero_lote, validade, quantidade)
+        VALUES (@pIdProduto, @pNumeroLote, @pValidade, 0);
+
+        SET @pIdLote = CONVERT(INT, SCOPE_IDENTITY());
+    END
+END;
+GO

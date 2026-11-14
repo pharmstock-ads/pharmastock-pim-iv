@@ -82,7 +82,7 @@ pharmastock-pim-iv/
 | Banco — procedures/triggers/inserts | Entregues em `database/` |
 | Banco — `schema.sql` unificado | Pendente (Geovanni; usar `tabelas/tabelas.txt`) |
 | Web MVC | Vinicius (DI já registrada) |
-| Mobile | Roberto — app A7 em `mobile/` (ver `mobile/README.md`); falta teste com a Api + capturas |
+| Mobile | PR [#13](https://github.com/pharmstock-ads/pharmastock-pim-iv/pull/13) — código A7 em `mobile/`; **foco atual:** ensaio na Api + capturas |
 | Docs de equipe | `docs/pim_IV/` |
 
 ---
@@ -262,7 +262,7 @@ Só referência de domínio — a entrega do IV usa **SQL Server** em `database/
 
 - Completar `database/schema.sql` / `seed.sql` formal (Geovanni)  
 - Web MVC de ponta a ponta (Vinicius)  
-- App Flutter: teste ponta a ponta + capturas (Roberto; depende de estoque demo)  
+- **Foco 14/11:** ensaio do app Flutter na Api + capturas (PR #13; entrada demo no Scalar). Web, `schema.sql` e Ágil ficam de onde pararam — `docs/pim_IV/ORDEM_DESENVOLVIMENTO.md`, seção “Parada em 14/11/2026”
 - Grupo na plataforma UNIP: limite de **até 6** integrantes  
 
 ---

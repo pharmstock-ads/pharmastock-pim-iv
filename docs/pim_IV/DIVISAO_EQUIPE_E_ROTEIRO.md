@@ -101,7 +101,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 6 — UX/UI | Daniel | ⚠️ |
 | 7 — ML / dados (curta) | Documentação | ❌ |
 | 8 — Comunicação / LIBRAS (curta) | Documentação | ❌ |
-| 9 — Mobile Flutter | Roberto | ⚠️ |
+| 9 — Mobile Flutter | Roberto | ⚠️ (PR #13; falta ensaio na Api + capturas — foco 14/11) |
 | 10 — Integração final | Documentação + grupo | ❌ |
 
 ---
@@ -295,7 +295,7 @@ Fazer depois que houver seed/dados reais.
 
 ### Etapa 9 — Desenvolvimento Mobile (Flutter)
 
-**Dono:** Roberto · **Depende de:** API ✅ (pronta) · **Status:** ⚠️ (código pronto na branch `feature/mobile-a7-roberto`; falta teste ponta a ponta + capturas)
+**Dono:** Roberto · **Depende de:** API ✅ (pronta) · **Status:** ⚠️ (código no PR [#13](https://github.com/pharmstock-ads/pharmastock-pim-iv/pull/13); checklist de `mobile/README.md` honesto; falta ensaio ponta a ponta + capturas). Foco do grupo em 14/11. Onde os outros pararam: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md), seção “Parada em 14/11/2026”.
 
 | Item | Status |
 |------|--------|
@@ -374,7 +374,7 @@ Fazer depois que houver seed/dados reais.
 | B | Docs | Caps. negócio / ágil / banco | ❌ |
 | C | Anderson | API + Scalar | ✅ |
 | C | Vinicius | MVC + responsivo | ❌ |
-| C | Roberto | Flutter + A7 | ⚠️ (código pronto; falta teste + capturas) |
+| C | Roberto | Flutter + A7 | ⚠️ (PR #13; foco 14/11 = ensaio na Api + capturas) |
 | C | Daniel (UX) | Ajustes de usabilidade | ❌ |
 | C | Docs | Capturas, diagramas, trechos | ❌ |
 | D | Todos | Integração ponta a ponta | ❌ |
@@ -392,7 +392,7 @@ Fazer depois que houver seed/dados reais.
 | Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ (SP/trigger ✅; schema.sql/DER ❌) |
 | Núcleo + API | Anderson | Camadas + fluxo + Scalar | ✅ |
 | Web | Vinicius | Telas prioritárias responsivas | ❌ |
-| Mobile | Roberto | App Flutter com ≥ 1 feature via API | ⚠️ (código pronto; falta demo com a Api) |
+| Mobile | Roberto | App Flutter com ≥ 1 feature via API | ⚠️ (PR #13; código pronto; falta demo com a Api) |
 | UX | Daniel | Personas, fluxos e protótipos usados pelo time | ⚠️ |
 | Documentação | _a definir_ | Doc ABNT completo com evidências | ❌ |
 

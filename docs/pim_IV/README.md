@@ -1,5 +1,7 @@
 ﻿# docs/pim_IV — documentação deste semestre
 
+**Parada 14/11/2026:** foco do grupo = ensaio do Flutter na Api e capturas (PR #13). Onde cada papel parou está em [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md), seção “Parada em 14/11/2026”.
+
 ## Guias por papel (começar por aqui)
 
 | Arquivo | Para quem |

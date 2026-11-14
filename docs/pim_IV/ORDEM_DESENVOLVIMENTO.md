@@ -8,7 +8,21 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 | ⚠️ | Parcial / em andamento / bloqueado por dependência |
 | ❌ | Não feito |
 
-**Atualizado em:** 05/11/2026 (Etapa 1 núcleo: Modelos + Negócio FEFO na branch `feature/nucleo-modelos-negocio`)
+**Atualizado em:** 14/11/2026 (parada do grupo; foco atual = corte mobile de 14/11)
+
+## Parada em 14/11/2026 — onde cada um ficou
+
+O grupo **pausa** o paralelo Web/Ágil/banco e fica só no corte mobile: app A7 já está no PR [#13](https://github.com/pharmstock-ads/pharmastock-pim-iv/pull/13); falta o ensaio na Api (perfil `http`) e as capturas. Entrada de demo para a lista com dado sai no Scalar (`POST /api/entradas`), não num script novo.
+
+| Quem | Onde parou | Só depois deste corte |
+|------|------------|------------------------|
+| Anderson | Núcleo + API ✅ (Dapper, FEFO, Scalar) | Não reabrir regra de negócio por causa do Flutter |
+| Roberto | Código A7 na `feature/mobile-a7-roberto` / PR #13. Checklist de `mobile/README.md` separa código pronto da prova na Api | Ensaio + capturas são o passo atual |
+| Vinicius | Web MVC ❌ (template). Corte 14/11 dele (login + uma tela) não começou | Retomar a Web |
+| Geovanni | SPs/triggers ✅. `schema.sql` e estoque demo no script ⚠️ | Unificar schema; a demo de hoje não depende disso |
+| Geovanna | RF/RNF no relatório ⚠️. Falta negócio, sprints e aceite no board | §5 do relatório ágil |
+| Daniel | Guia ✅. Personas, fluxos e protótipos do IV abertos | `uiux/` |
+| ABNT | Rascunhos fora do repo. Figuras mobile ❌ | Colar prints depois do ensaio |
 
 **Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [guias](./README.md)
 
@@ -44,7 +58,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 4 | Repositório + Negócio | Anderson | ✅ | Dapper + SPs + `*Negocio` + FEFO |
 | 5 | API | Anderson | ✅ | REST + Scalar + DTOs Modelos (`feature/nucleo-repo-api`) |
 | 6A | Web | Vinicius | ❌ | Template MVC só |
-| 6B | Mobile | Roberto | ⚠️ | App A7 (`feature/mobile-a7-roberto`); falta teste com a Api + capturas |
+| 6B | Mobile | Roberto | ⚠️ | PR #13; código A7 no repo. **Foco agora:** ensaio na Api + capturas |
 | 6C | UX | Daniel | ⚠️ | Guia pronto; evoluir `uiux/` (III → IV) |
 | 7 | Integração + ABNT | Docs + grupo | ❌ | — |
 
@@ -211,7 +225,9 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ### 6B — Mobile
 
-**Quem:** Roberto · **Status do bloco:** ⚠️ · Guia: [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md)
+**Quem:** Roberto · **Status do bloco:** ⚠️ · PR [#13](https://github.com/pharmstock-ads/pharmastock-pim-iv/pull/13) · Guia: [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md)
+
+Código de login, lotes a vencer, estoque baixo, vazio e erro de rede está na branch. A prova contra a Api real e as capturas continuam abertas (`mobile/README.md`). Gerar `android/` / `windows/` na máquina com `mobile/configurar.ps1` — essas pastas não entram no git.
 
 | Item | Status |
 |------|--------|
@@ -258,4 +274,4 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ---
 
-*Próximo foco: Vinicius (Web) + Roberto (Flutter) · Geovanni **2A** `schema.sql` + estoque demo ⚠️ · Ágil gaps §5 (board/sprints) ⚠️ · Núcleo C#/API ✅ etapa 2*
+*Parado em 14/11/2026. Foco agora: ensaio do Flutter na Api + capturas (PR #13). Em seguida, de onde cada um parou: Vinicius (Web) · Geovanni 2A `schema.sql` · Geovanna §5 · Daniel `uiux/` · Núcleo C#/API ✅.*

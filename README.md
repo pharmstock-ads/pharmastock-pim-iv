@@ -82,7 +82,7 @@ pharmastock-pim-iv/
 | Banco — procedures/triggers/inserts | Entregues em `database/` |
 | Banco — `schema.sql` unificado | Pendente (Geovanni; usar `tabelas/tabelas.txt`) |
 | Web MVC | Vinicius (DI já registrada) |
-| Mobile | Roberto |
+| Mobile | Roberto — app A7 em `mobile/` (ver `mobile/README.md`); falta teste com a Api + capturas |
 | Docs de equipe | `docs/pim_IV/` |
 
 ---
@@ -262,7 +262,7 @@ Só referência de domínio — a entrega do IV usa **SQL Server** em `database/
 
 - Completar `database/schema.sql` / `seed.sql` formal (Geovanni)  
 - Web MVC de ponta a ponta (Vinicius)  
-- App Flutter (Roberto)  
+- App Flutter: teste ponta a ponta + capturas (Roberto; depende de estoque demo)  
 - Grupo na plataforma UNIP: limite de **até 6** integrantes  
 
 ---

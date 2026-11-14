@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../config/api_config.dart';
 import '../services/servicos.dart';
 import '../util/formatos.dart';
+import '../util/layout.dart';
 import '../widgets/lista_lotes.dart';
 
 class EstoqueBaixoScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _EstoqueBaixoScreenState extends State<EstoqueBaixoScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            padding: paddingResponsivo(context).copyWith(bottom: 0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SegmentedButton<int>(
@@ -53,8 +54,8 @@ class _EstoqueBaixoScreenState extends State<EstoqueBaixoScreen> {
                     ? 'zerado'
                     : '${formatarQuantidade(lote.quantidade)} un.',
                 cor: lote.quantidade <= 0
-                    ? Colors.red.shade700
-                    : Colors.orange.shade800,
+                    ? Colors.red.shade800
+                    : Colors.deepOrange.shade800,
               ),
             ),
           ),

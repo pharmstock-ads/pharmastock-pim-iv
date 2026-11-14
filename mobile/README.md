@@ -17,6 +17,10 @@ O app só fala com a Api via HTTP/JSON — nenhum acesso a banco no código Dart
 
 Todas as listas tratam **loading**, **erro de rede** (com "Tentar novamente"), **lista vazia** e **pull-to-refresh**.
 
+**Diferentes dispositivos:** no celular os cards ficam empilhados; em tablet/desktop (≥ 600 px) ficam lado a lado e o conteúdo é centralizado (máx. 720 px) — ver `lib/util/layout.dart`.
+
+**Acessibilidade:** rótulos para leitor de tela (TalkBack / Narrador) nos cards, contagens, itens das listas e indicadores de carregamento; cores dos selos com contraste reforçado; o texto respeita o tamanho de fonte do sistema.
+
 ## Estrutura
 
 ```

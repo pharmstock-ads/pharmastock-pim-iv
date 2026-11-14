@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../models/lote_alerta.dart';
 import '../services/produto_service.dart';
 import '../util/formatos.dart';
+import '../util/layout.dart';
 
 class ListaLotes extends StatefulWidget {
   const ListaLotes({
@@ -62,7 +63,9 @@ class _ListaLotesState extends State<ListaLotes> {
         future: _futuro,
         builder: (context, snap) {
           if (snap.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(semanticsLabel: 'Carregando lotes'),
+            );
           }
           if (snap.hasError) {
             return _Mensagem(
@@ -83,7 +86,7 @@ class _ListaLotesState extends State<ListaLotes> {
           }
           return ListView.separated(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(12),
+            padding: paddingResponsivo(context),
             itemCount: dados.lotes.length,
             separatorBuilder: (_, __) => const SizedBox(height: 8),
             itemBuilder: (context, i) {
@@ -91,12 +94,18 @@ class _ListaLotesState extends State<ListaLotes> {
               final nome = dados.nomes[lote.idProduto] ?? 'Produto #${lote.idProduto}';
               return Card(
                 child: ListTile(
-                  leading: const CircleAvatar(child: Icon(Icons.medication)),
+                  leading: const CircleAvatar(
+                    child: Icon(Icons.medication),
+                  ),
                   title: Text(nome),
                   subtitle: Text(
                     'Lote ${lote.numeroLote}\n'
                     'Validade ${formatarData(lote.validade)} · '
                     'Qtd ${formatarQuantidade(lote.quantidade)}',
+                    // leitor de tela lê sem abreviações nem símbolos
+                    semanticsLabel: 'Lote ${lote.numeroLote}, '
+                        'validade ${formatarData(lote.validade)}, '
+                        'quantidade ${formatarQuantidade(lote.quantidade)}',
                   ),
                   isThreeLine: true,
                   trailing: widget.destaque(lote),
@@ -126,7 +135,9 @@ class _Mensagem extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       children: [
         const SizedBox(height: 48),
-        Icon(icone, size: 64, color: tema.colorScheme.outline),
+        ExcludeSemantics(
+          child: Icon(icone, size: 64, color: tema.colorScheme.outline),
+        ),
         const SizedBox(height: 16),
         Text(texto, textAlign: TextAlign.center, style: tema.textTheme.bodyLarge),
         if (acao != null) ...[

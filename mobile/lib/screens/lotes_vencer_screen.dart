@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../config/api_config.dart';
 import '../services/servicos.dart';
 import '../util/formatos.dart';
+import '../util/layout.dart';
 import '../widgets/lista_lotes.dart';
 
 class LotesVencerScreen extends StatefulWidget {
@@ -19,10 +20,11 @@ class _LotesVencerScreenState extends State<LotesVencerScreen> {
   static const _opcoes = [7, 15, 30, 60, 90];
   int _dias = ApiConfig.diasPadrao;
 
+  // Tons escuros para manter contraste legível sobre o fundo claro do selo.
   Color _corPrazo(int dias) {
-    if (dias <= 7) return Colors.red.shade700;
-    if (dias <= 15) return Colors.orange.shade800;
-    return Colors.amber.shade800;
+    if (dias <= 7) return Colors.red.shade800;
+    if (dias <= 15) return Colors.deepOrange.shade800;
+    return Colors.brown.shade600;
   }
 
   @override
@@ -32,7 +34,7 @@ class _LotesVencerScreenState extends State<LotesVencerScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            padding: paddingResponsivo(context).copyWith(bottom: 0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SegmentedButton<int>(

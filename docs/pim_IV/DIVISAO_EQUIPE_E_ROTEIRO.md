@@ -101,7 +101,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 6 — UX/UI | Daniel | ⚠️ |
 | 7 — ML / dados (curta) | Documentação | ❌ |
 | 8 — Comunicação / LIBRAS (curta) | Documentação | ❌ |
-| 9 — Mobile Flutter | Roberto | ❌ |
+| 9 — Mobile Flutter | Roberto | ⚠️ |
 | 10 — Integração final | Documentação + grupo | ❌ |
 
 ---
@@ -208,7 +208,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Trecho de controller para o doc | ❌ (ABNT) |
 | Lista de rotas para Mobile e Docs | ✅ (contrato §7 + Scalar) |
 
-**Critério de pronto:** Mobile consome ≥ 1 fluxo via API — **API pronta**; app Flutter ainda ❌.
+**Critério de pronto:** Mobile consome ≥ 1 fluxo via API — **API pronta**; app Flutter ⚠️ (código pronto, falta demo).
 
 #### 4.C — Web (MVC) — Vinicius
 
@@ -295,17 +295,17 @@ Fazer depois que houver seed/dados reais.
 
 ### Etapa 9 — Desenvolvimento Mobile (Flutter)
 
-**Dono:** Roberto · **Depende de:** API ✅ (pronta) · **Status:** ❌ (app ainda não criado)
+**Dono:** Roberto · **Depende de:** API ✅ (pronta) · **Status:** ⚠️ (código pronto na branch `feature/mobile-a7-roberto`; falta teste ponta a ponta + capturas)
 
 | Item | Status |
 |------|--------|
-| App Flutter em `mobile/` | ❌ |
-| Telas adaptadas a mobile | ❌ |
-| Consumir Web API (REST) | ❌ |
-| ≥ 1 funcionalidade complementar ao web | ❌ |
-| Erros de rede / loading | ❌ |
-| Capturas para Documentação | ❌ |
-| Documentar endpoints usados | ❌ |
+| App Flutter em `mobile/` | ⚠️ (`lib/` + testes; pastas de plataforma via `configurar.ps1`) |
+| Telas adaptadas a mobile | ✅ (celular + tablet/desktop; leitor de tela) |
+| Consumir Web API (REST) | ✅ (login, alertas, produtos) |
+| ≥ 1 funcionalidade complementar ao web | ✅ (A7: lotes a vencer + estoque baixo) |
+| Erros de rede / loading | ✅ |
+| Capturas para Documentação | ❌ (depende de estoque demo no banco) |
+| Documentar endpoints usados | ✅ (`mobile/README.md`) |
 
 **Sugestões de feature:** consulta estoque/validade, alerta de lote, movimentação simples, dashboard resumido.
 
@@ -374,7 +374,7 @@ Fazer depois que houver seed/dados reais.
 | B | Docs | Caps. negócio / ágil / banco | ❌ |
 | C | Anderson | API + Scalar | ✅ |
 | C | Vinicius | MVC + responsivo | ❌ |
-| C | Roberto | Flutter + A7 | ❌ |
+| C | Roberto | Flutter + A7 | ⚠️ (código pronto; falta teste + capturas) |
 | C | Daniel (UX) | Ajustes de usabilidade | ❌ |
 | C | Docs | Capturas, diagramas, trechos | ❌ |
 | D | Todos | Integração ponta a ponta | ❌ |
@@ -392,7 +392,7 @@ Fazer depois que houver seed/dados reais.
 | Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ (SP/trigger ✅; schema.sql/DER ❌) |
 | Núcleo + API | Anderson | Camadas + fluxo + Scalar | ✅ |
 | Web | Vinicius | Telas prioritárias responsivas | ❌ |
-| Mobile | Roberto | App Flutter com ≥ 1 feature via API | ❌ |
+| Mobile | Roberto | App Flutter com ≥ 1 feature via API | ⚠️ (código pronto; falta demo com a Api) |
 | UX | Daniel | Personas, fluxos e protótipos usados pelo time | ⚠️ |
 | Documentação | _a definir_ | Doc ABNT completo com evidências | ❌ |
 

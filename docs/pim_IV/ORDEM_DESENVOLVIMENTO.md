@@ -44,7 +44,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 4 | Repositório + Negócio | Anderson | ✅ | Dapper + SPs + `*Negocio` + FEFO |
 | 5 | API | Anderson | ✅ | REST + Scalar + DTOs Modelos (`feature/nucleo-repo-api`) |
 | 6A | Web | Vinicius | ❌ | Template MVC só |
-| 6B | Mobile | Roberto | ❌ | — |
+| 6B | Mobile | Roberto | ⚠️ | App A7 (`feature/mobile-a7-roberto`); falta teste com a Api + capturas |
 | 6C | UX | Daniel | ⚠️ | Guia pronto; evoluir `uiux/` (III → IV) |
 | 7 | Integração + ABNT | Docs + grupo | ❌ | — |
 
@@ -211,13 +211,13 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ### 6B — Mobile
 
-**Quem:** Roberto · **Status do bloco:** ❌
+**Quem:** Roberto · **Status do bloco:** ⚠️ · Guia: [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md)
 
 | Item | Status |
 |------|--------|
-| App Flutter em `mobile/` | ❌ |
-| Consumir a API | ❌ |
-| A7: lotes a vencer + estoque baixo | ❌ |
+| App Flutter em `mobile/` | ⚠️ (código + testes; gerar plataformas com `configurar.ps1`) |
+| Consumir a API | ✅ (login, alertas, produtos) |
+| A7: lotes a vencer + estoque baixo | ✅ (falta validar com estoque demo) |
 | Capturas para o documento | ❌ |
 
 ### 6C — UX

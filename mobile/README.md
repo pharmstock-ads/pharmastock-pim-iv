@@ -81,9 +81,7 @@ Faça um `POST /api/entradas` no Scalar com validade próxima e quantidade > 0 (
 
 ## Checklist (GUIA_MOBILE_ROBERTO §9)
 
-- [x] Login contra a Api real
-- [x] Tela de lotes a vencer consumindo `GET /api/alertas/lotes-a-vencer`
-- [x] Tela de estoque baixo consumindo `GET /api/alertas/estoque-baixo`
-- [x] Lista vazia e erro de rede tratados (sem crash)
+- [x] Código de login, lotes a vencer, estoque baixo, vazio e erro de rede
 - [x] Nenhum acesso a banco no Dart
+- [ ] Login e listas provados contra a Api real
 - [ ] Capturas de tela para o documento ABNT

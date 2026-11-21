@@ -8,6 +8,9 @@ public class HomeController : Controller
 {
     public IActionResult Index()
     {
+        if (HttpContext.Session.GetInt32("FuncionarioId") is null)
+            return RedirectToAction("Login", "Account");
+
         return View();
     }
 

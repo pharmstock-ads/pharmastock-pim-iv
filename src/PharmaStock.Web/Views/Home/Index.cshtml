@@ -1,8 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+    var logado = Context.Session.GetInt32("FuncionarioId") is not null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="py-4">
+    <h1 class="display-6">PharmaStock</h1>
+    <p class="lead text-muted">Controle de estoque farmacêutico — interface web.</p>
+
+    @if (logado)
+    {
+        <a class="btn btn-primary" asp-controller="Vendas" asp-action="Registrar">Nova venda</a>
+        <a class="btn btn-outline-secondary" asp-controller="Vendas" asp-action="Index">Vendas</a>
+    }
+    else
+    {
+        <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Entrar</a>
+    }
 </div>

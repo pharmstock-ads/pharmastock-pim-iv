@@ -1,0 +1,36 @@
+@model PharmaStock.Web.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Acesso ao sistema";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+        <h1 class="h3 mb-4">Acesso ao sistema</h1>
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-semibold"></label>
+                <input asp-for="Email" class="form-control" autocomplete="username" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Senha" class="form-label fw-semibold"></label>
+                <input asp-for="Senha" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

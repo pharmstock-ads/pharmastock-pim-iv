@@ -15,34 +15,36 @@ No IV: ASP.NET Core MVC + Web API, **SQL Server** (trigger + procedure), app Flu
 | Camada | Tecnologia |
 |--------|------------|
 | Linguagem | C# / .NET 10 |
-| Web | ASP.NET Core MVC (Razor) |
-| API | ASP.NET Core Web API (REST + OpenAPI + **Scalar**) |
+| Web | ASP.NET Core MVC (Razor) — chama **Negócio**, não a Api |
+| API | ASP.NET Core Web API (REST + OpenAPI + **Scalar**) — consumida pelo **Flutter** |
 | Camadas | Modelos → Repositório → Negócio → Web / Api |
 | Persistência | **Dapper** (CRUD + stored procedures) — sem EF Migrations |
 | Banco | **SQL Server** (Express / LocalDB / full) |
-| Mobile | Flutter consumindo a API |
-| Testes | xUnit |
+| Mobile | Flutter consumindo a Api |
+| Testes | xUnit (+ testes Flutter em `mobile/test/`) |
 
 ---
 
 ## Arquitetura (manual)
 
 ```
-Web ──┐
-      ├──► Negocio ──► Repositorio ──► Modelos
-Api ──┘                      │
-                             └──► SQL Server (trigger + stored procedure)
-Flutter ──► Api
+Browser ──► Web (MVC/Razor) ──┐
+                              ├──► Negocio ──► Repositorio ──► Modelos
+Flutter ──► Api (REST) ───────┘                      │
+                                                     └──► SQL Server
+Scalar ───► Api (só para testar rotas)
 ```
 
 Regras importantes:
 
 - Web e Api **não** acessam o banco nem o Repositório diretamente  
 - Controllers só recebem classes de **Negócio** (`*Negocio`)  
-- DTOs ficam em `PharmaStock.Modelos/Dtos/` (Web e Api compartilham)  
+- A Web **não** chama HTTP na Api; os dois hosts compartilham o Negócio  
+- DTOs ficam em `PharmaStock.Modelos/Dtos/`  
 - Connection string só em `appsettings.json`, chave **`Padrao`**  
 - DI idêntica nos dois `Program.cs` (Web e Api)  
-- Procedure chamada pela camada Repositório (Dapper)
+- Procedure chamada pela camada Repositório (Dapper)  
+- Auth MVP: sem JWT; senha demo no seed (ver credenciais abaixo)
 
 ---
 
@@ -55,35 +57,38 @@ pharmastock-pim-iv/
 │   ├── PharmaStock.Modelos      (+ Dtos/)
 │   ├── PharmaStock.Repositorio  (Dapper)
 │   ├── PharmaStock.Negocio      (*Negocio + FEFO)
-│   ├── PharmaStock.Web
+│   ├── PharmaStock.Web          (MVC + sessão)
 │   ├── PharmaStock.Api          (REST + Scalar)
 │   └── PharmaStock.Tests
-├── mobile/                      ← App Flutter
-├── database/                    ← SQL Server (tabelas, procedure/, trigger/, inserts)
+├── mobile/                      ← App Flutter (A7: alertas)
+├── database/                    ← schema.sql, procedures.sql, triggers.sql, seed.sql
 ├── docs/
 │   ├── manual/
-│   ├── pim_IV/
+│   ├── pim_IV/                  ← contrato, guias, ordem de desenvolvimento
 │   └── pim_III/
 ├── uiux/
-└── legacy/                      ← Console, WinForms, HTML e PG do PIM III (só referência)
+└── legacy/                      ← Console, WinForms, HTML e PG do PIM III
 ```
+
+Checklist vivo: [`docs/pim_IV/ORDEM_DESENVOLVIMENTO.md`](docs/pim_IV/ORDEM_DESENVOLVIMENTO.md)
 
 ---
 
-## Status atual
+## Status atual (21/11/2026)
 
 | Área | Situação |
 |------|----------|
-| Estrutura do repo + solution | Pronta |
-| Modelos + DTOs | Alinhados ao schema + `Modelos/Dtos/` |
-| Negócio (FEFO, auth, entrada, venda, alertas) | Pronto (`*Negocio`) |
-| Repositório Dapper + SPs | Pronto |
-| API REST + Scalar | Pronto — fluxo testável em `/scalar` |
-| Banco — procedures/triggers/inserts | Entregues em `database/` |
-| Banco — `schema.sql` unificado | Pendente (Geovanni; usar `tabelas/tabelas.txt`) |
-| Web MVC | Vinicius (DI já registrada) |
-| Mobile | Roberto — app A7 em `mobile/` (ver `mobile/README.md`); falta teste com a Api + capturas |
-| Docs de equipe | `docs/pim_IV/` |
+| Solution + camadas + DI | ✅ |
+| Modelos + DTOs | ✅ |
+| Negócio (FEFO, auth, entrada, venda, alertas) | ✅ |
+| Repositório Dapper + SPs | ✅ |
+| API REST + Scalar | ✅ |
+| Banco `schema` / `procedures` / `triggers` / `seed` | ✅ consolidados em `database/` |
+| Web — login, sessão, venda, entrada | ✅ (hub Home / polish em branches recentes) |
+| Web — fornecedor / produto / listagem completa | ⚠️ pendente |
+| Mobile — código A7 | ✅ `mobile/lib` |
+| Mobile — ensaio Api + capturas ABNT | ⚠️ |
+| Documento ABNT | ⚠️ montagem / prints |
 
 ---
 
@@ -91,82 +96,68 @@ pharmastock-pim-iv/
 
 1. [.NET 10 SDK](https://dotnet.microsoft.com/download) — `dotnet --version`  
 2. **SQL Server** (Express, LocalDB ou full) + [SSMS](https://learn.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms)  
-3. Flutter SDK (só para o app mobile)  
+3. Flutter SDK (só para o app) — ver [`mobile/README.md`](mobile/README.md)  
 4. Windows recomendado para desenvolvimento local  
 
-> **SSMS ≠ banco.** O Management Studio só conecta e executa scripts. Você precisa do **motor** SQL Server instalado.
+> **SSMS ≠ banco.** O Management Studio só conecta e executa scripts. É preciso o **motor** SQL Server instalado.
 
 ---
 
-## Como subir o banco (passo a passo)
+## Como subir o banco
 
-### 1. Instalar / confirmar o SQL Server
+### 1. Conectar no SSMS
 
-No PowerShell:
-
-```powershell
-# Se usou LocalDB:
-sqllocaldb info
-sqllocaldb start MSSQLLocalDB
-
-# Se usou Express, no SSMS o servidor costuma ser:
-# localhost\SQLEXPRESS
-```
-
-### 2. Conectar no SSMS
-
-| Instalação | Server name no SSMS |
-|------------|---------------------|
-| Express (comum) | `localhost\SQLEXPRESS` |
+| Instalação | Server name |
+|------------|-------------|
+| Express | `localhost\SQLEXPRESS` |
 | LocalDB | `(localdb)\MSSQLLocalDB` |
 
 Autenticação: **Windows Authentication**.
 
-### 3. Criar o banco
+```powershell
+sqllocaldb info
+sqllocaldb start MSSQLLocalDB
+```
+
+### 2. Criar o banco
 
 ```sql
 CREATE DATABASE PharmaStock;
 GO
 ```
 
-Selecione o banco `PharmaStock` no SSMS (ou `USE PharmaStock;`).
+### 3. Scripts — ordem oficial
 
-### 4. Rodar os scripts **nesta ordem**
+Pasta: [`database/`](database/) · detalhe: [`database/README.md`](database/README.md)
 
-Pasta: [`database/`](database/)
+| Ordem | Arquivo |
+|------:|---------|
+| 1 | `schema.sql` |
+| 2 | `procedures.sql` |
+| 3 | `triggers.sql` |
+| 4 | `seed.sql` |
 
-| Ordem | Arquivo(s) |
-|-------|------------|
-| 1 | `tabelas/tabelas.txt` |
-| 2 | todos em `procedure/*.txt` |
-| 3 | todos em `trigger/*.txt` |
-| 4 | `inserts/inserts.txt` |
+(Alternativa: scripts individuais em `tabelas/`, `procedure/`, `trigger/`, `inserts/` — manter sincronizados com os consolidados.)
 
-Copie o conteúdo de cada arquivo → New Query no SSMS → Execute (F5).
+O seed deixa lotes com **quantidade 0**. Estoque sobe com **entrada** (Web `/Entradas/Registrar` ou `POST /api/entradas` no Scalar).
 
-Confira: tabelas em **Tables**, `prc_*` em **Programmability → Stored Procedures**, triggers nas tabelas.
+### Credenciais de demonstração
 
-### 5. (Recomendado) Gerar estoque demo
+| Campo | Valor |
+|-------|--------|
+| E-mail | `ana.souza@pharmastock.local` |
+| Senha | `hash_demo_ana` |
 
-O seed deixa lotes com **quantidade 0**. Depois de subir a Api, faça um `POST /api/entradas` no Scalar (ou peça ao Geovanni um script de entrada demo — B2).
-
-Login seed:
-
-- e-mail: `ana.souza@pharmastock.local`  
-- senha: `hash_demo_ana`
+(Outros usuários no seed: `hash_demo_carlos`, `hash_demo_mariana`.)
 
 ---
 
-## Connection string — ajustar por máquina
+## Connection string
 
-A chave no código é sempre **`Padrao`**. O valor de **`Server=` muda em cada PC**.
-
-Arquivos:
+Chave **`Padrao`** em:
 
 - `src/PharmaStock.Api/appsettings.json`  
 - `src/PharmaStock.Web/appsettings.json`  
-
-Exemplo (Express — máquina de referência do núcleo):
 
 ```json
 {
@@ -176,94 +167,108 @@ Exemplo (Express — máquina de referência do núcleo):
 }
 ```
 
-| Seu SQL | Troque só o `Server=` |
-|---------|------------------------|
+| Seu SQL | `Server=` |
+|---------|-----------|
 | Express | `localhost\\SQLEXPRESS` |
 | LocalDB | `(localdb)\\mssqllocaldb` |
-| Outro host | `NOME-DO-PC\\SQLEXPRESS` |
-
-Se no SSMS você usa usuário/senha SQL (`sa`), use `User Id=...;Password=...` em vez de `Trusted_Connection=True`.
-
-O C# só chama `GetConnectionString("Padrao")` — **não** precisa mudar código ao trocar de máquina.
-
-Detalhes: [`database/README.md`](database/README.md) · [`docs/pim_IV/CONTRATO_TECNICO.md`](docs/pim_IV/CONTRATO_TECNICO.md)
 
 ---
 
-## Como rodar a solution
+## Como rodar
 
 ```bash
 git clone https://github.com/pharmstock-ads/pharmastock-pim-iv.git
 cd pharmastock-pim-iv/src
 
-# 1) Ajuste ConnectionStrings:Padrao nos appsettings (Api e Web) — ver seção acima
-# 2) Banco PharmaStock já criado e scripts aplicados
+# 1) Ajuste ConnectionStrings:Padrao (Api e Web)
+# 2) Banco PharmaStock criado + scripts aplicados
 
 dotnet restore PharmaStock.sln
 dotnet build PharmaStock.sln
 dotnet test PharmaStock.Tests
-
-dotnet run --project PharmaStock.Api
-# Documentação interativa: http://localhost:5152/scalar  (perfil http)
-# ou https://localhost:7275/scalar (perfil https)
-
-dotnet run --project PharmaStock.Web
 ```
 
-### Fluxo rápido no Scalar
+### API (Flutter / Scalar)
 
-1. `POST /api/auth/login`  
-2. `GET /api/produtos`  
-3. `POST /api/entradas` (sobe estoque)  
-4. `POST /api/vendas` (FEFO)  
-5. `GET /api/alertas/lotes-a-vencer` e `/api/alertas/estoque-baixo`  
+```bash
+dotnet run --project PharmaStock.Api --launch-profile http
+```
 
-Contrato HTTP: [`docs/pim_IV/CONTRATO_TECNICO.md`](docs/pim_IV/CONTRATO_TECNICO.md) §7.
+- Scalar: **http://localhost:5152/scalar**  
+- Base REST: `http://localhost:5152/api`
+
+Fluxo rápido no Scalar: login → produtos → **entrada** → venda → alertas.
+
+### Web (MVC)
+
+```bash
+dotnet run --project PharmaStock.Web --launch-profile http
+```
+
+- URL: **http://localhost:5238**  
+- Sem sessão → redireciona para login  
+- Após login: hub (entrada / venda)
+
+A Web **não** precisa da Api no ar.
+
+### Mobile (Flutter)
+
+```bash
+cd mobile
+powershell -ExecutionPolicy Bypass -File .\configurar.ps1   # 1ª vez
+flutter run
+# Windows: flutter run -d windows --dart-define=API_BASE_URL=http://localhost:5152/api
+```
+
+Detalhes, emulador e alertas vazios: [`mobile/README.md`](mobile/README.md).  
+Api precisa estar rodando. Chrome Flutter sem CORS na Api → use emulador ou Windows.
 
 ---
 
 ## MVP funcional
 
-1. Login / funcionário (sem JWT no MVP)  
-2. Fornecedor e produto  
-3. Entrada de lote (lote nasce na entrada — sem `POST /api/lotes`)  
-4. Venda com FEFO + baixa de estoque (SPs/triggers)  
-5. Alertas A7 (lotes a vencer / estoque baixo)  
-6. Listagens na Web (Vinicius)  
-7. Feature complementar no Flutter (Roberto)  
+| # | Item | Onde |
+|---|------|------|
+| 1 | Login (sem JWT) | Web + Api + Flutter |
+| 2 | Fornecedor / produto | Api ✅ · Web ⚠️ |
+| 3 | Entrada de lote | Api ✅ · Web ✅ |
+| 4 | Venda FEFO | Api ✅ · Web ✅ |
+| 5 | Alertas A7 | Api + Flutter ✅ |
+| 6 | Listagens Web | Parcial (venda; histórico ainda simples) |
 
-Roteiro: [`docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md`](docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md)  
-Eng. Software Ágil: [`docs/pim_IV/RELATORIO_ENG_SOFTWARE_AGIL.md`](docs/pim_IV/RELATORIO_ENG_SOFTWARE_AGIL.md)
+Contrato HTTP: [`docs/pim_IV/CONTRATO_TECNICO.md`](docs/pim_IV/CONTRATO_TECNICO.md) §7.
 
 ---
 
-## Papéis (resumo)
+## Papéis
 
 | Papel | Quem | Foco |
 |-------|------|------|
-| Núcleo C# + API | Anderson | Modelos, Negócio, Repositório, Api |
-| Banco | Geovanni | Schema, trigger, procedure, seed — **SQL Server** |
+| Núcleo C# + API (+ líder UNIP) | Anderson | Modelos, Negócio, Repositório, Api |
+| Banco | Geovanni | Schema, SP, trigger, seed — SQL Server |
 | Web | Vinicius | MVC + responsivo |
-| Mobile | Roberto | Flutter |
-| Eng. Software Ágil | Geovanna | RF/RNF, backlog, sprints · [Trello](https://trello.com/b/9ifnCGAL/pim-iv) |
-| Documentação | _a definir_ | ABNT / consolidação |
+| Mobile | Roberto | Flutter A7 |
+| Eng. Software Ágil | Geovanna | RF/RNF, backlog · [Trello](https://trello.com/b/9ifnCGAL/pim-iv) |
 | UX/UI | Daniel | Personas, fluxos, protótipos |
+| Documentação | _a definir_ | ABNT |
+
+Guias: [`docs/pim_IV/README.md`](docs/pim_IV/README.md)
 
 ---
 
 ## Legado (PIM III)
 
-Em `legacy/`: console, WinForms, HTML e PostgreSQL antigo.  
-Só referência de domínio — a entrega do IV usa **SQL Server** em `database/`.
+Em `legacy/`: console, WinForms, HTML e PostgreSQL. Só referência — a entrega do IV usa **SQL Server** em `database/`.
 
 ---
 
 ## Pendências conhecidas
 
-- Completar `database/schema.sql` / `seed.sql` formal (Geovanni)  
-- Web MVC de ponta a ponta (Vinicius)  
-- App Flutter: teste ponta a ponta + capturas (Roberto; depende de estoque demo)  
-- Grupo na plataforma UNIP: limite de **até 6** integrantes  
+- Web: cadastro fornecedor/produto; listagem rica de vendas; prints ABNT  
+- Mobile: ensaio ponta a ponta + capturas (estoque via entrada)  
+- Ágil: prosa de negócio / sprints no board  
+- Hash real de senha / JWT — fora do MVP (planos internos do time)  
+- Plataforma UNIP: até **6** integrantes  
 
 ---
 

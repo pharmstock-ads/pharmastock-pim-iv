@@ -2,9 +2,9 @@
 
 **Para:** Roberto  
 **De:** Anderson (Líder · Núcleo/API)  
-**Atualizado:** 06/11/2026  
-**Pasta do app:** `mobile/` (hoje só tem README — o app Flutter ainda precisa ser criado)  
-**Status:** a **API já está pronta** — você pode integrar de verdade (Scalar + endpoints A7)
+**Atualizado:** 21/11/2026  
+**Pasta do app:** `mobile/` (`lib/` + testes; primeiras plataformas com `configurar.ps1`)  
+**Status:** **código A7 pronto** (login, home, lotes a vencer, estoque baixo). Pendência de entrega = ensaio com a Api + **capturas** para o ABNT. API/Scalar disponíveis.
 
 ---
 
@@ -143,7 +143,7 @@ Não use `POST /api/lotes` — **não existe** no MVP (lote nasce na entrada, na
 
 ## 4. Por que a tela de alerta pode vir vazia
 
-O seed (`database/inserts/inserts.txt`) cria lotes com **quantidade 0** e validades longas.
+O seed (`database/seed.sql` / `inserts/`) cria lotes com **quantidade 0** e validades longas.
 
 Para a demo A7 mostrar dados:
 
@@ -173,21 +173,21 @@ A Api precisa estar **rodando** no PC enquanto você testa o app.
 
 ---
 
-## 6. Criar o projeto Flutter (passo a passo)
+## 6. Subir o app Flutter (já existe em `mobile/`)
 
-A pasta `mobile/` ainda não tem o app completo. No PC:
+O código do A7 já está em `mobile/lib/`. Na máquina, gere as pastas de plataforma (não versionadas) e rode:
 
 ```bash
 cd pharmastock-pim-iv/mobile
-flutter create . --project-name pharmastock_mobile
-flutter pub add http
-# opcional: flutter pub add shared_preferences
-# opcional: flutter pub add provider   # ou riverpod, se preferir
+powershell -ExecutionPolicy Bypass -File .\configurar.ps1
+flutter run
+# Windows desktop:
+# flutter run -d windows --dart-define=API_BASE_URL=http://localhost:5152/api
 ```
 
-Garantir que `build/` está no `.gitignore`.
+Detalhes e checklist: `mobile/README.md`.
 
-### Estrutura sugerida de pastas
+### Estrutura atual (`lib/`)
 
 ```
 mobile/lib/
@@ -196,6 +196,8 @@ mobile/lib/
   services/api_client.dart
   services/auth_service.dart
   services/alerta_service.dart
+  services/produto_service.dart
+  services/servicos.dart
   models/login_response.dart
   models/lote_alerta.dart
   models/produto.dart
@@ -203,6 +205,9 @@ mobile/lib/
   screens/home_screen.dart
   screens/lotes_vencer_screen.dart
   screens/estoque_baixo_screen.dart
+  widgets/lista_lotes.dart
+  util/layout.dart
+  util/formatos.dart
 ```
 
 ---
@@ -284,12 +289,10 @@ Exemplo de teste manual no Scalar (mesmos paths do app).
 
 ## 9. Critérios de aceite
 
-- [ ] App abre no emulador ou device  
-- [ ] Login contra a Api real (Ana do seed)  
-- [ ] Tela de lotes a vencer consome `GET /api/alertas/lotes-a-vencer`  
-- [ ] Tela de estoque baixo consome `GET /api/alertas/estoque-baixo`  
-- [ ] Lista vazia tratada com mensagem (não crash)  
-- [ ] Nenhum acesso a banco no código Dart  
+- [x] Código: login, lotes a vencer, estoque baixo, vazio e erro de rede  
+- [x] Nenhum acesso a banco no código Dart  
+- [ ] App aberto no emulador/device contra a Api real (ensaio)  
+- [ ] Capturas para o documento ABNT  
 
 ---
 

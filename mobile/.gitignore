@@ -1,0 +1,29 @@
+# Plataformas geradas por configurar.ps1 / flutter create — não versionar.
+/android/
+/ios/
+/web/
+/windows/
+/linux/
+/macos/
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# IDE
+.idea/
+*.iml
+.metadata
+
+# Misc
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store

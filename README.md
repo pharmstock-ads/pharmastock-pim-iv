@@ -72,23 +72,6 @@ pharmastock-pim-iv/
 
 Checklist vivo: [`docs/pim_IV/ORDEM_DESENVOLVIMENTO.md`](docs/pim_IV/ORDEM_DESENVOLVIMENTO.md)
 
----
-
-## Status atual (21/11/2026)
-
-| Área | Situação |
-|------|----------|
-| Solution + camadas + DI | ✅ |
-| Modelos + DTOs | ✅ |
-| Negócio (FEFO, auth, entrada, venda, alertas) | ✅ |
-| Repositório Dapper + SPs | ✅ |
-| API REST + Scalar | ✅ |
-| Banco `schema` / `procedures` / `triggers` / `seed` | ✅ consolidados em `database/` |
-| Web — login, sessão, venda, entrada | ✅ (hub Home / polish em branches recentes) |
-| Web — fornecedor / produto / listagem completa | ⚠️ pendente |
-| Mobile — código A7 | ✅ `mobile/lib` |
-| Mobile — ensaio Api + capturas ABNT | ⚠️ |
-| Documento ABNT | ⚠️ montagem / prints |
 
 ---
 

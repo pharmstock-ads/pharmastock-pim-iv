@@ -1,19 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Home";
-    var logado = Context.Session.GetInt32("FuncionarioId") is not null;
+    ViewData["Title"] = "Início";
+}
+
+@if (TempData["Sucesso"] is string sucesso)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @sucesso
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
 }
 
 <div class="py-4">
-    <h1 class="display-6">PharmaStock</h1>
-    <p class="lead text-muted">Controle de estoque farmacêutico — interface web.</p>
+    <h1 class="h3 mb-2">Olá, @Context.Session.GetString("FuncionarioNome")</h1>
+    <p class="text-muted mb-4">Escolha uma operação do estoque.</p>
 
-    @if (logado)
-    {
-        <a class="btn btn-primary" asp-controller="Vendas" asp-action="Registrar">Nova venda</a>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-primary" asp-controller="Entradas" asp-action="Registrar">Nova entrada</a>
+        <a class="btn btn-outline-primary" asp-controller="Vendas" asp-action="Registrar">Nova venda</a>
         <a class="btn btn-outline-secondary" asp-controller="Vendas" asp-action="Index">Vendas</a>
-    }
-    else
-    {
-        <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Entrar</a>
-    }
+    </div>
 </div>

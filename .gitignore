@@ -25,13 +25,23 @@ Thumbs.db
 .DS_Store
 
 # Flutter / mobile
-mobile/**/.dart_tool/
-mobile/**/.packages
-mobile/**/.flutter-plugins
-mobile/**/.flutter-plugins-dependencies
-mobile/**/build/
-mobile/**/.pub-cache/
-mobile/**/.pub/
+# Pastas de plataforma saem do configurar.ps1 — não versionar (geradas localmente).
+mobile/android/
+mobile/ios/
+mobile/web/
+mobile/windows/
+mobile/linux/
+mobile/macos/
+mobile/.idea/
+mobile/*.iml
+mobile/.metadata
+mobile/.dart_tool/
+mobile/.packages
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/.pub-cache/
+mobile/.pub/
 mobile/**/ios/Pods/
 mobile/**/android/.gradle/
 mobile/**/android/local.properties

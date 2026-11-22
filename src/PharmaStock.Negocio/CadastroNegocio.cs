@@ -52,6 +52,13 @@ public class CadastroNegocio
         if (string.IsNullOrWhiteSpace(produto.Nome))
             throw new DominioException("Nome do produto é obrigatório.");
 
+        if (await _produtos.ObterPorCodigoAsync(produto.Codigo, ct) is not null)
+            throw new DominioException("Já existe um produto com este código.");
+
+        if (!string.IsNullOrWhiteSpace(produto.CodBarra)
+            && await _produtos.ObterPorCodBarraAsync(produto.CodBarra.Trim(), ct) is not null)
+            throw new DominioException("Já existe um produto com este código de barras.");
+
         return await _produtos.InserirAsync(produto, ct);
     }
 

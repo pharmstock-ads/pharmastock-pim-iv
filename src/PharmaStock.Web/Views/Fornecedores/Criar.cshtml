@@ -1,0 +1,39 @@
+@model PharmaStock.Web.ViewModels.FornecedorFormViewModel
+@{
+    ViewData["Title"] = "Novo fornecedor";
+}
+
+<h1 class="h3 mb-3">Novo fornecedor</h1>
+
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+<form asp-action="Criar" method="post" class="col-12 col-lg-6">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="NomeEmpresa" class="form-label fw-semibold"></label>
+        <input asp-for="NomeEmpresa" class="form-control" autocomplete="organization" />
+        <span asp-validation-for="NomeEmpresa" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Cnpj" class="form-label fw-semibold"></label>
+        <input asp-for="Cnpj" class="form-control" placeholder="00.000.000/0000-00" />
+        <span asp-validation-for="Cnpj" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Telefone" class="form-label fw-semibold"></label>
+        <input asp-for="Telefone" class="form-control" autocomplete="tel" />
+        <span asp-validation-for="Telefone" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

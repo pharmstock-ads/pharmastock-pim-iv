@@ -1,0 +1,50 @@
+@model IReadOnlyList<PharmaStock.Modelos.Fornecedor>
+@{
+    ViewData["Title"] = "Fornecedores";
+}
+
+@if (TempData["Sucesso"] is string sucesso)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @sucesso
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Fornecedores</h1>
+    <a asp-action="Criar" class="btn btn-primary">Novo fornecedor</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">CNPJ</th>
+                <th scope="col">Telefone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="4" class="text-muted">Nenhum fornecedor cadastrado.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var f in Model)
+                {
+                    <tr>
+                        <td>@f.Id</td>
+                        <td>@f.NomeEmpresa</td>
+                        <td>@f.Cnpj</td>
+                        <td>@(f.Telefone ?? "—")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

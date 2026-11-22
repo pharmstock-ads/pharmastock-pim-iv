@@ -4,7 +4,7 @@
 **De:** Anderson (Líder · Núcleo/API)  
 **Atualizado:** 06/11/2026  
 **Projeto:** `src/PharmaStock.Web`  
-**Status:** núcleo + API + banco **já prontos** — você pode integrar de verdade agora
+**Status:** núcleo + API + banco + **código Web MVP** prontos (22/11/2026). Evidência ABNT mínima **já no Word** do Vinicius (controller, DI, view, ViewModel, venda, login desktop/mobile). Pendência: polish (legendas, apagar marcador de figura órfão). Não precisa documentar todas as telas do código.
 
 ---
 
@@ -86,7 +86,7 @@ dotnet build PharmaStock.sln
 dotnet run --project PharmaStock.Web
 ```
 
-6. [ ] Abrir a URL que o terminal mostrar (ex. `https://localhost:7xxx`) — hoje só Home padrão; as telas você cria  
+6. [ ] Abrir **http://localhost:5238** (perfil `http`) — login → Início / Dashboard / cadastros / entrada / venda  
 
 **Opcional:** subir a Api em outro terminal (`dotnet run --project PharmaStock.Api`) e abrir `/scalar` para ver os mesmos fluxos em HTTP — útil para comparar, mas a Web **não precisa** chamar a Api por HTTP; ela chama o Negócio direto.
 
@@ -247,19 +247,22 @@ Validação: Data Annotations + `ModelState.IsValid`.
 - Menu que colapsa no celular  
 - Tabelas com scroll horizontal **ou** cards em telas estreitas  
 - Testar em ~375px de largura e no desktop  
-- Guardar capturas para o ABNT / Geovanna  
+- Para o ABNT: **um** par de capturas (mesma tela nos dois tamanhos) basta no mínimo  
+ 
 
 ---
 
 ## 9. Critérios de aceite
 
-- [ ] Login com Ana (seed) funciona  
-- [ ] Cadastra fornecedor e produto pela UI  
-- [ ] Entrada aumenta estoque do lote  
-- [ ] Venda baixa estoque **sem** o usuário escolher lote  
-- [ ] Mensagem clara se estoque insuficiente  
-- [ ] Layout usável no celular  
-- [ ] Nenhum SQL/ADO/Dapper no controller ou View  
+- [x] Login com Ana (seed) funciona  
+- [x] Cadastra fornecedor e produto pela UI  
+- [x] Entrada aumenta estoque do lote  
+- [x] Venda baixa estoque **sem** o usuário escolher lote  
+- [x] Mensagem clara se estoque insuficiente  
+- [x] Layout usável no celular (Bootstrap; par desktop/~375px **já no Word**)  
+ 
+ 
+- [x] Nenhum SQL/ADO/Dapper no controller ou View  
 
 ---
 
@@ -268,7 +271,7 @@ Validação: Data Annotations + `ModelState.IsValid`.
 - Flutter, alterar SPs/triggers  
 - JWT, Identity, BCrypt  
 - Desconto, push, ML  
-- Telas de alerta A7 (prioridade do mobile; na Web só se sobrar tempo)
+- Telas de alerta A7 como app mobile (prioridade do Roberto); na Web há **Dashboard** de resumo (bônus, não substitui o Flutter)
 
 ---
 

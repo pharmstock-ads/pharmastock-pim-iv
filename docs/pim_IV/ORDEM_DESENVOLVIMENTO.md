@@ -8,7 +8,7 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 | ⚠️ | Parcial / em andamento / bloqueado por dependência |
 | ❌ | Não feito |
 
-**Atualizado em:** 21/11/2026 (revisão: banco consolidado, Web login+venda, Mobile A7 em código ✅; rascunhos Etapas 7/8/10 encaminhados ao doc)
+**Atualizado em:** 22/11/2026 (Web MVP de código ✅ — fornecedor/produto/entrada/venda/listagens/dashboard; pendência = prints ABNT; Mobile A7 código ✅)
 
 **Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [guias](./README.md)
 
@@ -24,7 +24,7 @@ O **banco SQL Server** (Geovanni) cobre o mínimo do manual: `schema.sql` + `pro
 
 O **núcleo C#** (Anderson) está fechado: Dapper + SPs + DTOs em Modelos + DI Web/Api + API REST + Scalar; fluxo login → produtos → entrada → venda → alertas validado. Web e Api não acessam banco/Repositório nos controllers (só Negócio). Connection string chave **`Padrao`** (ajuste `Server=` por máquina — ver README).
 
-**UI hoje:** **Mobile** (Roberto) — código A7 pronto; falta só evidência (prints / ensaio) para o ABNT. **Web** (Vinicius) — sessão + login + venda já no repo; faltam demais telas do MVP (fornecedor/produto/entrada/listagens) e capturas responsivas. UX (Daniel) pode validar com o que já existe.
+**UI hoje:** **Mobile** (Roberto) — código A7 pronto; falta evidência (prints / ensaio) para o ABNT. **Web** (Vinicius) — MVP de código no repo (login, fornecedor, produto, entrada, venda FEFO, lotes, listagem de vendas, hub Início + Dashboard); faltam capturas desktop/~375px e trecho de controller no Word. UX (Daniel) pode validar com o que já existe.
 
 Por fim, o time **integra** o caminho feliz ponta a ponta (cadastro → entrada → venda → consulta no app) e fecha o **documento ABNT**. Rascunhos de Machine Learning (Etapa 7), Comunicação/LIBRAS (Etapa 8) e Integração (Etapa 10) já foram encaminhados ao responsável da documentação — entram como seções curtas no texto, não como projetos de código.
 
@@ -43,7 +43,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 3 | Modelos C# | Anderson | ✅ | Alinhados ao schema |
 | 4 | Repositório + Negócio | Anderson | ✅ | Dapper + SPs + `*Negocio` + FEFO |
 | 5 | API | Anderson | ✅ | REST + Scalar + DTOs Modelos |
-| 6A | Web | Vinicius | ⚠️ | Login + sessão + venda; falta resto do MVP + prints |
+| 6A | Web | Vinicius | ⚠️ | Código MVP ✅; falta prints ABNT + comentário didático no Word |
 | 6B | Mobile | Roberto | ⚠️ | **Código A7 ✅**; prints/ensaio em andamento (ABNT) |
 | 6C | UX | Daniel | ⚠️ | Guia pronto; evoluir `uiux/` (III → IV) |
 | 7 | Integração + ABNT | Docs + grupo | ⚠️ | Rascunhos 7/8/10 encaminhados; montagem ABNT + fluxo E2E abertos |
@@ -198,16 +198,18 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ### 6A — Web
 
-**Quem:** Vinicius · **Status do bloco:** ⚠️ · Guia: [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md)
+**Quem:** Vinicius · **Status do bloco:** ⚠️ (código ✅ · evidência ABNT aberta) · Guia: [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md)
 
 | Item | Status |
 |------|--------|
 | Sessão + `AccountController` (login via `AuthNegocio`) | ✅ |
-| `VendasController` (grava via `VendaNegocio`, sem lote na tela) | ✅ |
-| Menu / layout Bootstrap (navbar colapsável) | ✅ (base) |
-| Controllers de fornecedor / produto / entrada | ❌ |
-| Listagens do backlog MVP | ⚠️ (venda parcial; resto aberto) |
-| Capturas desktop × mobile para o documento | ❌ |
+| `FornecedoresController` / `ProdutosController` / `EntradasController` | ✅ |
+| `VendasController` (grava via `VendaNegocio`, sem lote na tela; Index lista vendas) | ✅ |
+| Lotes por produto (`Produtos/Lotes`) | ✅ |
+| Menu / layout Bootstrap + hub Início | ✅ |
+| Dashboard (alertas + resumo; bônus vs guia) | ✅ (PR `feature/web-home-resumo`) |
+| Cultura pt-BR / decimal com vírgula | ✅ |
+| Capturas desktop × ~375px + trecho MVC no Word | ❌ |
 
 ### 6B — Mobile
 
@@ -274,4 +276,4 @@ Cruzamento **manual × guia × repo (código)** — 21/11/2026:
 
 ---
 
-*Próximo foco: Vinicius (resto Web + prints) · Roberto (capturas A7) · Geovanna (gaps Ágil §5) · Docs (montar ABNT com rascunhos 7/8/10) · Núcleo/API ✅*
+*Próximo foco: Vinicius (prints Web ABNT) · Roberto (capturas A7) · Geovanna (gaps Ágil §5) · Docs (montar ABNT com rascunhos 7/8/10) · Núcleo/API/Web código ✅*

@@ -190,9 +190,10 @@ dotnet run --project PharmaStock.Web --launch-profile http
 
 - URL: **http://localhost:5238**  
 - Sem sessão → redireciona para login  
-- Após login: hub (entrada / venda)
+- Após login: hub Início (operações) + **Dashboard** (resumo/alertas)  
+- Caminho feliz: fornecedor/produto → **entrada** → venda → lotes / listagem de vendas  
 
-A Web **não** precisa da Api no ar.
+A Web **não** precisa da Api no ar. Detalhe: [`src/PharmaStock.Web/README.md`](src/PharmaStock.Web/README.md).
 
 ### Mobile (Flutter)
 
@@ -213,11 +214,11 @@ Api precisa estar rodando. Chrome Flutter sem CORS na Api → use emulador ou Wi
 | # | Item | Onde |
 |---|------|------|
 | 1 | Login (sem JWT) | Web + Api + Flutter |
-| 2 | Fornecedor / produto | Api ✅ · Web ⚠️ |
+| 2 | Fornecedor / produto | Api ✅ · Web ✅ |
 | 3 | Entrada de lote | Api ✅ · Web ✅ |
 | 4 | Venda FEFO | Api ✅ · Web ✅ |
-| 5 | Alertas A7 | Api + Flutter ✅ |
-| 6 | Listagens Web | Parcial (venda; histórico ainda simples) |
+| 5 | Alertas A7 | Api + Flutter ✅ · Web Dashboard (resumo) |
+| 6 | Listagens Web | ✅ vendas + lotes por produto |
 
 Contrato HTTP: [`docs/pim_IV/CONTRATO_TECNICO.md`](docs/pim_IV/CONTRATO_TECNICO.md) §7.
 
@@ -247,7 +248,7 @@ Em `legacy/`: console, WinForms, HTML e PostgreSQL. Só referência — a entreg
 
 ## Pendências conhecidas
 
-- Web: cadastro fornecedor/produto; listagem rica de vendas; prints ABNT  
+- Web: **prints ABNT** (desktop × ~375px) + trecho de controller no Word  
 - Mobile: ensaio ponta a ponta + capturas (estoque via entrada)  
 - Ágil: prosa de negócio / sprints no board  
 - Hash real de senha / JWT — fora do MVP (planos internos do time)  

@@ -96,8 +96,8 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
 | 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
-| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API ✅; Web MVC ❌) |
-| 5 — Web responsivo | Vinicius | ❌ |
+| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; trecho/doc Web ⚠️) |
+| 5 — Web responsivo | Vinicius | ⚠️ (layout ✅; prints ABNT ❌) |
 | 6 — UX/UI | Daniel | ⚠️ |
 | 7 — ML / dados (curta) | Documentação | ❌ |
 | 8 — Comunicação / LIBRAS (curta) | Documentação | ❌ |
@@ -175,7 +175,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 4 — Desenvolvimento C# (POO, MVC e Web API)
 
-**Status geral:** ⚠️ (núcleo+API ✅ 06/11; Web MVC ainda ❌)
+**Status geral:** ⚠️ (núcleo+API ✅; Web MVC código ✅ 22/11; evidência ABNT Web aberta)
 
 #### 4.A — Núcleo (Modelos + Negócio + Repositório) — Anderson
 
@@ -214,14 +214,14 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 | Item | Status |
 |------|--------|
-| Controllers MVC finos | ❌ |
-| Views Razor + layouts + partials | ❌ |
-| ViewModels | ❌ |
-| Integração com Negócio (sem SQL na UI) | ❌ |
-| Trecho de controller para o doc | ❌ |
-| Print da solution (5+ projetos) | ❌ |
+| Controllers MVC finos | ✅ |
+| Views Razor + layouts + partials | ✅ |
+| ViewModels | ✅ |
+| Integração com Negócio (sem SQL na UI) | ✅ |
+| Trecho de controller para o doc | ❌ (colar no Word) |
+| Print da solution (5+ projetos) | ❌ (captura) |
 
-**Critério de pronto:** telas prioritárias do backlog web funcionam.
+**Critério de pronto:** telas prioritárias do backlog web funcionam — **código OK**; falta evidência no ABNT.
 
 #### Artefatos da Etapa 4 (Documentação)
 
@@ -235,17 +235,17 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 5 — Desenvolvimento Web Responsivo
 
-**Dono:** Vinicius · **Status:** ❌
+**Dono:** Vinicius · **Status:** ⚠️
 
 | Item | Status |
 |------|--------|
-| Layout responsivo (desktop / tablet / mobile web) | ❌ |
-| Consistência visual (Blue-Pharma / protótipos) | ❌ |
-| Formulários e listagens em tela estreita | ❌ |
-| Integração Razor/CSS com Negócio | ❌ |
+| Layout responsivo (desktop / tablet / mobile web) | ✅ (Bootstrap) |
+| Consistência visual (Blue-Pharma / protótipos) | ⚠️ |
+| Formulários e listagens em tela estreita | ✅ (`col-12` / `table-responsive`) |
+| Integração Razor/CSS com Negócio | ✅ |
 | Capturas em resoluções diferentes | ❌ |
 
-**Critério de pronto:** telas prioritárias não quebram em viewport estreita.
+**Critério de pronto:** telas prioritárias não quebram em viewport estreita — **código OK**; falta print ~375px.
 
 ---
 
@@ -373,7 +373,7 @@ Fazer depois que houver seed/dados reais.
 | B | Daniel (UX) | Protótipos alta fidelidade | ⚠️ |
 | B | Docs | Caps. negócio / ágil / banco | ❌ |
 | C | Anderson | API + Scalar | ✅ |
-| C | Vinicius | MVC + responsivo | ❌ |
+| C | Vinicius | MVC + responsivo | ⚠️ (código ✅; prints ❌) |
 | C | Roberto | Flutter + A7 | ⚠️ (código pronto; falta teste + capturas) |
 | C | Daniel (UX) | Ajustes de usabilidade | ❌ |
 | C | Docs | Capturas, diagramas, trechos | ❌ |
@@ -391,7 +391,7 @@ Fazer depois que houver seed/dados reais.
 | Ágil | Geovanna | Backlog, sprints e aceite documentados | ⚠️ (baseline RF/RNF ✅; board/sprints ❌) |
 | Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ (SP/trigger ✅; schema.sql/DER ❌) |
 | Núcleo + API | Anderson | Camadas + fluxo + Scalar | ✅ |
-| Web | Vinicius | Telas prioritárias responsivas | ❌ |
+| Web | Vinicius | Telas prioritárias responsivas | ⚠️ (código ✅; prints ABNT ❌) |
 | Mobile | Roberto | App Flutter com ≥ 1 feature via API | ⚠️ (código pronto; falta demo com a Api) |
 | UX | Daniel | Personas, fluxos e protótipos usados pelo time | ⚠️ |
 | Documentação | _a definir_ | Doc ABNT completo com evidências | ❌ |

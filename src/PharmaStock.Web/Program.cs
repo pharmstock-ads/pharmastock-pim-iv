@@ -1,3 +1,5 @@
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 using PharmaStock.Negocio;
 using PharmaStock.Repositorio;
 using PharmaStock.Repositorio.Abstracoes;
@@ -34,6 +36,16 @@ builder.Services.AddSession(opt =>
 });
 
 var app = builder.Build();
+
+var culturaPtBr = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = culturaPtBr;
+CultureInfo.DefaultThreadCurrentUICulture = culturaPtBr;
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(culturaPtBr),
+    SupportedCultures = [culturaPtBr],
+    SupportedUICultures = [culturaPtBr]
+});
 
 if (!app.Environment.IsDevelopment())
 {

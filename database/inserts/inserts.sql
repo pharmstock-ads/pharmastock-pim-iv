@@ -27,28 +27,18 @@ GO
 INSERT INTO dbo.Produto
     (codigo, codbarra, nome, id_categoria, id_fornecedor)
 VALUES
-    (1001, '7891000100011', 'Paracetamol 500mg - 20 comprimidos',
-     (SELECT id FROM dbo.Categoria WHERE nome = 'Analgesicos'),
-     (SELECT id FROM dbo.Fornecedor WHERE cnpj = '12345678000190')),
-    (1002, '7891000100028', 'Dipirona 500mg - 10 comprimidos',
-     (SELECT id FROM dbo.Categoria WHERE nome = 'Analgesicos'),
-     (SELECT id FROM dbo.Fornecedor WHERE cnpj = '23456789000101')),
-    (1003, '7891000100035', 'Amoxicilina 500mg - 21 capsulas',
-     (SELECT id FROM dbo.Categoria WHERE nome = 'Antibioticos'),
-     (SELECT id FROM dbo.Fornecedor WHERE cnpj = '23456789000101')),
-    (1004, '7891000100042', 'Vitamina C 1g - 10 comprimidos',
-     (SELECT id FROM dbo.Categoria WHERE nome = 'Vitaminas'),
-     (SELECT id FROM dbo.Fornecedor WHERE cnpj = '34567890000112')),
-    (1005, '7891000100059', 'Sabonete antisseptico 90g',
-     (SELECT id FROM dbo.Categoria WHERE nome = 'Higiene'),
-     (SELECT id FROM dbo.Fornecedor WHERE cnpj = '12345678000190'));
+    (1001, '7891000100011', 'Paracetamol 500mg - 20 comprimidos', 1, 1),
+    (1002, '7891000100028', 'Dipirona 500mg - 10 comprimidos', 1, 2),
+    (1003, '7891000100035', 'Amoxicilina 500mg - 21 capsulas', 2, 2),
+    (1004, '7891000100042', 'Vitamina C 1g - 10 comprimidos', 3, 3),
+    (1005, '7891000100059', 'Sabonete antisseptico 90g', 4, 1);
 GO
 
 INSERT INTO dbo.Lote (id_produto, numero_lote, validade, quantidade)
 VALUES
-    ((SELECT id FROM dbo.Produto WHERE codigo = 1001), 'PARA-2026-01', '2027-12-31', 0),
-    ((SELECT id FROM dbo.Produto WHERE codigo = 1002), 'DIP-2026-01', '2027-10-31', 0),
-    ((SELECT id FROM dbo.Produto WHERE codigo = 1003), 'AMOX-2026-01', '2027-08-31', 0),
-    ((SELECT id FROM dbo.Produto WHERE codigo = 1004), 'VITC-2026-01', '2028-01-31', 0),
-    ((SELECT id FROM dbo.Produto WHERE codigo = 1005), 'SAB-2026-01', '2028-06-30', 0);
+    (1, 'PARA-2026-01', '2027-12-31', 0),
+    (2, 'DIP-2026-01', '2027-10-31', 0),
+    (3, 'AMOX-2026-01', '2027-08-31', 0),
+    (4, 'VITC-2026-01', '2028-01-31', 0),
+    (5, 'SAB-2026-01', '2028-06-30', 0);
 GO

@@ -16,7 +16,7 @@ CREATE TABLE dbo.Funcionario (
     cpf VARCHAR(11) NULL UNIQUE,
     cargo VARCHAR(50) NULL,
     email VARCHAR(50) NULL,
-    senha_hash VARCHAR(25) NOT NULL,
+    senha_hash VARCHAR(255) NOT NULL,
     data_admissao DATE NOT NULL DEFAULT SYSDATETIME(),
     ativo CHAR(1) NOT NULL CHECK (ativo IN ('s', 'n'))
 );
@@ -105,7 +105,6 @@ CREATE TABLE dbo.Movimentacao (
     preco_unitario DECIMAL(15,2) NOT NULL,
     quantidade DECIMAL(15,2) NOT NULL CHECK (quantidade > 0),
     data_mov DATE NOT NULL DEFAULT SYSDATETIME(),
-    pagamento VARCHAR(30) NULL,
     tipo_mov CHAR(1) NOT NULL CHECK (tipo_mov IN ('e', 's')),
     FOREIGN KEY (id_funcionario) REFERENCES dbo.Funcionario(id_funcionario),
     FOREIGN KEY (id_produto) REFERENCES dbo.Produto(id),

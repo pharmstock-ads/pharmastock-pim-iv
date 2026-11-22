@@ -96,8 +96,8 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
 | 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
-| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; evidência Web no Word ✅; polish) |
-| 5 — Web responsivo | Vinicius | ⚠️ (layout ✅; prints no Word ✅; polish de legenda/texto) |
+| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; peça Web no Word pronta p/ encaixe) |
+| 5 — Web responsivo | Vinicius | ✅ (layout + evidências no Word; refs/ABNT na montagem) |
 | 6 — UX/UI | Daniel | ⚠️ (peça quase pronta para encaixe) |
 | 7 — ML / dados (curta) | Documentação | ⚠️ (rascunho no montado; falta revisão final) |
 | 8 — Comunicação / LIBRAS (curta) | Documentação | ⚠️ (rascunho no montado; falta revisão final) |
@@ -175,7 +175,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 4 — Desenvolvimento C# (POO, MVC e Web API)
 
-**Status geral:** ⚠️ (núcleo+API ✅; Web MVC código ✅ 22/11; evidência ABNT Web aberta)
+**Status geral:** ⚠️ (núcleo+API ✅; Web MVC código + peça Word ✅; evidência núcleo/API no ABNT parcial)
 
 #### 4.A — Núcleo (Modelos + Negócio + Repositório) — Anderson
 
@@ -218,34 +218,34 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Views Razor + layouts + partials | ✅ |
 | ViewModels | ✅ |
 | Integração com Negócio (sem SQL na UI) | ✅ |
-| Trecho de controller para o doc | ✅ (no Word do Vinicius — `VendasController`) |
-| Print da solution / DI / View | ✅ (no Word; falta polish de legenda / texto residual) |
+| Trecho de controller para o doc | ✅ (Word — `VendasController`) |
+| Print da solution / DI / View | ✅ (Word) |
 
-**Critério de pronto:** telas prioritárias funcionam — **código OK**; evidência mínima **já no Word** (`v3_revisao`). Sobram limpeza de marcador órfão e legendas.
+**Critério de pronto:** telas prioritárias + evidência mínima no Word — **atendido**. Refs/numeração ABNT na montagem do grupo.
 
 #### Artefatos da Etapa 4 (Documentação)
 
 | Item | Status |
 |------|--------|
-| Descrição da arquitetura em camadas | ⚠️ (prosa no núcleo/API do montado; Web ainda sem prints) |
-| Diagrama Web/Api → Negócio → Repositório → SQL Server + Flutter | ⚠️ (parcial; falta figura única no ABNT) |
-| Trechos: repositório, negócio, MVC, API, chamada da procedure | ⚠️ (MVC Web ✅ no Word do Vinicius; núcleo/API conforme montagem) |
+| Descrição da arquitetura em camadas | ⚠️ (núcleo/API no montado; Web no Word do Vinicius) |
+| Diagrama Web/Api → Negócio → Repositório → SQL Server + Flutter | ⚠️ (Web tem diagrama no Word; figura única do sistema na montagem) |
+| Trechos: repositório, negócio, MVC, API, chamada da procedure | ⚠️ (MVC Web ✅; núcleo/API conforme montagem) |
 
 ---
 
 ### Etapa 5 — Desenvolvimento Web Responsivo
 
-**Dono:** Vinicius · **Status:** ⚠️
+**Dono:** Vinicius · **Status:** ✅ (mínimo do manual)
 
 | Item | Status |
 |------|--------|
 | Layout responsivo (desktop / tablet / mobile web) | ✅ (Bootstrap) |
-| Consistência visual (Blue-Pharma / protótipos) | ⚠️ (encaixe com peça UX) |
+| Consistência visual (Blue-Pharma / protótipos) | ⚠️ (encaixe com peça UX na montagem) |
 | Formulários e listagens em tela estreita | ✅ (`col-12` / `table-responsive`) |
 | Integração Razor/CSS com Negócio | ✅ |
 | Capturas em resoluções diferentes | ✅ (login desktop + viewport estreita no Word) |
 
-**Critério de pronto:** código + par desktop/mobile no Word — **atendido no mínimo**. Não é necessário printar todas as telas do MVP.
+**Critério de pronto:** código + par desktop/mobile no Word — **atendido**.
 
 ---
 
@@ -330,7 +330,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ## 5. Documento acadêmico (ABNT)
 
-**Dono:** Documentação · **Status:** ⚠️ (montagem em andamento; Web/Mobile/UIUX ainda encaixam)
+**Dono:** Documentação · **Status:** ⚠️ (montagem em andamento; Web pronta p/ encaixe; Mobile/UIUX quase)
 
 | Item | Status |
 |------|--------|
@@ -339,7 +339,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Abstract + keywords | ⚠️ |
 | Sumário | ⚠️ (incompleto enquanto faltam peças) |
 | Introdução | ⚠️ |
-| Desenvolvimento (20–30 páginas) | ⚠️ (banco + núcleo/API + rascunhos 7/8/10; faltam Web/Mobile/UX) |
+| Desenvolvimento (20–30 páginas) | ⚠️ (banco + núcleo/API + Web Word + rascunhos 7/8/10; falta encaixar Mobile/UX) |
 | Conclusão | ❌ |
 | Referências (ABNT) | ⚠️ |
 
@@ -354,7 +354,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 |------|--------|------|--------|
 | A — Fundação | sem. 1–2 | Kickoff Ágil, entidades, esqueleto do doc | ⚠️ |
 | B — Dados e núcleo | sem. 3–5 | Schema/seed, Modelos ✅, Negócio ✅, Repo Dapper | ⚠️ |
-| C — Interfaces | sem. 5–8 | API, Web, Mobile, UX | ⚠️ (API+Web+Mobile código ✅; evidências/ABNT abertas) |
+| C — Interfaces | sem. 5–8 | API, Web, Mobile, UX | ⚠️ (API+Web+Mobile código ✅; evidência Web no Word ✅; Mobile/UX encaixe) |
 | D — Fechamento | sem. 8–fim | Integração, ABNT, postagem | ⚠️ |
 
 ### Detalhe por fase
@@ -371,12 +371,12 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | B | Daniel (UX) | Protótipos alta fidelidade | ⚠️ |
 | B | Docs | Caps. negócio / ágil / banco | ❌ |
 | C | Anderson | API + Scalar | ✅ |
-| C | Vinicius | MVC + responsivo | ⚠️ (código ✅; prints mínimos no Word ✅) |
+| C | Vinicius | MVC + responsivo | ✅ (código + peça Word) |
 | C | Roberto | Flutter + A7 | ⚠️ (código pronto; falta teste + capturas) |
 | C | Daniel (UX) | Ajustes de usabilidade | ❌ |
-| C | Docs | Capturas, diagramas, trechos | ⚠️ (núcleo parcialmente; Web/Mobile prints abertos) |
+| C | Docs | Capturas, diagramas, trechos | ⚠️ (Web ✅ no Word; Mobile/UX + núcleo na montagem) |
 | D | Todos | Integração ponta a ponta | ⚠️ |
-| D | Docs | Etapas 7–8, 10, PDF final | ⚠️ (rascunhos 7/8/10 existem; falta montagem + Web/Mobile/UX) |
+| D | Docs | Etapas 7–8, 10, PDF final | ⚠️ (rascunhos 7/8/10 + Web prontos; falta montagem + Mobile/UX) |
 | D | Geovanna | Retrospectiva + evidências | ❌ |
 | D | Líder | Postagem UNIP | ❌ |
 
@@ -389,7 +389,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Ágil | Geovanna | Backlog, sprints e aceite documentados | ⚠️ (baseline RF/RNF ✅; board/sprints ❌) |
 | Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ (SP/trigger ✅; schema.sql/DER ❌) |
 | Núcleo + API | Anderson | Camadas + fluxo + Scalar | ✅ |
-| Web | Vinicius | Telas prioritárias responsivas | ⚠️ (código ✅; evidência mínima no Word ✅; polish) |
+| Web | Vinicius | Telas prioritárias responsivas | ✅ (código + Word; refs/ABNT na montagem) |
 | Mobile | Roberto | App Flutter com ≥ 1 feature via API | ⚠️ (código pronto; falta demo com a Api) |
 | UX | Daniel | Personas, fluxos e protótipos usados pelo time | ⚠️ |
 | Documentação | _a definir_ | Doc ABNT completo com evidências | ❌ |

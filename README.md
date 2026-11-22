@@ -248,7 +248,8 @@ Em `legacy/`: console, WinForms, HTML e PostgreSQL. Só referência — a entreg
 
 ## Pendências conhecidas
 
-- Web: **prints ABNT** (desktop × ~375px) + trecho de controller no Word  
+- Web: peça Word pronta p/ encaixe (refs/numeração ABNT na montagem)  
+
 - Mobile: ensaio ponta a ponta + capturas (estoque via entrada)  
 - Ágil: prosa de negócio / sprints no board  
 - Hash real de senha / JWT — fora do MVP (planos internos do time)  

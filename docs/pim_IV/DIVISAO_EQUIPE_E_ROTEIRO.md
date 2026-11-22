@@ -96,8 +96,8 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
 | 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
-| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; evidência ABNT Web ⚠️) |
-| 5 — Web responsivo | Vinicius | ⚠️ (layout ✅; prints ABNT ❌) |
+| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; evidência Web no Word ✅; polish) |
+| 5 — Web responsivo | Vinicius | ⚠️ (layout ✅; prints no Word ✅; polish de legenda/texto) |
 | 6 — UX/UI | Daniel | ⚠️ (peça quase pronta para encaixe) |
 | 7 — ML / dados (curta) | Documentação | ⚠️ (rascunho no montado; falta revisão final) |
 | 8 — Comunicação / LIBRAS (curta) | Documentação | ⚠️ (rascunho no montado; falta revisão final) |
@@ -218,11 +218,10 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Views Razor + layouts + partials | ✅ |
 | ViewModels | ✅ |
 | Integração com Negócio (sem SQL na UI) | ✅ |
-| Trecho de controller para o doc | ❌ (mínimo ABNT — colar no Word) |
-| Print da solution / DI / View | ❌ (capturas mínimas) |
+| Trecho de controller para o doc | ✅ (no Word do Vinicius — `VendasController`) |
+| Print da solution / DI / View | ✅ (no Word; falta polish de legenda / texto residual) |
 
-**Critério de pronto:** telas prioritárias do backlog web funcionam — **código OK**; falta evidência no ABNT.  
-Checklist fino do Word (mínimo do manual): fora do repo, com o time de docs.
+**Critério de pronto:** telas prioritárias funcionam — **código OK**; evidência mínima **já no Word** (`v3_revisao`). Sobram limpeza de marcador órfão e legendas.
 
 #### Artefatos da Etapa 4 (Documentação)
 
@@ -230,7 +229,7 @@ Checklist fino do Word (mínimo do manual): fora do repo, com o time de docs.
 |------|--------|
 | Descrição da arquitetura em camadas | ⚠️ (prosa no núcleo/API do montado; Web ainda sem prints) |
 | Diagrama Web/Api → Negócio → Repositório → SQL Server + Flutter | ⚠️ (parcial; falta figura única no ABNT) |
-| Trechos: repositório, negócio, MVC, API, chamada da procedure | ⚠️ (núcleo/API abertos; **MVC Web ainda falta**) |
+| Trechos: repositório, negócio, MVC, API, chamada da procedure | ⚠️ (MVC Web ✅ no Word do Vinicius; núcleo/API conforme montagem) |
 
 ---
 
@@ -244,9 +243,9 @@ Checklist fino do Word (mínimo do manual): fora do repo, com o time de docs.
 | Consistência visual (Blue-Pharma / protótipos) | ⚠️ (encaixe com peça UX) |
 | Formulários e listagens em tela estreita | ✅ (`col-12` / `table-responsive`) |
 | Integração Razor/CSS com Negócio | ✅ |
-| Capturas em resoluções diferentes | ❌ (**mínimo:** 1 tela desktop + mesma ~375px) |
+| Capturas em resoluções diferentes | ✅ (login desktop + viewport estreita no Word) |
 
-**Critério de pronto:** telas prioritárias não quebram em viewport estreita — **código OK**; falta o par de prints no Word. Não é necessário printar todas as telas do MVP.
+**Critério de pronto:** código + par desktop/mobile no Word — **atendido no mínimo**. Não é necessário printar todas as telas do MVP.
 
 ---
 
@@ -372,7 +371,7 @@ Checklist fino do Word (mínimo do manual): fora do repo, com o time de docs.
 | B | Daniel (UX) | Protótipos alta fidelidade | ⚠️ |
 | B | Docs | Caps. negócio / ágil / banco | ❌ |
 | C | Anderson | API + Scalar | ✅ |
-| C | Vinicius | MVC + responsivo | ⚠️ (código ✅; prints ❌) |
+| C | Vinicius | MVC + responsivo | ⚠️ (código ✅; prints mínimos no Word ✅) |
 | C | Roberto | Flutter + A7 | ⚠️ (código pronto; falta teste + capturas) |
 | C | Daniel (UX) | Ajustes de usabilidade | ❌ |
 | C | Docs | Capturas, diagramas, trechos | ⚠️ (núcleo parcialmente; Web/Mobile prints abertos) |
@@ -390,7 +389,7 @@ Checklist fino do Word (mínimo do manual): fora do repo, com o time de docs.
 | Ágil | Geovanna | Backlog, sprints e aceite documentados | ⚠️ (baseline RF/RNF ✅; board/sprints ❌) |
 | Banco | Geovanni | Schema + seed + SPs/triggers + diagramas | ⚠️ (SP/trigger ✅; schema.sql/DER ❌) |
 | Núcleo + API | Anderson | Camadas + fluxo + Scalar | ✅ |
-| Web | Vinicius | Telas prioritárias responsivas | ⚠️ (código ✅; prints ABNT ❌) |
+| Web | Vinicius | Telas prioritárias responsivas | ⚠️ (código ✅; evidência mínima no Word ✅; polish) |
 | Mobile | Roberto | App Flutter com ≥ 1 feature via API | ⚠️ (código pronto; falta demo com a Api) |
 | UX | Daniel | Personas, fluxos e protótipos usados pelo time | ⚠️ |
 | Documentação | _a definir_ | Doc ABNT completo com evidências | ❌ |

@@ -4,7 +4,7 @@
 **De:** Anderson (Líder · Núcleo/API)  
 **Atualizado:** 06/11/2026  
 **Projeto:** `src/PharmaStock.Web`  
-**Status:** núcleo + API + banco + **código Web MVP** prontos (22/11/2026). Pendência: **evidência ABNT mínima** — trecho de 1 controller, DI no `Program.cs`, e **uma** tela em desktop + ~375px. Não precisa documentar todas as telas do código.
+**Status:** núcleo + API + banco + **código Web MVP** prontos (22/11/2026). Evidência ABNT mínima **já no Word** do Vinicius (controller, DI, view, ViewModel, venda, login desktop/mobile). Pendência: polish (legendas, apagar marcador de figura órfão). Não precisa documentar todas as telas do código.
 
 ---
 
@@ -259,7 +259,8 @@ Validação: Data Annotations + `ModelState.IsValid`.
 - [x] Entrada aumenta estoque do lote  
 - [x] Venda baixa estoque **sem** o usuário escolher lote  
 - [x] Mensagem clara se estoque insuficiente  
-- [x] Layout usável no celular (Bootstrap; **falta o par desktop/~375px no Word**)  
+- [x] Layout usável no celular (Bootstrap; par desktop/~375px **já no Word**)  
+ 
  
 - [x] Nenhum SQL/ADO/Dapper no controller ou View  
 

@@ -5,7 +5,7 @@ Documento de referência compartilhada: decisões de arquitetura, fronteiras ent
 **Atualizado em:** 06/11/2026 (C1–C4 / C13–C16; alinhamento template: DTOs Modelos, DI Web+Api, `Padrao`, Scalar, `*Negocio`)  
 **Status:** rascunho vivo — ver **§11** para pendências restantes (banco/grupo)
 
-**Complementares:** [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [`database/README.md`](../../database/README.md) · [guias por papel](./README.md)
+**Complementares:** [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DESENVOLVIMENTO.md) · [`database/README.md`](../../database/README.md) · [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [README desta pasta](./README.md)
 
 ---
 
@@ -71,7 +71,7 @@ O C# (`PharmaStock.Modelos` e Repositório) **se adapta** ao que o Geovanni vers
 | Web | Vinicius | Telas MVC / ViewModels (consome Negócio) |
 | Mobile | Roberto | Flutter: login + **lotes a vencer** + **estoque baixo** (A7) |
 | Eng. Software Ágil | Geovanna | Backlog, RF/RNF, aceite · [Trello PIM IV](https://trello.com/b/9ifnCGAL/pim-iv) |
-| UX / UI | Daniel | Personas, fluxos, protótipos — [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
+| UX / UI | Daniel | Personas, fluxos, protótipos (`uiux/`) |
 | Documentação ABNT | _a definir_ | — |
 
 ---

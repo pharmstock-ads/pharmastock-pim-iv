@@ -19,7 +19,7 @@ Guias operacionais por pessoa: ver [README.md](./README.md) (pasta `docs/pim_IV`
 | 4 | **Mobile** | Roberto | Etapa 9 — Flutter: **lotes a vencer + estoque baixo** | `mobile/` |
 | 5 | **Engenharia de Software Ágil** | Geovanna | Etapa 1 (apoio) + Etapa 2 | backlog, board, `docs/pim_IV/` (planejamento) |
 | 6 | **Documentação acadêmica** | _a definir_ | Etapa 10 + montagem ABNT | `docs/pim_IV/` (documento final) |
-| 7 | **UX / UI** | Daniel | Etapa 6 | `uiux/` · [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md) |
+| 7 | **UX / UI** | Daniel | Etapa 6 | `uiux/` |
 
 ### Fora de papel dedicado
 
@@ -109,7 +109,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 ### Etapa 1 — Definição e caracterização do negócio fictício
 
 **Dono do texto:** Ágil (Geovanna) + Documentação · **Participam:** grupo no kickoff · **Status:** ⚠️  
-**Base:** [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md)
+**Base:** material Ágil do time (fora do repo) + board Trello.
 
 | Item | Status |
 |------|--------|
@@ -128,11 +128,11 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 ### Etapa 2 — Engenharia de Software Ágil Aplicada
 
 **Dono:** Geovanna · **Apoiam:** Núcleo, UX, Web/Mobile · **Status:** ⚠️  
-**Base:** [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) §4
+**Base:** material Ágil do time (fora do repo) + board Trello.
 
 | Item | Status |
 |------|--------|
-| Stakeholders / atores | ⚠️ (atores §4.1; falta lista completa de stakeholders) |
+| Stakeholders / atores | ⚠️ (atores no material Ágil; falta lista completa de stakeholders) |
 | Requisitos funcionais (RF) | ⚠️ (RF01–RF22 no relatório; falta prosa/board) |
 | Requisitos não funcionais (RNF) | ⚠️ (RNF01–RNF16 no relatório; falta prosa/board) |
 | Backlog priorizado | ⚠️ (MVP §3 + prioridade Must/Should/Could; falta board) |
@@ -251,7 +251,7 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 6 — UX e UI Design
 
-**Dono:** Daniel · **Status:** ⚠️ · [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md)
+**Dono:** Daniel · **Status:** ⚠️ · pasta `uiux/`
 
 | Item | Status |
 |------|--------|

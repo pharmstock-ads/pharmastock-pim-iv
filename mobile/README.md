@@ -79,7 +79,7 @@ Login de teste (seed): `ana.souza@pharmastock.local` / `hash_demo_ana`.
 O seed cria lotes com quantidade 0 e validade longa. Se o **Scalar** também devolver `[]`, falta estoque no banco — não é bug do app.
 Faça um `POST /api/entradas` no Scalar com validade próxima e quantidade > 0 (ou rode o script de entrada demo do banco, quando existir).
 
-## Checklist (GUIA_MOBILE_ROBERTO §9)
+## Checklist
 
 - [x] Código de login, lotes a vencer, estoque baixo, vazio e erro de rede
 - [x] Nenhum acesso a banco no Dart

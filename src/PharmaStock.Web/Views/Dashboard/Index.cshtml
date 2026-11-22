@@ -1,0 +1,125 @@
+@model PharmaStock.Web.ViewModels.HomeResumoViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="py-3">
+    <h1 class="h3 mb-1">Dashboard</h1>
+    <p class="text-muted mb-4">Resumo do estoque e movimento recente.</p>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4 col">
+            <div class="border rounded p-3 h-100 bg-white">
+                <div class="text-muted small">A vencer (30 dias)</div>
+                <div class="fs-3 fw-semibold">@Model.LotesAVencerCount</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col">
+            <div class="border rounded p-3 h-100 bg-white">
+                <div class="text-muted small">Estoque baixo</div>
+                <div class="fs-3 fw-semibold">@Model.EstoqueBaixoCount</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col">
+            <div class="border rounded p-3 h-100 bg-white">
+                <div class="text-muted small">Vendas hoje</div>
+                <div class="fs-3 fw-semibold">@Model.VendasHoje</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col">
+            <div class="border rounded p-3 h-100 bg-white">
+                <div class="text-muted small">Produtos</div>
+                <div class="fs-3 fw-semibold">@Model.TotalProdutos</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col">
+            <div class="border rounded p-3 h-100 bg-white">
+                <div class="text-muted small">Fornecedores</div>
+                <div class="fs-3 fw-semibold">@Model.TotalFornecedores</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-7">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="h5 mb-0">Atenção</h2>
+                <span class="text-muted small">Validade ≤ 30 dias ou qtd ≤ 10</span>
+            </div>
+            <div class="table-responsive border rounded">
+                <table class="table table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Lote</th>
+                            <th scope="col">Validade</th>
+                            <th scope="col">Qtd</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Alertas.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-muted px-3 py-3">
+                                    Nenhum alerta no momento. Com estoque zerado pelo seed, registre uma entrada.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var a in Model.Alertas)
+                            {
+                                <tr>
+                                    <td>@a.Tipo</td>
+                                    <td>
+                                        <a asp-controller="Produtos" asp-action="Lotes" asp-route-id="@a.IdProduto">@a.ProdutoNome</a>
+                                    </td>
+                                    <td>@a.NumeroLote</td>
+                                    <td>@a.Validade.ToString("dd/MM/yyyy")</td>
+                                    <td>@a.Quantidade.ToString("0.##")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="h5 mb-0">Vendas recentes</h2>
+                <a asp-controller="Vendas" asp-action="Index" class="small">Ver todas</a>
+            </div>
+            <div class="table-responsive border rounded">
+                <table class="table table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.VendasRecentes.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3" class="text-muted px-3 py-3">Nenhuma venda registrada.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var v in Model.VendasRecentes)
+                            {
+                                <tr>
+                                    <td>@v.IdVenda</td>
+                                    <td>@v.DataVenda.ToString("dd/MM HH:mm")</td>
+                                    <td>@v.ValorTotal.ToString("C")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -39,6 +39,34 @@ public class ProdutoRepositorio : IProdutoRepositorio
             cancellationToken: ct));
     }
 
+    public async Task<Produto?> ObterPorCodigoAsync(int codigo, CancellationToken ct = default)
+    {
+        await using var conn = _factory.Create();
+        return await conn.QuerySingleOrDefaultAsync<Produto>(new CommandDefinition(
+            """
+            SELECT id AS Id, codigo AS Codigo, codbarra AS CodBarra, nome AS Nome,
+                   id_categoria AS IdCategoria, id_fornecedor AS IdFornecedor
+            FROM dbo.produto
+            WHERE codigo = @codigo
+            """,
+            new { codigo },
+            cancellationToken: ct));
+    }
+
+    public async Task<Produto?> ObterPorCodBarraAsync(string codBarra, CancellationToken ct = default)
+    {
+        await using var conn = _factory.Create();
+        return await conn.QuerySingleOrDefaultAsync<Produto>(new CommandDefinition(
+            """
+            SELECT id AS Id, codigo AS Codigo, codbarra AS CodBarra, nome AS Nome,
+                   id_categoria AS IdCategoria, id_fornecedor AS IdFornecedor
+            FROM dbo.produto
+            WHERE codbarra = @codBarra
+            """,
+            new { codBarra },
+            cancellationToken: ct));
+    }
+
     public async Task<int> InserirAsync(Produto produto, CancellationToken ct = default)
     {
         await using var conn = _factory.Create();

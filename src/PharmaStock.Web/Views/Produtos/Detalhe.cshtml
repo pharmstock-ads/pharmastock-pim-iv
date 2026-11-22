@@ -1,0 +1,46 @@
+@model PharmaStock.Modelos.Produto
+@{
+    ViewData["Title"] = "Detalhe do produto";
+    var fornecedorNome = ViewBag.FornecedorNome as string;
+}
+
+@if (TempData["Sucesso"] is string sucesso)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @sucesso
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">@Model.Nome</h1>
+    <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+</div>
+
+<dl class="row col-12 col-lg-8">
+    <dt class="col-sm-4">Id</dt>
+    <dd class="col-sm-8">@Model.Id</dd>
+
+    <dt class="col-sm-4">Código</dt>
+    <dd class="col-sm-8">@Model.Codigo</dd>
+
+    <dt class="col-sm-4">Código de barras</dt>
+    <dd class="col-sm-8">@(Model.CodBarra ?? "—")</dd>
+
+    <dt class="col-sm-4">Fornecedor</dt>
+    <dd class="col-sm-8">
+        @if (Model.IdFornecedor is null)
+        {
+            <span class="text-muted">Não informado</span>
+        }
+        else
+        {
+            @(fornecedorNome ?? $"#{Model.IdFornecedor}")
+        }
+    </dd>
+
+    <dt class="col-sm-4">Categoria</dt>
+    <dd class="col-sm-8">
+        @(Model.IdCategoria is null ? "Não informada (MVP)" : Model.IdCategoria.ToString())
+    </dd>
+</dl>

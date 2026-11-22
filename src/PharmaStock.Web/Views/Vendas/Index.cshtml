@@ -1,3 +1,4 @@
+@model IReadOnlyList<(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal)>
 @{
     ViewData["Title"] = "Vendas";
 }
@@ -15,4 +16,35 @@
     <a asp-action="Registrar" class="btn btn-primary">Nova venda</a>
 </div>
 
-<p class="text-muted">Histórico de vendas será exibido aqui.</p>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Data</th>
+                <th scope="col">Funcionário</th>
+                <th scope="col">Valor total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="4" class="text-muted">Nenhuma venda registrada.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var v in Model)
+                {
+                    <tr>
+                        <td>@v.IdVenda</td>
+                        <td>@v.DataVenda.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>#@v.IdFuncionario</td>
+                        <td>@v.ValorTotal.ToString("C")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -43,6 +43,22 @@ public class ProdutosController : Controller
     }
 
     [HttpGet]
+    public async Task<IActionResult> Lotes(int id)
+    {
+        if (HttpContext.Session.GetInt32("FuncionarioId") is null)
+            return RedirectToAction("Login", "Account", new { returnUrl = $"/Produtos/Lotes/{id}" });
+
+        var produto = await _cadastro.ObterProdutoAsync(id);
+        if (produto is null)
+            return NotFound();
+
+        ViewBag.ProdutoId = produto.Id;
+        ViewBag.ProdutoNome = produto.Nome;
+        var lotes = await _cadastro.ListarLotesPorProdutoAsync(id);
+        return View(lotes);
+    }
+
+    [HttpGet]
     public async Task<IActionResult> Criar()
     {
         if (HttpContext.Session.GetInt32("FuncionarioId") is null)

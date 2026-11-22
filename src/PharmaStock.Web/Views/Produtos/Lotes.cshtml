@@ -1,0 +1,50 @@
+@model IReadOnlyList<PharmaStock.Modelos.Lote>
+@{
+    ViewData["Title"] = "Lotes do produto";
+    var produtoId = (int)ViewBag.ProdutoId;
+    var produtoNome = ViewBag.ProdutoNome as string ?? "Produto";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h1 class="h3 mb-0">Lotes</h1>
+        <p class="text-muted mb-0">@produtoNome</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Detalhe" asp-route-id="@produtoId" class="btn btn-outline-secondary">Detalhe</a>
+        <a asp-controller="Entradas" asp-action="Registrar" class="btn btn-primary">Nova entrada</a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nº lote</th>
+                <th scope="col">Validade</th>
+                <th scope="col">Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="4" class="text-muted">Nenhum lote para este produto. Registre uma entrada.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var l in Model)
+                {
+                    <tr>
+                        <td>@l.Id</td>
+                        <td>@l.NumeroLote</td>
+                        <td>@l.Validade.ToString("dd/MM/yyyy")</td>
+                        <td>@l.Quantidade.ToString("0.##")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

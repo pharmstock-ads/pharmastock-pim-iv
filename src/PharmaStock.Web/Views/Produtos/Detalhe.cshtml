@@ -12,9 +12,12 @@
     </div>
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">@Model.Nome</h1>
-    <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+    <div class="d-flex gap-2">
+        <a asp-action="Lotes" asp-route-id="@Model.Id" class="btn btn-outline-primary">Lotes</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+    </div>
 </div>
 
 <dl class="row col-12 col-lg-8">

@@ -1,2 +1,18 @@
 ﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    // Aceita decimal no padrão pt-BR (1,00 / 10,50) no validate do browser.
+    (function ($) {
+        $.validator.methods.number = function (value, element) {
+            if (this.optional(element)) return true;
+            return /^-?\d+(?:[.,]\d+)?$/.test(value);
+        };
+
+        $.validator.methods.range = function (value, element, param) {
+            if (this.optional(element)) return true;
+            var normalized = String(value).replace(/\./g, "").replace(",", ".");
+            var number = Number(normalized);
+            return !isNaN(number) && number >= param[0] && number <= param[1];
+        };
+    })(jQuery);
+</script>

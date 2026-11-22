@@ -64,11 +64,12 @@ public class VendasController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         if (HttpContext.Session.GetInt32("FuncionarioId") is null)
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Account", new { returnUrl = "/Vendas" });
 
-        return View();
+        var lista = await _venda.ListarAsync();
+        return View(lista);
     }
 }

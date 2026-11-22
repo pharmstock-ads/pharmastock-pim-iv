@@ -8,7 +8,7 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 | ⚠️ | Parcial / em andamento / bloqueado por dependência |
 | ❌ | Não feito |
 
-**Atualizado em:** 22/11/2026 (Web MVP de código ✅ — fornecedor/produto/entrada/venda/listagens/dashboard; pendência = prints ABNT; Mobile A7 código ✅)
+**Atualizado em:** 22/11/2026 (Web MVP de código ✅; pendência = evidência ABNT mínima no Word; Mobile A7 código ✅; rascunhos 7/8/10 no montado)
 
 **Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [guias](./README.md)
 
@@ -24,7 +24,7 @@ O **banco SQL Server** (Geovanni) cobre o mínimo do manual: `schema.sql` + `pro
 
 O **núcleo C#** (Anderson) está fechado: Dapper + SPs + DTOs em Modelos + DI Web/Api + API REST + Scalar; fluxo login → produtos → entrada → venda → alertas validado. Web e Api não acessam banco/Repositório nos controllers (só Negócio). Connection string chave **`Padrao`** (ajuste `Server=` por máquina — ver README).
 
-**UI hoje:** **Mobile** (Roberto) — código A7 pronto; falta evidência (prints / ensaio) para o ABNT. **Web** (Vinicius) — MVP de código no repo (login, fornecedor, produto, entrada, venda FEFO, lotes, listagem de vendas, hub Início + Dashboard); faltam capturas desktop/~375px e trecho de controller no Word. UX (Daniel) pode validar com o que já existe.
+**UI hoje:** **Mobile** (Roberto) e **UX** (Daniel) — peças quase prontas para encaixe no ABNT. **Web** (Vinicius) — código MVP no repo; no Word falta só o **mínimo** do manual (1 controller, DI, 1 tela desktop/~375px) — sem documentar todas as telas.
 
 Por fim, o time **integra** o caminho feliz ponta a ponta (cadastro → entrada → venda → consulta no app) e fecha o **documento ABNT**. Rascunhos de Machine Learning (Etapa 7), Comunicação/LIBRAS (Etapa 8) e Integração (Etapa 10) já foram encaminhados ao responsável da documentação — entram como seções curtas no texto, não como projetos de código.
 
@@ -43,7 +43,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | 3 | Modelos C# | Anderson | ✅ | Alinhados ao schema |
 | 4 | Repositório + Negócio | Anderson | ✅ | Dapper + SPs + `*Negocio` + FEFO |
 | 5 | API | Anderson | ✅ | REST + Scalar + DTOs Modelos |
-| 6A | Web | Vinicius | ⚠️ | Código MVP ✅; falta prints ABNT + comentário didático no Word |
+| 6A | Web | Vinicius | ⚠️ | Código MVP ✅; falta evidência ABNT mínima (controller + DI + 1 tela desktop/~375px) |
 | 6B | Mobile | Roberto | ⚠️ | **Código A7 ✅**; prints/ensaio em andamento (ABNT) |
 | 6C | UX | Daniel | ⚠️ | Guia pronto; evoluir `uiux/` (III → IV) |
 | 7 | Integração + ABNT | Docs + grupo | ⚠️ | Rascunhos 7/8/10 encaminhados; montagem ABNT + fluxo E2E abertos |
@@ -209,7 +209,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Menu / layout Bootstrap + hub Início | ✅ |
 | Dashboard (alertas + resumo; bônus vs guia) | ✅ (PR `feature/web-home-resumo`) |
 | Cultura pt-BR / decimal com vírgula | ✅ |
-| Capturas desktop × ~375px + trecho MVC no Word | ❌ |
+| Evidência ABNT mínima (trecho MVC + DI + 1 tela desktop/~375px; sem printar tudo) | ❌ |
 
 ### 6B — Mobile
 
@@ -276,4 +276,4 @@ Cruzamento **manual × guia × repo (código)** — 21/11/2026:
 
 ---
 
-*Próximo foco: Vinicius (prints Web ABNT) · Roberto (capturas A7) · Geovanna (gaps Ágil §5) · Docs (montar ABNT com rascunhos 7/8/10) · Núcleo/API/Web código ✅*
+*Próximo foco: Vinicius (evidência Web mínima no Word) · Roberto/Daniel (encaixar Mobile/UIUX) · Docs (montar ABNT; rascunhos 7/8/10 já existem) · Núcleo/API/Web código ✅*

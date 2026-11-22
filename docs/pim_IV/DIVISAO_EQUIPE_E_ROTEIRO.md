@@ -96,13 +96,13 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | 1 — Negócio fictício | Geovanna (+ Docs) | ⚠️ |
 | 2 — Eng. Software Ágil | Geovanna | ⚠️ |
 | 3 — Banco de Dados | Geovanni | ⚠️ |
-| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; trecho/doc Web ⚠️) |
+| 4 — C# (núcleo / API / Web) | Anderson / Vinicius | ⚠️ (núcleo+API+Web código ✅; evidência ABNT Web ⚠️) |
 | 5 — Web responsivo | Vinicius | ⚠️ (layout ✅; prints ABNT ❌) |
-| 6 — UX/UI | Daniel | ⚠️ |
-| 7 — ML / dados (curta) | Documentação | ❌ |
-| 8 — Comunicação / LIBRAS (curta) | Documentação | ❌ |
-| 9 — Mobile Flutter | Roberto | ⚠️ |
-| 10 — Integração final | Documentação + grupo | ❌ |
+| 6 — UX/UI | Daniel | ⚠️ (peça quase pronta para encaixe) |
+| 7 — ML / dados (curta) | Documentação | ⚠️ (rascunho no montado; falta revisão final) |
+| 8 — Comunicação / LIBRAS (curta) | Documentação | ⚠️ (rascunho no montado; falta revisão final) |
+| 9 — Mobile Flutter | Roberto | ⚠️ (código ✅; peça ABNT quase pronta para encaixe) |
+| 10 — Integração final | Documentação + grupo | ⚠️ (rascunho no montado; falta ensaio + montagem) |
 
 ---
 
@@ -141,7 +141,7 @@ Progresso detalhado por bloco de código: [ORDEM_DESENVOLVIMENTO.md](./ORDEM_DES
 | Board Trello ([pim-iv](https://trello.com/b/9ifnCGAL/pim-iv)) | ⚠️ (quadro + cards; falta sprints/aceite) |
 | Artefatos para o doc (prints, RF/RNF, sprints) | ❌ |
 
-**MVP sugerido (alta prioridade):** login → fornecedor/produto → entrada de lote → venda FIFO → listagens web → feature Flutter.
+**MVP sugerido (alta prioridade):** login → fornecedor/produto → entrada de lote → venda FEFO → listagens web → feature Flutter.
 
 **Critério de pronto:** top 5 do backlog claros para Banco e Núcleo.
 
@@ -218,18 +218,19 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Views Razor + layouts + partials | ✅ |
 | ViewModels | ✅ |
 | Integração com Negócio (sem SQL na UI) | ✅ |
-| Trecho de controller para o doc | ❌ (colar no Word) |
-| Print da solution (5+ projetos) | ❌ (captura) |
+| Trecho de controller para o doc | ❌ (mínimo ABNT — colar no Word) |
+| Print da solution / DI / View | ❌ (capturas mínimas) |
 
-**Critério de pronto:** telas prioritárias do backlog web funcionam — **código OK**; falta evidência no ABNT.
+**Critério de pronto:** telas prioritárias do backlog web funcionam — **código OK**; falta evidência no ABNT.  
+Checklist fino do Word (mínimo do manual): fora do repo, com o time de docs.
 
 #### Artefatos da Etapa 4 (Documentação)
 
 | Item | Status |
 |------|--------|
-| Descrição da arquitetura em camadas | ❌ |
-| Diagrama Web/Api → Negócio → Repositório → SQL Server + Flutter | ❌ |
-| Trechos: repositório, negócio, MVC, API, chamada da procedure | ❌ |
+| Descrição da arquitetura em camadas | ⚠️ (prosa no núcleo/API do montado; Web ainda sem prints) |
+| Diagrama Web/Api → Negócio → Repositório → SQL Server + Flutter | ⚠️ (parcial; falta figura única no ABNT) |
+| Trechos: repositório, negócio, MVC, API, chamada da procedure | ⚠️ (núcleo/API abertos; **MVC Web ainda falta**) |
 
 ---
 
@@ -240,12 +241,12 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 | Item | Status |
 |------|--------|
 | Layout responsivo (desktop / tablet / mobile web) | ✅ (Bootstrap) |
-| Consistência visual (Blue-Pharma / protótipos) | ⚠️ |
+| Consistência visual (Blue-Pharma / protótipos) | ⚠️ (encaixe com peça UX) |
 | Formulários e listagens em tela estreita | ✅ (`col-12` / `table-responsive`) |
 | Integração Razor/CSS com Negócio | ✅ |
-| Capturas em resoluções diferentes | ❌ |
+| Capturas em resoluções diferentes | ❌ (**mínimo:** 1 tela desktop + mesma ~375px) |
 
-**Critério de pronto:** telas prioritárias não quebram em viewport estreita — **código OK**; falta print ~375px.
+**Critério de pronto:** telas prioritárias não quebram em viewport estreita — **código OK**; falta o par de prints no Word. Não é necessário printar todas as telas do MVP.
 
 ---
 
@@ -267,29 +268,27 @@ Fluxo: abrir entrada/venda → itens → SP grava `movimentacao` → trigger atu
 
 ### Etapa 7 — Machine Learning e Análise de Dados _(seção curta)_
 
-**Dono do texto:** Documentação · **Status:** ❌
+**Dono do texto:** Documentação · **Status:** ⚠️
 
 | Item | Status |
 |------|--------|
-| Dados relevantes (estoque baixo, validade, vendas) | ❌ |
-| Análise simples / ML básico | ❌ |
-| Indicador/relatório interpretável | ❌ |
-| ½–1 página no documento | ❌ |
-
-Fazer depois que houver seed/dados reais.
+| Dados relevantes (estoque baixo, validade, vendas) | ⚠️ (rascunho no documento montado) |
+| Análise simples / ML básico | ⚠️ (descritiva + cobertura; sem treino de modelo) |
+| Indicador/relatório interpretável | ⚠️ |
+| ½–1 página no documento | ⚠️ (texto existe; falta revisão na montagem final) |
 
 ---
 
 ### Etapa 8 — Comunicação, Liderança, Negociação e LIBRAS _(seção curta)_
 
-**Dono do texto:** Documentação · **Status:** ❌
+**Dono do texto:** Documentação · **Status:** ⚠️
 
 | Item | Status |
 |------|--------|
-| Comunicação do time (reuniões, board, GitHub) | ❌ |
-| 1 situação de liderança/negociação | ❌ |
-| Proposta de acessibilidade / LIBRAS | ❌ |
-| ½–1 página no documento | ❌ |
+| Comunicação do time (reuniões, board, GitHub) | ⚠️ (rascunho no documento montado) |
+| 1 situação de liderança/negociação | ⚠️ |
+| Proposta de acessibilidade / LIBRAS | ⚠️ |
+| ½–1 página no documento | ⚠️ (texto existe; falta revisão na montagem final) |
 
 ---
 
@@ -315,15 +314,15 @@ Fazer depois que houver seed/dados reais.
 
 ### Etapa 10 — Integração e avaliação final
 
-**Dono:** Documentação + grupo · **Status:** ❌
+**Dono:** Documentação + grupo · **Status:** ⚠️
 
 | Item | Status |
 |------|--------|
-| Integrar Web + API + Banco + Mobile | ❌ |
+| Integrar Web + API + Banco + Mobile | ⚠️ (peças de código prontas; falta ensaio E2E + evidências) |
 | Checklist RF (feito / parcial / não feito) | ❌ |
-| Avaliação vs objetivos do negócio | ❌ |
-| Limitações técnicas/conceituais | ❌ |
-| Melhorias / evolução futura | ❌ |
+| Avaliação vs objetivos do negócio | ⚠️ (rascunho no montado) |
+| Limitações técnicas/conceituais | ⚠️ (rascunho no montado) |
+| Melhorias / evolução futura | ⚠️ (rascunho no montado) |
 | Ensaio de apresentação | ❌ |
 
 **Critério de pronto:** caminho feliz ponta a ponta (produto/lote → venda → consulta no app).
@@ -332,21 +331,21 @@ Fazer depois que houver seed/dados reais.
 
 ## 5. Documento acadêmico (ABNT)
 
-**Dono:** Documentação · **Status:** ❌
+**Dono:** Documentação · **Status:** ⚠️ (montagem em andamento; Web/Mobile/UIUX ainda encaixam)
 
 | Item | Status |
 |------|--------|
-| Capa | ❌ |
-| Resumo + palavras-chave | ❌ |
-| Abstract + keywords | ❌ |
-| Sumário | ❌ |
-| Introdução | ❌ |
-| Desenvolvimento (20–30 páginas) | ❌ |
+| Capa | ⚠️ (no montado atual) |
+| Resumo + palavras-chave | ⚠️ (revisar claims vs MVP: FEFO, auth demo) |
+| Abstract + keywords | ⚠️ |
+| Sumário | ⚠️ (incompleto enquanto faltam peças) |
+| Introdução | ⚠️ |
+| Desenvolvimento (20–30 páginas) | ⚠️ (banco + núcleo/API + rascunhos 7/8/10; faltam Web/Mobile/UX) |
 | Conclusão | ❌ |
-| Referências (ABNT) | ❌ |
+| Referências (ABNT) | ⚠️ |
 
 **Regras:** citar PIM III; só o **líder** posta na UNIP; prazo/canal oficiais.  
-**Pasta:** `docs/pim_IV/`.
+**Pasta:** `docs/pim_IV/` (guias) · montagem ABNT fora do repo com o time.
 
 ---
 
@@ -356,8 +355,8 @@ Fazer depois que houver seed/dados reais.
 |------|--------|------|--------|
 | A — Fundação | sem. 1–2 | Kickoff Ágil, entidades, esqueleto do doc | ⚠️ |
 | B — Dados e núcleo | sem. 3–5 | Schema/seed, Modelos ✅, Negócio ✅, Repo Dapper | ⚠️ |
-| C — Interfaces | sem. 5–8 | API, Web, Mobile, UX | ❌ |
-| D — Fechamento | sem. 8–fim | Integração, ABNT, postagem | ❌ |
+| C — Interfaces | sem. 5–8 | API, Web, Mobile, UX | ⚠️ (API+Web+Mobile código ✅; evidências/ABNT abertas) |
+| D — Fechamento | sem. 8–fim | Integração, ABNT, postagem | ⚠️ |
 
 ### Detalhe por fase
 
@@ -376,9 +375,9 @@ Fazer depois que houver seed/dados reais.
 | C | Vinicius | MVC + responsivo | ⚠️ (código ✅; prints ❌) |
 | C | Roberto | Flutter + A7 | ⚠️ (código pronto; falta teste + capturas) |
 | C | Daniel (UX) | Ajustes de usabilidade | ❌ |
-| C | Docs | Capturas, diagramas, trechos | ❌ |
-| D | Todos | Integração ponta a ponta | ❌ |
-| D | Docs | Etapas 7–8, 10, PDF final | ❌ |
+| C | Docs | Capturas, diagramas, trechos | ⚠️ (núcleo parcialmente; Web/Mobile prints abertos) |
+| D | Todos | Integração ponta a ponta | ⚠️ |
+| D | Docs | Etapas 7–8, 10, PDF final | ⚠️ (rascunhos 7/8/10 existem; falta montagem + Web/Mobile/UX) |
 | D | Geovanna | Retrospectiva + evidências | ❌ |
 | D | Líder | Postagem UNIP | ❌ |
 

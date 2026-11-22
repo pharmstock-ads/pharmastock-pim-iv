@@ -4,7 +4,7 @@
 **De:** Anderson (Líder · Núcleo/API)  
 **Atualizado:** 06/11/2026  
 **Projeto:** `src/PharmaStock.Web`  
-**Status:** núcleo + API + banco + **código Web MVP** prontos (22/11/2026). Pendência principal: **prints ABNT** (desktop / ~375px) e trecho de controller no documento.
+**Status:** núcleo + API + banco + **código Web MVP** prontos (22/11/2026). Pendência: **evidência ABNT mínima** — trecho de 1 controller, DI no `Program.cs`, e **uma** tela em desktop + ~375px. Não precisa documentar todas as telas do código.
 
 ---
 
@@ -247,7 +247,8 @@ Validação: Data Annotations + `ModelState.IsValid`.
 - Menu que colapsa no celular  
 - Tabelas com scroll horizontal **ou** cards em telas estreitas  
 - Testar em ~375px de largura e no desktop  
-- Guardar capturas para o ABNT / Geovanna  
+- Para o ABNT: **um** par de capturas (mesma tela nos dois tamanhos) basta no mínimo  
+ 
 
 ---
 
@@ -258,7 +259,8 @@ Validação: Data Annotations + `ModelState.IsValid`.
 - [x] Entrada aumenta estoque do lote  
 - [x] Venda baixa estoque **sem** o usuário escolher lote  
 - [x] Mensagem clara se estoque insuficiente  
-- [x] Layout usável no celular (Bootstrap; **falta print ~375px no ABNT**)  
+- [x] Layout usável no celular (Bootstrap; **falta o par desktop/~375px no Word**)  
+ 
 - [x] Nenhum SQL/ADO/Dapper no controller ou View  
 
 ---

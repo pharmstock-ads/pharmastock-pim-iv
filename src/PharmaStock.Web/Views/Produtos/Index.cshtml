@@ -1,0 +1,54 @@
+@model IReadOnlyList<PharmaStock.Modelos.Produto>
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+@if (TempData["Sucesso"] is string sucesso)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @sucesso
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Produtos</h1>
+    <a asp-action="Criar" class="btn btn-primary">Novo produto</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Código</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Cód. barras</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="5" class="text-muted">Nenhum produto cadastrado.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Codigo</td>
+                        <td>@p.Nome</td>
+                        <td>@(p.CodBarra ?? "—")</td>
+                        <td class="text-end">
+                            <a asp-action="Detalhe" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary">Detalhe</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -53,4 +53,4 @@ Seed deixa lotes com quantidade **0**; sem entrada a venda falha por estoque ins
 
 A Api **não** precisa estar rodando para a Web. Flutter usa a Api — ver [`../PharmaStock.Api/`](../PharmaStock.Api/) e [`../../mobile/`](../../mobile/).
 
-Guia do papel Web: [`../../docs/pim_IV/GUIA_WEB_VINICIUS.md`](../../docs/pim_IV/GUIA_WEB_VINICIUS.md).
+Papéis e status: [`../../docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md`](../../docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md).

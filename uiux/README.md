@@ -14,4 +14,4 @@ uiux/
 
 No PIM IV, evoluir estes artefatos para as telas ASP.NET MVC e do app Flutter (personas, fluxos, wireframes — Etapa 6).
 
-**Dono:** Daniel · Guia: [`docs/pim_IV/GUIA_UX_DANIEL.md`](../docs/pim_IV/GUIA_UX_DANIEL.md)
+**Dono:** Daniel · Status no time: [`docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md`](../docs/pim_IV/DIVISAO_EQUIPE_E_ROTEIRO.md) (Etapa 6)

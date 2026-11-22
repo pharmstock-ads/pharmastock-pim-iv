@@ -10,7 +10,7 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 
 **Atualizado em:** 22/11/2026 (Web código + evidência mínima no Word ✅; polish de legenda; Mobile A7 código ✅; rascunhos 7/8/10 no montado)
 
-**Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [guias](./README.md)
+**Complementares:** [DIVISAO_EQUIPE_E_ROTEIRO.md](./DIVISAO_EQUIPE_E_ROTEIRO.md) · [CONTRATO_TECNICO.md](./CONTRATO_TECNICO.md) · [`database/README.md`](../../database/README.md) · [README desta pasta](./README.md)
 
 ---
 
@@ -18,9 +18,9 @@ Checklist vivo do time. Atualize a coluna **Status** com:
 
 O PharmaStock do PIM IV não deve começar pela API nem pelas telas. A ordem existe para evitar retrabalho: cada camada só faz sentido quando a anterior já está estável o bastante para o próximo papel consumir.
 
-O ponto de partida acadêmico continua sendo o **Ágil** (Geovanna). Baseline de RF/RNF e gaps estão em [RELATORIO_ENG_SOFTWARE_AGIL.md](./RELATORIO_ENG_SOFTWARE_AGIL.md) (§4–§5) — **alinhar §5 com ela**. Tecnicamente, núcleo/API já liberam Web/Mobile. MVP: login, fornecedor/produto, entrada, venda FEFO, listagens web, Flutter A7.
+O ponto de partida acadêmico continua sendo o **Ágil** (Geovanna). Baseline de RF/RNF e gaps ficam no material Ágil do time (fora do repo) + board Trello. Tecnicamente, núcleo/API já liberam Web/Mobile. MVP: login, fornecedor/produto, entrada, venda FEFO, listagens web, Flutter A7.
 
-O **banco SQL Server** (Geovanni) cobre o mínimo do manual: `schema.sql` + `procedures.sql` + `triggers.sql` + `seed.sql` (ordem no [README do banco](../../database/README.md)). Seed ainda deixa lote com quantidade **0** — para demo A7, registrar entrada (Scalar/Web) com validade próxima. Detalhe: [GUIA_BANCO_GEOVANNI.md](./GUIA_BANCO_GEOVANNI.md). PostgreSQL do III só em `legacy/`.
+O **banco SQL Server** (Geovanni) cobre o mínimo do manual: `schema.sql` + `procedures.sql` + `triggers.sql` + `seed.sql` (ordem no [README do banco](../../database/README.md)). Seed ainda deixa lote com quantidade **0** — para demo A7, registrar entrada (Scalar/Web) com validade próxima. PostgreSQL do III só em `legacy/`.
 
 O **núcleo C#** (Anderson) está fechado: Dapper + SPs + DTOs em Modelos + DI Web/Api + API REST + Scalar; fluxo login → produtos → entrada → venda → alertas validado. Web e Api não acessam banco/Repositório nos controllers (só Negócio). Connection string chave **`Padrao`** (ajuste `Server=` por máquina — ver README).
 
@@ -198,7 +198,7 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 
 ### 6A — Web
 
-**Quem:** Vinicius · **Status do bloco:** ⚠️ (código ✅ · evidência ABNT aberta) · Guia: [GUIA_WEB_VINICIUS.md](./GUIA_WEB_VINICIUS.md)
+**Quem:** Vinicius · **Status do bloco:** ✅ (código + peça Word)
 
 | Item | Status |
 |------|--------|
@@ -207,13 +207,13 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | `VendasController` (grava via `VendaNegocio`, sem lote na tela; Index lista vendas) | ✅ |
 | Lotes por produto (`Produtos/Lotes`) | ✅ |
 | Menu / layout Bootstrap + hub Início | ✅ |
-| Dashboard (alertas + resumo; bônus vs guia) | ✅ (PR `feature/web-home-resumo`) |
+| Dashboard (alertas + resumo; bônus) | ✅ (PR `feature/web-home-resumo`) |
 | Cultura pt-BR / decimal com vírgula | ✅ |
 | Evidência ABNT mínima (trecho MVC + DI + 1 tela desktop/~375px) | ✅ (no Word; polish de legenda/marcador) |
 
 ### 6B — Mobile
 
-**Quem:** Roberto · **Status do bloco:** ⚠️ · Guia: [GUIA_MOBILE_ROBERTO.md](./GUIA_MOBILE_ROBERTO.md) · App: `mobile/`
+**Quem:** Roberto · **Status do bloco:** ⚠️ · App: `mobile/`
 
 > **Código do A7 fechado** (manual Etapa 9 em nível de implementação). Pendência = evidência ABNT (prints) + ensaio com API/banco com estoque.
 
@@ -226,20 +226,20 @@ Em resumo: **Ágil define o quê → Banco e Modelos firmam os dados → Reposit
 | Sem acesso a banco / FEFO no Dart | ✅ |
 | Capturas para o documento | ⚠️ (Roberto em andamento) |
 
-Cruzamento **manual × guia × repo (código)** — 21/11/2026:
+Cruzamento **manual × repo (código)** — 21/11/2026:
 
-| Exigência | Manual / guia | Repo |
-|-----------|---------------|------|
+| Exigência | Manual | Repo |
+|-----------|--------|------|
 | App Flutter consumindo Web API | Etapa 9 | ✅ `mobile/lib` |
 | Telas / adaptação a dispositivos | Etapa 9 | ✅ login, home, 2 alertas; layout ≥600 px |
 | ≥ 1 função complementar à web | Etapa 9 / A7 | ✅ lotes a vencer + estoque baixo |
-| Rotas do contrato | GUIA §3 | ✅ `POST /auth/login`, `GET /alertas/...`, `GET /produtos` |
-| Sem SQL no app | GUIA §2 | ✅ |
-| Tratamento vazio / rede | GUIA | ✅ |
+| Rotas do contrato | CONTRATO §7 | ✅ `POST /auth/login`, `GET /alertas/...`, `GET /produtos` |
+| Sem SQL no app | contrato | ✅ |
+| Tratamento vazio / rede | — | ✅ |
 
 ### 6C — UX
 
-**Quem:** Daniel · **Status do bloco:** ⚠️ · Guia: [GUIA_UX_DANIEL.md](./GUIA_UX_DANIEL.md)
+**Quem:** Daniel · **Status do bloco:** ⚠️ · Pasta: `uiux/`
 
 | Item | Status |
 |------|--------|

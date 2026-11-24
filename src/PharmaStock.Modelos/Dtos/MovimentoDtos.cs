@@ -22,3 +22,12 @@ public record VendaRequestDto(int FuncionarioId, IReadOnlyList<VendaItemRequestD
 public record VendaResponseDto(int VendaId);
 
 public record VendaResumoDto(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal);
+
+public record VendaDetalheDto(
+    int IdVenda,
+    int IdFuncionario,
+    DateTime DataVenda,
+    decimal ValorTotal,
+    string FuncionarioNome,
+    string Produtos,
+    int QuantidadeItens);

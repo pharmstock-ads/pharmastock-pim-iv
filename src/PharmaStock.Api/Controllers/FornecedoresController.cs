@@ -22,12 +22,14 @@ public class FornecedoresController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<object>> Criar([FromBody] FornecedorSalvarDto dto, CancellationToken ct)
+    public async Task<ActionResult<FornecedorDto>> Criar([FromBody] FornecedorSalvarDto dto, CancellationToken ct)
     {
         try
         {
             var id = await _cadastro.CriarFornecedorAsync(dto.NomeEmpresa, dto.Cnpj, dto.Telefone, ct);
-            return Created($"/api/fornecedores/{id}", new { id });
+            var f = await _cadastro.ObterFornecedorAsync(id, ct)
+                ?? throw new DominioException("Fornecedor criado não encontrado.");
+            return Created($"/api/fornecedores/{id}", new FornecedorDto(f.Id, f.NomeEmpresa, f.Cnpj, f.Telefone));
         }
         catch (DominioException ex)
         {

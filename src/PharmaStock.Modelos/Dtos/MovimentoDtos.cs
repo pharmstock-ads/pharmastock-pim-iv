@@ -10,7 +10,10 @@ public record EntradaItemRequestDto(
 
 public record EntradaRequestDto(int FuncionarioId, IReadOnlyList<EntradaItemRequestDto> Itens);
 
-public record EntradaResponseDto(int EntradaId);
+public record EntradaResponseDto(
+    int EntradaId,
+    int FuncionarioId,
+    IReadOnlyList<EntradaItemRequestDto> Itens);
 
 public record VendaItemRequestDto(int ProdutoId, int Quantidade, decimal PrecoUnitario);
 

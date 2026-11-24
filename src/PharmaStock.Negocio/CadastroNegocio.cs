@@ -24,6 +24,9 @@ public class CadastroNegocio
     public Task<IReadOnlyList<Fornecedor>> ListarFornecedoresAsync(CancellationToken ct = default)
         => _fornecedores.ListarAsync(ct);
 
+    public Task<Fornecedor?> ObterFornecedorAsync(int id, CancellationToken ct = default)
+        => _fornecedores.ObterPorIdAsync(id, ct);
+
     public async Task<int> CriarFornecedorAsync(string nomeEmpresa, string cnpj, string? telefone, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(nomeEmpresa))

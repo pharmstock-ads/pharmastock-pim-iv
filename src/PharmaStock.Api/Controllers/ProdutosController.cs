@@ -30,7 +30,7 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<object>> Criar([FromBody] ProdutoSalvarDto dto, CancellationToken ct)
+    public async Task<ActionResult<ProdutoDto>> Criar([FromBody] ProdutoSalvarDto dto, CancellationToken ct)
     {
         try
         {
@@ -42,7 +42,9 @@ public class ProdutosController : ControllerBase
                 IdCategoria = dto.IdCategoria,
                 IdFornecedor = dto.IdFornecedor
             }, ct);
-            return Created($"/api/produtos/{id}", new { id });
+            var p = await _cadastro.ObterProdutoAsync(id, ct)
+                ?? throw new DominioException("Produto criado não encontrado.");
+            return Created($"/api/produtos/{id}", Map(p));
         }
         catch (DominioException ex)
         {

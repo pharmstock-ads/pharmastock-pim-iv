@@ -15,7 +15,7 @@ public class VendasController : ControllerBase
     public VendasController(VendaNegocio vendas) => _vendas = vendas;
 
     [HttpPost]
-    public async Task<ActionResult<VendaResponseDto>> Registrar([FromBody] VendaRequestDto dto, CancellationToken ct)
+    public async Task<ActionResult<VendaResumoDto>> Registrar([FromBody] VendaRequestDto dto, CancellationToken ct)
     {
         try
         {
@@ -24,7 +24,12 @@ public class VendasController : ControllerBase
 
             var itens = dto.Itens.Select(i => new VendaItemPedido(i.ProdutoId, i.Quantidade, i.PrecoUnitario)).ToList();
             var id = await _vendas.RegistrarAsync(dto.FuncionarioId, itens, ct);
-            return Created($"/api/vendas/{id}", new VendaResponseDto(id));
+            var lista = await _vendas.ListarAsync(ct);
+            var criada = lista.FirstOrDefault(v => v.IdVenda == id)
+                ?? throw new DominioException("Venda criada não encontrada.");
+            return Created(
+                $"/api/vendas/{id}",
+                new VendaResumoDto(criada.IdVenda, criada.IdFuncionario, criada.DataVenda, criada.ValorTotal));
         }
         catch (DominioException ex)
         {

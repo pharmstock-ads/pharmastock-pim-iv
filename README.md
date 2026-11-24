@@ -277,21 +277,6 @@ Api precisa estar rodando. Chrome Flutter sem CORS na Api → use emulador ou Wi
 
 ---
 
-## Papéis
-
-| Papel | Quem | Foco |
-|-------|------|------|
-| Núcleo C# + API (+ líder UNIP) | Anderson | Modelos, Negócio, Repositório, Api |
-| Banco | Geovanni | Schema, SP, trigger, seed — SQL Server |
-| Web | Vinicius | MVC + responsivo |
-| Mobile | Roberto | Flutter A7 |
-| Eng. Software Ágil | Geovanna | RF/RNF, backlog · [Trello](https://trello.com/b/9ifnCGAL/pim-iv) |
-| UX/UI | Daniel | Personas, fluxos, protótipos |
-| Documentação | _a definir_ | ABNT |
-
-Guias: [`docs/pim_IV/README.md`](docs/pim_IV/README.md)
-
----
 
 ## Legado (PIM III)
 
@@ -299,15 +284,6 @@ Em `legacy/`: console, WinForms, HTML e PostgreSQL. Só referência — a entreg
 
 ---
 
-## Pendências conhecidas
-
-- Web: peça Word (refs/numeração ABNT na montagem final)  
-- Mobile: ensaio ponta a ponta + capturas (estoque via entrada)  
-- Ágil: prosa de negócio / sprints no board  
-- JWT — fora do escopo atual (auth continua por sessão Web + `funcionarioId` na Api)  
-- Plataforma UNIP: até **6** integrantes  
-
----
 
 ## Licença
 

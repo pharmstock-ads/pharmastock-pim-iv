@@ -1,4 +1,4 @@
-﻿// Contrato de venda (SPs).
+﻿// Contrato de venda (SPs). O Negócio chama esta interface; a implementação Dapper é injetada via DI.
 namespace PharmaStock.Repositorio.Abstracoes;
 
 public record VendaItemRegistro(

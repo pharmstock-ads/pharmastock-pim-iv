@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Microsoft.OpenApi;
 using PharmaStock.Negocio;
 using PharmaStock.Repositorio;
 using PharmaStock.Repositorio.Abstracoes;
@@ -24,7 +26,25 @@ builder.Services.AddScoped<VendaNegocio>();
 builder.Services.AddScoped<AlertaNegocio>();
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    // Ordem das tags no OpenAPI = fluxo operacional (como na Web).
+    // Scalar usa essa ordem quando não força ordenação alfabética.
+    options.AddDocumentTransformer((document, _, _) =>
+    {
+        document.Tags = new HashSet<OpenApiTag>
+        {
+            new() { Name = "Auth" },
+            new() { Name = "Fornecedores" },
+            new() { Name = "Produtos" },
+            new() { Name = "Entradas" },
+            new() { Name = "Lotes" },
+            new() { Name = "Vendas" },
+            new() { Name = "Alertas" },
+        };
+        return Task.CompletedTask;
+    });
+});
 
 var app = builder.Build();
 

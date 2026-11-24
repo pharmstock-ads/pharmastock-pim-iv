@@ -5,8 +5,11 @@ Sistema de gestão de estoque farmacêutico — **continuidade** do [PIM III](ht
 **Curso:** Análise e Desenvolvimento de Sistemas — UNIP Ribeirão Preto, 2026  
 **Repositório:** [pharmstock-ads/pharmastock-pim-iv](https://github.com/pharmstock-ads/pharmastock-pim-iv)
 
-No III: Console + WinForms (memória), scripts PostgreSQL só de referência e protótipo HTML.  
-No IV: ASP.NET Core MVC + Web API, **SQL Server** (trigger + procedure), app Flutter e documentação ABNT.
+| PIM III | PIM IV |
+|---------|--------|
+| Console + WinForms (memória) | ASP.NET Core **MVC** + **Web API** |
+| Scripts PostgreSQL (referência) | **SQL Server** (procedures + triggers) |
+| Protótipo HTML | App **Flutter** + documentação ABNT |
 
 ---
 
@@ -14,13 +17,14 @@ No IV: ASP.NET Core MVC + Web API, **SQL Server** (trigger + procedure), app Flu
 
 | Camada | Tecnologia |
 |--------|------------|
-| Linguagem | C# / .NET 10 |
+| Linguagem | C# / **.NET 10** |
 | Web | ASP.NET Core MVC (Razor) — chama **Negócio**, não a Api |
 | API | ASP.NET Core Web API (REST + OpenAPI + **Scalar**) — consumida pelo **Flutter** |
 | Camadas | Modelos → Repositório → Negócio → Web / Api |
 | Persistência | **Dapper** (CRUD + stored procedures) — sem EF Migrations |
 | Banco | **SQL Server** (Express / LocalDB / full) |
-| Mobile | Flutter consumindo a Api |
+| Auth | Sessão na Web; Api sem JWT. Senha com **BCrypt** no Negócio |
+| Mobile | Flutter consumindo a Api (alertas A7) |
 | Testes | xUnit (+ testes Flutter em `mobile/test/`) |
 
 ---
@@ -37,14 +41,15 @@ Scalar ───► Api (só para testar rotas)
 
 Regras importantes:
 
-- Web e Api **não** acessam o banco nem o Repositório diretamente  
+- Web e Api **não** acessam o banco nem o Repositório nos controllers  
 - Controllers só recebem classes de **Negócio** (`*Negocio`)  
 - A Web **não** chama HTTP na Api; os dois hosts compartilham o Negócio  
 - DTOs ficam em `PharmaStock.Modelos/Dtos/`  
 - Connection string só em `appsettings.json`, chave **`Padrao`**  
 - DI idêntica nos dois `Program.cs` (Web e Api)  
 - Procedure chamada pela camada Repositório (Dapper)  
-- Auth MVP: sem JWT; senha demo no seed (ver credenciais abaixo)
+- Login: cliente envia senha **plana**; o Negócio verifica com **BCrypt** contra `senha_hash`  
+- Cadastro de funcionário: `POST /api/funcionarios` (Api/Scalar) — hasheia antes de gravar  
 
 ---
 
@@ -56,22 +61,22 @@ pharmastock-pim-iv/
 │   ├── PharmaStock.sln
 │   ├── PharmaStock.Modelos      (+ Dtos/)
 │   ├── PharmaStock.Repositorio  (Dapper)
-│   ├── PharmaStock.Negocio      (*Negocio + FEFO)
+│   ├── PharmaStock.Negocio      (*Negocio + FEFO + SenhaHasher)
 │   ├── PharmaStock.Web          (MVC + sessão)
 │   ├── PharmaStock.Api          (REST + Scalar)
 │   └── PharmaStock.Tests
 ├── mobile/                      ← App Flutter (A7: alertas)
-├── database/                    ← schema.sql, procedures.sql, triggers.sql, seed.sql
+├── database/                    ← schema, procedures, triggers, seed
 ├── docs/
 │   ├── manual/
-│   ├── pim_IV/                  ← contrato, guias, ordem de desenvolvimento
+│   ├── pim_IV/                  ← contrato, ordem de desenvolvimento
 │   └── pim_III/
 ├── uiux/
 └── legacy/                      ← Console, WinForms, HTML e PG do PIM III
 ```
 
-Checklist vivo: [`docs/pim_IV/ORDEM_DESENVOLVIMENTO.md`](docs/pim_IV/ORDEM_DESENVOLVIMENTO.md)
-
+Checklist vivo: [`docs/pim_IV/ORDEM_DESENVOLVIMENTO.md`](docs/pim_IV/ORDEM_DESENVOLVIMENTO.md)  
+Contrato HTTP: [`docs/pim_IV/CONTRATO_TECNICO.md`](docs/pim_IV/CONTRATO_TECNICO.md)
 
 ---
 
@@ -120,7 +125,7 @@ Pasta: [`database/`](database/) · detalhe: [`database/README.md`](database/READ
 | 3 | `triggers.sql` |
 | 4 | `seed.sql` |
 
-(Alternativa: scripts individuais em `tabelas/`, `procedure/`, `trigger/`, `inserts/` — manter sincronizados com os consolidados.)
+(Alternativa: scripts em `tabelas/`, `procedure/`, `trigger/`, `inserts/` — manter sincronizados com os consolidados.)
 
 O seed deixa lotes com **quantidade 0**. Estoque sobe com **entrada** (Web `/Entradas/Registrar` ou `POST /api/entradas` no Scalar).
 
@@ -128,10 +133,30 @@ O seed deixa lotes com **quantidade 0**. Estoque sobe com **entrada** (Web `/Ent
 
 | Campo | Valor |
 |-------|--------|
-| E-mail | `ana.souza@pharmastock.local` |
+| E-mail (Ana) | `ana.souza@pharmastock.local` |
 | Senha | `@Ana123` |
 
-(Mesma senha para Carlos e Mariana no seed. No banco fica só o hash BCrypt.)
+A mesma senha plana vale para **Carlos** (`carlos.lima@pharmastock.local`) e **Mariana** (`mariana.alves@pharmastock.local`).  
+No banco fica **apenas** o hash BCrypt em `Funcionario.senha_hash` (`VARCHAR(255)`).
+
+**Banco antigo** (ainda com `hash_demo_*`): rode o seed novo **ou** atualize as três linhas:
+
+```sql
+-- Só se a coluna ainda for curta (ex. varchar(25)):
+-- ALTER TABLE dbo.Funcionario ALTER COLUMN senha_hash VARCHAR(255) NOT NULL;
+
+UPDATE dbo.Funcionario
+SET senha_hash = '$2a$11$.Nl.EB9iVvItIxEW4B7gU.FDFb.6gcxid2W0jNQRwAHRFJVu3KtAG'
+WHERE email = 'ana.souza@pharmastock.local';
+
+UPDATE dbo.Funcionario
+SET senha_hash = '$2a$11$dvJ.Ztubo1QchHEw7FK2a.7ZnSZiaQZgPkjZcJmCwGUOtWHPeXxkC'
+WHERE email = 'carlos.lima@pharmastock.local';
+
+UPDATE dbo.Funcionario
+SET senha_hash = '$2a$11$OQSTMBPIJW/Wf.sQ49ieEe9hTB0dW03Rw8DQKLgo3oBhFdW5jwSQW'
+WHERE email = 'mariana.alves@pharmastock.local';
+```
 
 ---
 
@@ -177,10 +202,39 @@ dotnet test PharmaStock.Tests
 dotnet run --project PharmaStock.Api --launch-profile http
 ```
 
-- Scalar: **http://localhost:5152/scalar**  
-- Base REST: `http://localhost:5152/api`
+| Recurso | URL |
+|---------|-----|
+| Api | http://localhost:5152 |
+| Scalar | **http://localhost:5152/scalar** |
+| Base REST | `http://localhost:5152/api` |
 
-Fluxo rápido no Scalar: login → produtos → **entrada** → venda → alertas.
+Fluxo rápido no Scalar:
+
+1. `POST /api/auth/login` (ou `POST /api/funcionarios` para criar um usuário novo)  
+2. `GET /api/produtos`  
+3. `POST /api/entradas` (sobe estoque)  
+4. `POST /api/vendas` (FEFO no Negócio)  
+5. `GET /api/alertas/...`  
+
+**Criar funcionário** (senha plana no body → hash no banco):
+
+```http
+POST /api/funcionarios
+```
+
+```json
+{
+  "nome": "Convidado Demo",
+  "cpf": "11122233344",
+  "email": "demo@pharmastock.local",
+  "senha": "@Ana123",
+  "cargo": "Atendente"
+}
+```
+
+Depois o mesmo e-mail/senha funcionam no login da Web e no `POST /api/auth/login` (Mobile).
+
+Detalhe: [`src/PharmaStock.Api/README.md`](src/PharmaStock.Api/README.md).
 
 ### Web (MVC)
 
@@ -189,8 +243,8 @@ dotnet run --project PharmaStock.Web --launch-profile http
 ```
 
 - URL: **http://localhost:5238**  
-- Sem sessão → redireciona para login  
-- Após login: hub Início (operações) + **Dashboard** (resumo/alertas)  
+- Sem sessão → redireciona para login (`@Ana123` com o e-mail do seed)  
+- Após login: **Início** (hub) + **Dashboard** (resumo/alertas)  
 - Caminho feliz: fornecedor/produto → **entrada** → venda → lotes / listagem de vendas  
 
 A Web **não** precisa da Api no ar. Detalhe: [`src/PharmaStock.Web/README.md`](src/PharmaStock.Web/README.md).
@@ -213,14 +267,13 @@ Api precisa estar rodando. Chrome Flutter sem CORS na Api → use emulador ou Wi
 
 | # | Item | Onde |
 |---|------|------|
-| 1 | Login (sem JWT) | Web + Api + Flutter |
-| 2 | Fornecedor / produto | Api ✅ · Web ✅ |
-| 3 | Entrada de lote | Api ✅ · Web ✅ |
-| 4 | Venda FEFO | Api ✅ · Web ✅ |
-| 5 | Alertas A7 | Api + Flutter ✅ · Web Dashboard (resumo) |
-| 6 | Listagens Web | ✅ vendas + lotes por produto |
-
-Contrato HTTP: [`docs/pim_IV/CONTRATO_TECNICO.md`](docs/pim_IV/CONTRATO_TECNICO.md) §7.
+| 1 | Login (BCrypt, sem JWT) | Web + Api + Flutter |
+| 2 | Criar funcionário | Api (`POST /api/funcionarios`) |
+| 3 | Fornecedor / produto | Api ✅ · Web ✅ |
+| 4 | Entrada de lote | Api ✅ · Web ✅ |
+| 5 | Venda FEFO | Api ✅ · Web ✅ |
+| 6 | Alertas A7 | Api + Flutter ✅ · Web Dashboard (resumo) |
+| 7 | Listagens Web | ✅ vendas (produto, qtd, funcionário) + lotes por produto |
 
 ---
 
@@ -248,11 +301,10 @@ Em `legacy/`: console, WinForms, HTML e PostgreSQL. Só referência — a entreg
 
 ## Pendências conhecidas
 
-- Web: peça Word pronta p/ encaixe (refs/numeração ABNT na montagem)  
-
+- Web: peça Word (refs/numeração ABNT na montagem final)  
 - Mobile: ensaio ponta a ponta + capturas (estoque via entrada)  
 - Ágil: prosa de negócio / sprints no board  
-- Hash real de senha / JWT — fora do MVP (planos internos do time)  
+- JWT — fora do escopo atual (auth continua por sessão Web + `funcionarioId` na Api)  
 - Plataforma UNIP: até **6** integrantes  
 
 ---

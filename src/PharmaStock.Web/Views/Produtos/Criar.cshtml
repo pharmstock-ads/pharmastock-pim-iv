@@ -24,7 +24,8 @@
 
     <div class="mb-3">
         <label asp-for="CodBarra" class="form-label fw-semibold"></label>
-        <input asp-for="CodBarra" class="form-control" maxlength="25" />
+        <input asp-for="CodBarra" class="form-control" maxlength="25" required />
+        <div class="form-text">Obrigatório e único (até 25 caracteres). Evita erro de duplicidade no banco.</div>
         <span asp-validation-for="CodBarra" class="text-danger"></span>
     </div>
 

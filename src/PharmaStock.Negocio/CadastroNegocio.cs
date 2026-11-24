@@ -74,19 +74,19 @@ public class CadastroNegocio
         if (nome.Length > 100)
             throw new DominioException("Nome do produto deve ter no máximo 100 caracteres.");
 
-        string? codBarra = null;
-        if (!string.IsNullOrWhiteSpace(produto.CodBarra))
-        {
-            codBarra = produto.CodBarra.Trim();
-            if (codBarra.Length > 25)
-                throw new DominioException("Código de barras deve ter no máximo 25 caracteres.");
-        }
+        // Obrigatório na aplicação: a coluna codbarra é UNIQUE no SQL Server e
+        // um segundo NULL/vazio gera SqlException em vez de mensagem amigável.
+        if (string.IsNullOrWhiteSpace(produto.CodBarra))
+            throw new DominioException("Código de barras é obrigatório.");
+
+        var codBarra = produto.CodBarra.Trim();
+        if (codBarra.Length > 25)
+            throw new DominioException("Código de barras deve ter no máximo 25 caracteres.");
 
         if (await _produtos.ObterPorCodigoAsync(produto.Codigo, ct) is not null)
             throw new DominioException("Já existe um produto com este código.");
 
-        if (codBarra is not null
-            && await _produtos.ObterPorCodBarraAsync(codBarra, ct) is not null)
+        if (await _produtos.ObterPorCodBarraAsync(codBarra, ct) is not null)
             throw new DominioException("Já existe um produto com este código de barras.");
 
         produto.Nome = nome;

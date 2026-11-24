@@ -22,7 +22,7 @@ public static class FefoAlocador
         var estoqueTotal = disponiveis.Sum(l => l.Quantidade);
         if (estoqueTotal < quantidadePedida)
             throw new EstoqueInsuficienteException(
-                $"Estoque insuficiente. Pedido: {quantidadePedida}, disponível: {estoqueTotal}.");
+                $"Estoque insuficiente. Pedido: {quantidadePedida}, disponível: {(int)Math.Floor(estoqueTotal)}.");
 
         var restante = quantidadePedida;
         var alocacoes = new List<AlocacaoLote>();

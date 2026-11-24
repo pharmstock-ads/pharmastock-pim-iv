@@ -26,8 +26,9 @@
                     <h2 class="h5 card-title">Fornecedor</h2>
                     <p class="card-text text-muted flex-grow-1">
                         Lista e cadastra empresas fornecedoras.
+                        Opcional para o cadastro de produtos e consolidação de venda.
                     </p>
-                    <a class="btn btn-outline-primary mt-2" asp-controller="Fornecedores" asp-action="Index">Fornecedores</a>
+                    <a class="btn btn-sm btn-outline-primary align-self-start mt-2" asp-controller="Fornecedores" asp-action="Index">Fornecedores</a>
                 </div>
             </div>
         </div>
@@ -36,9 +37,10 @@
                 <div class="card-body d-flex flex-column">
                     <h2 class="h5 card-title">Produto</h2>
                     <p class="card-text text-muted flex-grow-1">
-                        Lista, detalhe e cadastro com fornecedor opcional.
+                        Lista, detalhe, cadastro com fornecedor opcional e
+                        consulta os lotes do item.
                     </p>
-                    <a class="btn btn-outline-primary mt-2" asp-controller="Produtos" asp-action="Index">Produtos</a>
+                    <a class="btn btn-sm btn-outline-primary align-self-start mt-2" asp-controller="Produtos" asp-action="Index">Produtos</a>
                 </div>
             </div>
         </div>
@@ -49,7 +51,7 @@
                     <p class="card-text text-muted flex-grow-1">
                         Registra lote, validade, quantidade e preço. O estoque sobe após gravar.
                     </p>
-                    <a class="btn btn-primary mt-2" asp-controller="Entradas" asp-action="Registrar">Nova entrada</a>
+                    <a class="btn btn-sm btn-primary align-self-start mt-2" asp-controller="Entradas" asp-action="Registrar">Nova entrada</a>
                 </div>
             </div>
         </div>
@@ -60,7 +62,7 @@
                     <p class="card-text text-muted flex-grow-1">
                         Baixa estoque sem escolher lote na tela.
                     </p>
-                    <a class="btn btn-outline-primary mt-2" asp-controller="Vendas" asp-action="Registrar">Nova venda</a>
+                    <a class="btn btn-sm btn-outline-primary align-self-start mt-2" asp-controller="Vendas" asp-action="Registrar">Nova venda</a>
                 </div>
             </div>
         </div>
@@ -71,7 +73,7 @@
                     <p class="card-text text-muted flex-grow-1">
                         Consulta as vendas já registradas.
                     </p>
-                    <a class="btn btn-outline-secondary mt-2" asp-controller="Vendas" asp-action="Index">Vendas</a>
+                    <a class="btn btn-sm btn-outline-secondary align-self-start mt-2" asp-controller="Vendas" asp-action="Index">Vendas</a>
                 </div>
             </div>
         </div>

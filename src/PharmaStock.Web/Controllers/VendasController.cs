@@ -70,6 +70,18 @@ public class VendasController : Controller
             return RedirectToAction("Login", "Account", new { returnUrl = "/Vendas" });
 
         var lista = await _venda.ListarAsync();
-        return View(lista);
+        var model = lista
+            .Select(v => new VendaListaItemViewModel
+            {
+                IdVenda = v.IdVenda,
+                DataVenda = v.DataVenda,
+                FuncionarioNome = v.FuncionarioNome,
+                Produtos = v.Produtos,
+                QuantidadeItens = v.QuantidadeItens,
+                ValorTotal = v.ValorTotal
+            })
+            .ToList();
+
+        return View(model);
     }
 }

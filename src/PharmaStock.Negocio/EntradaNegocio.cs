@@ -46,6 +46,9 @@ public class EntradaNegocio
         {
             if (item.Quantidade <= 0)
                 throw new DominioException("Quantidade deve ser maior que zero.");
+            // Unidade inteira: não existe meia caixa no MVP (coluna DECIMAL no banco aceita fração).
+            if (item.Quantidade != decimal.Truncate(item.Quantidade))
+                throw new DominioException("Quantidade deve ser um número inteiro (unidades).");
             if (item.PrecoUnitario < 0)
                 throw new DominioException("Preço unitário não pode ser negativo.");
             if (string.IsNullOrWhiteSpace(item.NumeroLote))
@@ -62,7 +65,7 @@ public class EntradaNegocio
                 produto.Id,
                 numeroLote,
                 item.Validade.Date,
-                item.Quantidade,
+                decimal.Truncate(item.Quantidade),
                 item.PrecoUnitario));
         }
 

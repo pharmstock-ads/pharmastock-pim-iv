@@ -7,6 +7,15 @@ public record VendaItemRegistro(
     int Quantidade,
     decimal PrecoUnitario);
 
+public record VendaListagem(
+    int IdVenda,
+    int IdFuncionario,
+    DateTime DataVenda,
+    decimal ValorTotal,
+    string FuncionarioNome,
+    string Produtos,
+    int QuantidadeItens);
+
 public interface IVendaRepositorio
 {
     Task<int> RegistrarVendaCompletaAsync(
@@ -14,6 +23,5 @@ public interface IVendaRepositorio
         IReadOnlyList<VendaItemRegistro> itens,
         CancellationToken ct = default);
 
-    Task<IReadOnlyList<(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal)>> ListarAsync(
-        CancellationToken ct = default);
+    Task<IReadOnlyList<VendaListagem>> ListarAsync(CancellationToken ct = default);
 }

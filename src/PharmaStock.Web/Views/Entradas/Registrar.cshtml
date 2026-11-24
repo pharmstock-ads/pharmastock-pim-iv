@@ -34,7 +34,8 @@
 
     <div class="mb-3">
         <label asp-for="Quantidade" class="form-label fw-semibold"></label>
-        <input asp-for="Quantidade" class="form-control" />
+        <input asp-for="Quantidade" class="form-control" type="number" min="1" step="1" inputmode="numeric" />
+        <div class="form-text">Somente unidades inteiras (sem vírgula ou decimal).</div>
         <span asp-validation-for="Quantidade" class="text-danger"></span>
     </div>
 

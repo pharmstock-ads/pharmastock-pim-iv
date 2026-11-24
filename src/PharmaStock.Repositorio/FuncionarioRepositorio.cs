@@ -38,4 +38,28 @@ public class FuncionarioRepositorio : IFuncionarioRepositorio
             new { cpfOuEmail },
             cancellationToken: ct));
     }
+
+    public async Task<int> InserirAsync(Funcionario funcionario, CancellationToken ct = default)
+    {
+        await using var conn = _factory.Create();
+        return await conn.ExecuteScalarAsync<int>(new CommandDefinition(
+            """
+            INSERT INTO dbo.Funcionario
+                (nome, cpf, cargo, email, senha_hash, data_admissao, ativo)
+            OUTPUT INSERTED.id_funcionario
+            VALUES
+                (@Nome, @Cpf, @Cargo, @Email, @SenhaHash, @DataAdmissao, @Ativo)
+            """,
+            new
+            {
+                funcionario.Nome,
+                funcionario.Cpf,
+                funcionario.Cargo,
+                funcionario.Email,
+                funcionario.SenhaHash,
+                funcionario.DataAdmissao,
+                Ativo = funcionario.Ativo.ToString()
+            },
+            cancellationToken: ct));
+    }
 }

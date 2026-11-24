@@ -35,6 +35,7 @@ builder.Services.AddOpenApi(options =>
         document.Tags = new HashSet<OpenApiTag>
         {
             new() { Name = "Auth" },
+            new() { Name = "Funcionarios" },
             new() { Name = "Fornecedores" },
             new() { Name = "Produtos" },
             new() { Name = "Entradas" },

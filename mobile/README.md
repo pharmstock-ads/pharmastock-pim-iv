@@ -72,7 +72,7 @@ Testes:
 flutter test
 ```
 
-Login de teste (seed): `ana.souza@pharmastock.local` / `hash_demo_ana`.
+Login de teste (seed): `ana.souza@pharmastock.local` / `@Ana123`.
 
 ## Alertas vazios?
 

@@ -2,6 +2,7 @@
 using PharmaStock.Modelos;
 using PharmaStock.Negocio;
 using PharmaStock.Negocio.Excecoes;
+using PharmaStock.Negocio.Seguranca;
 using PharmaStock.Repositorio.Abstracoes;
 
 namespace PharmaStock.Tests;
@@ -28,13 +29,15 @@ file class FuncionarioRepoFake : IFuncionarioRepositorio
 
 public class AuthNegocioTests
 {
+    private const string SenhaPlana = "SenhaTeste@1";
+
     private static Funcionario AnaAtiva() => new()
     {
         IdFuncionario = 1,
         Nome = "Ana",
         Email = "ana.souza@pharmastock.local",
         Cpf = "12345678901",
-        SenhaHash = "hash_demo_ana",
+        SenhaHash = SenhaHasher.Hash(SenhaPlana),
         Ativo = 's'
     };
 
@@ -42,7 +45,7 @@ public class AuthNegocioTests
     public async Task Login_Ok()
     {
         var negocio = new AuthNegocio(new FuncionarioRepoFake(AnaAtiva()));
-        var user = await negocio.LoginAsync("ana.souza@pharmastock.local", "hash_demo_ana");
+        var user = await negocio.LoginAsync("ana.souza@pharmastock.local", SenhaPlana);
         Assert.Equal(1, user.IdFuncionario);
     }
 
@@ -61,6 +64,6 @@ public class AuthNegocioTests
         ana.Ativo = 'n';
         var negocio = new AuthNegocio(new FuncionarioRepoFake(ana));
         await Assert.ThrowsAsync<DominioException>(() =>
-            negocio.LoginAsync("ana.souza@pharmastock.local", "hash_demo_ana"));
+            negocio.LoginAsync("ana.souza@pharmastock.local", SenhaPlana));
     }
 }

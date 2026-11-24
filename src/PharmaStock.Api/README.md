@@ -24,7 +24,7 @@ Perfil `https`: https://localhost:7275/scalar
 ### Login demo (seed)
 
 - E-mail: `ana.souza@pharmastock.local`  
-- Senha: `hash_demo_ana`
+- Senha: `@Ana123`
 
 ### Fluxo rápido no Scalar
 

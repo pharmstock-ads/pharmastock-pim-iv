@@ -8,12 +8,13 @@ VALUES
     ('SaudeMais Distribuidora', '34567890000112', '(16) 3333-3000');
 GO
 
+-- Senha plana de demo (todas): @Ana123 — senha_hash = BCrypt.
 INSERT INTO dbo.Funcionario
     (nome, cpf, cargo, email, senha_hash, data_admissao, ativo)
 VALUES
-    ('Ana Paula Souza', '12345678901', 'Farmaceutica', 'ana.souza@pharmastock.local', 'hash_demo_ana', '2025-02-10', 's'),
-    ('Carlos Henrique Lima', '23456789012', 'Estoquista', 'carlos.lima@pharmastock.local', 'hash_demo_carlos', '2025-04-15', 's'),
-    ('Mariana Costa Alves', '34567890123', 'Atendente', 'mariana.alves@pharmastock.local', 'hash_demo_mariana', '2025-06-01', 's');
+    ('Ana Paula Souza', '12345678901', 'Farmaceutica', 'ana.souza@pharmastock.local', '$2a$11$.Nl.EB9iVvItIxEW4B7gU.FDFb.6gcxid2W0jNQRwAHRFJVu3KtAG', '2025-02-10', 's'),
+    ('Carlos Henrique Lima', '23456789012', 'Estoquista', 'carlos.lima@pharmastock.local', '$2a$11$dvJ.Ztubo1QchHEw7FK2a.7ZnSZiaQZgPkjZcJmCwGUOtWHPeXxkC', '2025-04-15', 's'),
+    ('Mariana Costa Alves', '34567890123', 'Atendente', 'mariana.alves@pharmastock.local', '$2a$11$OQSTMBPIJW/Wf.sQ49ieEe9hTB0dW03Rw8DQKLgo3oBhFdW5jwSQW', '2025-06-01', 's');
 GO
 
 INSERT INTO dbo.Categoria (nome)

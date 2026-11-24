@@ -216,7 +216,7 @@ Consumidores: **Roberto (Flutter)** e, se útil, ferramentas de teste do Viniciu
 Cliente guarda `funcionarioId` e envia nas operações.  
 **FECHADO no MVP:** sem JWT (A2 adiado). JWT só depois, se sobrar tempo.
 
-**Login / senha (C16 — FECHADO):** comparar a senha enviada com `funcionario.senha_hash` do banco (valores demo do `inserts.txt`, ex. `hash_demo_ana`). Sem BCrypt/Identity obrigatório no primeiro MVP. Se Geovanni ampliar `senha_hash` depois, o Negócio pode evoluir o algoritmo sem mudar a rota.
+**Login / senha (C16 — FECHADO):** o cliente envia a senha em texto; o Negócio verifica com **BCrypt** (`SenhaHasher`) contra `funcionario.senha_hash`. Seed/demo: senha plana `@Ana123` (hash no banco). Rota de login e body `{ cpfOuEmail, senha }` não mudam. Sem JWT.
 
 ### 7.2 Cadastros
 
@@ -298,7 +298,7 @@ SPs cobrem entrada/venda (e ObterOuCadastrarLote). Cadastros (fornecedor, produt
 | C13 | Multilote na venda (FEFO) | **FECHADO** — N `vendaitem` | Anderson |
 | C14 | Defaults alertas A7 | **FECHADO** — `dias=30`, `limite=10` | Anderson + Roberto |
 | C15 | Transação multi-item | **FECHADO** — 1 transação no Repositório | Anderson |
-| C16 | Senha no MVP | **FECHADO** — compara com `senha_hash` demo; sem BCrypt obrigatório | Anderson |
+| C16 | Senha no MVP | **FECHADO** — BCrypt no Negócio; seed com hash; demo `@Ana123` | Anderson |
 
 ---
 
@@ -332,7 +332,7 @@ Quando fechar: mudar status aqui + refletir na seção correspondente.
 | **B6** | Estoque negativo no SQL? | §5.4 | MVP: só **Negócio** valida; CHECK/trigger no banco = nice-to-have | **ABERTO** |
 | **B7** | Connection string Dev | §5.4 | Chave **`Padrao`**; `Database=PharmaStock`; `Server=` por máquina (Express/LocalDB) | **PARCIAL** — padrão FECHADO; valor local de cada dev |
 | **B8** | Homogeneizar e testar SPs no schema real | §5.4 | Rodar entrada/venda no SSMS e avisar o núcleo | **ABERTO** |
-| **P10** | Tamanho de `senha_hash` (varchar 25) | schema | Ampliar (ex. 128) **ou** manter demo curto alinhado ao C16 | **ABERTO** |
+| **P10** | Tamanho de `senha_hash` | schema | `VARCHAR(255)` (cabe BCrypt) | **FECHADO** |
 
 ### 11.3 Grupo (não bloqueia núcleo/API)
 

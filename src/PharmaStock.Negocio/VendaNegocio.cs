@@ -67,7 +67,6 @@ public class VendaNegocio
         return await _vendas.RegistrarVendaCompletaAsync(idFuncionario, registros, ct);
     }
 
-    public Task<IReadOnlyList<(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal)>> ListarAsync(
-        CancellationToken ct = default)
+    public Task<IReadOnlyList<VendaListagem>> ListarAsync(CancellationToken ct = default)
         => _vendas.ListarAsync(ct);
 }

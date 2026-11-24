@@ -1,9 +1,6 @@
-using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using PharmaStock.Negocio;
 using PharmaStock.Negocio.Excecoes;
-using PharmaStock.Repositorio;
-using PharmaStock.Repositorio.Abstracoes;
 using PharmaStock.Web.ViewModels;
 
 namespace PharmaStock.Web.Controllers;
@@ -12,19 +9,11 @@ public class VendasController : Controller
 {
     private readonly VendaNegocio _venda;
     private readonly CadastroNegocio _cadastro;
-    private readonly IFuncionarioRepositorio _funcionarios;
-    private readonly ISqlConnectionFactory _db;
 
-    public VendasController(
-        VendaNegocio venda,
-        CadastroNegocio cadastro,
-        IFuncionarioRepositorio funcionarios,
-        ISqlConnectionFactory db)
+    public VendasController(VendaNegocio venda, CadastroNegocio cadastro)
     {
         _venda = venda;
         _cadastro = cadastro;
-        _funcionarios = funcionarios;
-        _db = db;
     }
 
     [HttpGet]
@@ -81,43 +70,14 @@ public class VendasController : Controller
             return RedirectToAction("Login", "Account", new { returnUrl = "/Vendas" });
 
         var lista = await _venda.ListarAsync();
-        var nomesFunc = new Dictionary<int, string>();
-        foreach (var id in lista.Select(v => v.IdFuncionario).Distinct())
-        {
-            var f = await _funcionarios.ObterPorIdAsync(id);
-            nomesFunc[id] = f?.Nome ?? $"#{id}";
-        }
-
-        var produtosPorVenda = new Dictionary<int, string>();
-        if (lista.Count > 0)
-        {
-            await using var conn = _db.Create();
-            var ids = lista.Select(v => v.IdVenda).ToArray();
-            var rows = await conn.QueryAsync<(int IdVenda, string Nome)>(
-                """
-                SELECT vi.id_venda AS IdVenda, p.nome AS Nome
-                FROM dbo.VendaItem vi
-                INNER JOIN dbo.Produto p ON p.id = vi.id_produto
-                WHERE vi.id_venda IN @ids
-                ORDER BY p.nome
-                """,
-                new { ids });
-
-            produtosPorVenda = rows
-                .GroupBy(r => r.IdVenda)
-                .ToDictionary(
-                    g => g.Key,
-                    g => string.Join(", ", g.Select(x => x.Nome).Distinct()));
-        }
-
         var model = lista
-            .OrderByDescending(v => v.DataVenda)
             .Select(v => new VendaListaItemViewModel
             {
                 IdVenda = v.IdVenda,
                 DataVenda = v.DataVenda,
-                FuncionarioNome = nomesFunc.GetValueOrDefault(v.IdFuncionario, $"#{v.IdFuncionario}"),
-                Produtos = produtosPorVenda.GetValueOrDefault(v.IdVenda, "—"),
+                FuncionarioNome = v.FuncionarioNome,
+                Produtos = v.Produtos,
+                QuantidadeItens = v.QuantidadeItens,
                 ValorTotal = v.ValorTotal
             })
             .ToList();

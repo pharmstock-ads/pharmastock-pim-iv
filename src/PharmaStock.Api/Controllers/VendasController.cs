@@ -33,6 +33,8 @@ public class VendasController : ControllerBase
     public async Task<ActionResult<IReadOnlyList<VendaResumoDto>>> Listar(CancellationToken ct)
     {
         var lista = await _vendas.ListarAsync(ct);
-        return Ok(lista.Select(v => new VendaResumoDto(v.IdVenda, v.IdFuncionario, v.DataVenda, v.ValorTotal)).ToList());
+        return Ok(lista
+            .Select(v => new VendaResumoDto(v.IdVenda, v.IdFuncionario, v.DataVenda, v.ValorTotal))
+            .ToList());
     }
 }

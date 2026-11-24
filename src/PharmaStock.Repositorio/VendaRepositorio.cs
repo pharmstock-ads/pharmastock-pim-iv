@@ -62,21 +62,52 @@ public class VendaRepositorio : IVendaRepositorio
         }
     }
 
-    public async Task<IReadOnlyList<(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal)>> ListarAsync(
-        CancellationToken ct = default)
+    public async Task<IReadOnlyList<VendaListagem>> ListarAsync(CancellationToken ct = default)
     {
         await using var conn = _factory.Create();
-        var rows = await conn.QueryAsync(new CommandDefinition(
+        var rows = await conn.QueryAsync<(
+            int IdVenda,
+            int IdFuncionario,
+            DateTime DataVenda,
+            decimal ValorTotal,
+            string? FuncionarioNome,
+            string? ProdutoNome,
+            decimal? Quantidade)>(new CommandDefinition(
             """
-            SELECT id_venda AS IdVenda, id_funcionario AS IdFuncionario,
-                   data_venda AS DataVenda, valor_total AS ValorTotal
-            FROM dbo.venda
-            ORDER BY data_venda DESC
+            SELECT
+                v.id_venda AS IdVenda,
+                v.id_funcionario AS IdFuncionario,
+                v.data_venda AS DataVenda,
+                v.valor_total AS ValorTotal,
+                f.nome AS FuncionarioNome,
+                p.nome AS ProdutoNome,
+                vi.quantidade AS Quantidade
+            FROM dbo.Venda v
+            LEFT JOIN dbo.Funcionario f ON f.id_funcionario = v.id_funcionario
+            LEFT JOIN dbo.VendaItem vi ON vi.id_venda = v.id_venda
+            LEFT JOIN dbo.Produto p ON p.id = vi.id_produto
+            ORDER BY v.data_venda DESC, p.nome
             """,
             cancellationToken: ct));
 
         return rows
-            .Select(r => ((int)r.IdVenda, (int)r.IdFuncionario, (DateTime)r.DataVenda, (decimal)r.ValorTotal))
+            .GroupBy(r => new { r.IdVenda, r.IdFuncionario, r.DataVenda, r.ValorTotal, r.FuncionarioNome })
+            .Select(g =>
+            {
+                var nomes = string.Join(
+                    ", ",
+                    g.Select(x => x.ProdutoNome).Where(n => !string.IsNullOrWhiteSpace(n)).Distinct());
+                return new VendaListagem(
+                    g.Key.IdVenda,
+                    g.Key.IdFuncionario,
+                    g.Key.DataVenda,
+                    g.Key.ValorTotal,
+                    string.IsNullOrWhiteSpace(g.Key.FuncionarioNome)
+                        ? $"#{g.Key.IdFuncionario}"
+                        : g.Key.FuncionarioNome!,
+                    string.IsNullOrEmpty(nomes) ? "—" : nomes,
+                    (int)Math.Floor(g.Sum(x => x.Quantidade ?? 0m)));
+            })
             .ToList();
     }
 }

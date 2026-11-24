@@ -7,5 +7,6 @@ public interface IFornecedorRepositorio
 {
     Task<IReadOnlyList<Fornecedor>> ListarAsync(CancellationToken ct = default);
     Task<Fornecedor?> ObterPorIdAsync(int id, CancellationToken ct = default);
+    Task<Fornecedor?> ObterPorCnpjAsync(string cnpj, CancellationToken ct = default);
     Task<int> InserirAsync(Fornecedor fornecedor, CancellationToken ct = default);
 }

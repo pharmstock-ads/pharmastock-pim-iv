@@ -18,13 +18,13 @@
 
     <div class="mb-3">
         <label asp-for="Nome" class="form-label fw-semibold"></label>
-        <input asp-for="Nome" class="form-control" />
+        <input asp-for="Nome" class="form-control" maxlength="100" />
         <span asp-validation-for="Nome" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="CodBarra" class="form-label fw-semibold"></label>
-        <input asp-for="CodBarra" class="form-control" />
+        <input asp-for="CodBarra" class="form-control" maxlength="25" />
         <span asp-validation-for="CodBarra" class="text-danger"></span>
     </div>
 

@@ -37,6 +37,19 @@ public class FornecedorRepositorio : IFornecedorRepositorio
             cancellationToken: ct));
     }
 
+    public async Task<Fornecedor?> ObterPorCnpjAsync(string cnpj, CancellationToken ct = default)
+    {
+        await using var conn = _factory.Create();
+        return await conn.QuerySingleOrDefaultAsync<Fornecedor>(new CommandDefinition(
+            """
+            SELECT id AS Id, nome_empresa AS NomeEmpresa, cnpj AS Cnpj, telefone AS Telefone
+            FROM dbo.fornecedor
+            WHERE cnpj = @cnpj
+            """,
+            new { cnpj },
+            cancellationToken: ct));
+    }
+
     public async Task<int> InserirAsync(Fornecedor fornecedor, CancellationToken ct = default)
     {
         await using var conn = _factory.Create();

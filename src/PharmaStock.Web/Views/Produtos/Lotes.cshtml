@@ -41,7 +41,7 @@
                         <td>@l.Id</td>
                         <td>@l.NumeroLote</td>
                         <td>@l.Validade.ToString("dd/MM/yyyy")</td>
-                        <td>@l.Quantidade.ToString("0.##")</td>
+                        <td>@((int)Math.Floor(l.Quantidade))</td>
                     </tr>
                 }
             }

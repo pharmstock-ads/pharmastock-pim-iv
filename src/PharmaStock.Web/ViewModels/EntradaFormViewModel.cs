@@ -20,9 +20,9 @@ public class EntradaFormViewModel
     public DateTime Validade { get; set; } = DateTime.Today.AddMonths(6);
 
     [Required(ErrorMessage = "Informe a quantidade.")]
-    [Range(0.01, double.MaxValue, ErrorMessage = "Quantidade deve ser maior que zero.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser um número inteiro maior que zero.")]
     [Display(Name = "Quantidade")]
-    public decimal Quantidade { get; set; } = 1;
+    public int Quantidade { get; set; } = 1;
 
     [Required(ErrorMessage = "Informe o preço unitário.")]
     [Range(0, double.MaxValue, ErrorMessage = "Preço unitário não pode ser negativo.")]

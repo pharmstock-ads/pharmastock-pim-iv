@@ -45,10 +45,13 @@ public class FefoAlocadorTests
     {
         var lotes = new[]
         {
-            new Lote { Id = 1, Validade = new DateTime(2027, 1, 1), Quantidade = 5 }
+            new Lote { Id = 1, Validade = new DateTime(2027, 1, 1), Quantidade = 5.7m }
         };
 
-        Assert.Throws<EstoqueInsuficienteException>(() => FefoAlocador.Alocar(lotes, 10));
+        var ex = Assert.Throws<EstoqueInsuficienteException>(() => FefoAlocador.Alocar(lotes, 10));
+        Assert.Contains("disponível: 5", ex.Message);
+        Assert.DoesNotContain("5,7", ex.Message);
+        Assert.DoesNotContain("5.7", ex.Message);
     }
 
     [Fact]

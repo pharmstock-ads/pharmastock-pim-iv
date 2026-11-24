@@ -154,4 +154,21 @@ public class CadastroNegocioTests
         });
         Assert.True(id > 0);
     }
+
+    [Fact]
+    public async Task CriarProduto_FornecedorInexistente_Lanca()
+    {
+        var negocio = Novo();
+
+        var ex = await Assert.ThrowsAsync<DominioException>(() =>
+            negocio.CriarProdutoAsync(new Produto
+            {
+                Codigo = 20,
+                Nome = "Teste",
+                CodBarra = "7891000100099",
+                IdFornecedor = 999
+            }));
+
+        Assert.Contains("Fornecedor", ex.Message, StringComparison.OrdinalIgnoreCase);
+    }
 }

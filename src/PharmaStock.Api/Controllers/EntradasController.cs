@@ -19,6 +19,9 @@ public class EntradasController : ControllerBase
     {
         try
         {
+            if (dto.Itens is null)
+                return BadRequest(new { mensagem = "Informe ao menos um item de entrada." });
+
             var itens = dto.Itens.Select(i => new EntradaItemPedido(
                 i.ProdutoId, i.NumeroLote, i.Validade, i.Quantidade, i.PrecoUnitario)).ToList();
             var id = await _entradas.RegistrarAsync(dto.FuncionarioId, itens, ct);

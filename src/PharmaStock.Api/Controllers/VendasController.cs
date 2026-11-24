@@ -19,6 +19,9 @@ public class VendasController : ControllerBase
     {
         try
         {
+            if (dto.Itens is null)
+                return BadRequest(new { mensagem = "Informe ao menos um item de venda." });
+
             var itens = dto.Itens.Select(i => new VendaItemPedido(i.ProdutoId, i.Quantidade, i.PrecoUnitario)).ToList();
             var id = await _vendas.RegistrarAsync(dto.FuncionarioId, itens, ct);
             return Created($"/api/vendas/{id}", new VendaResponseDto(id));

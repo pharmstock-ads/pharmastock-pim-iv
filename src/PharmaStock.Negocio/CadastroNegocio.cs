@@ -89,6 +89,12 @@ public class CadastroNegocio
         if (await _produtos.ObterPorCodBarraAsync(codBarra, ct) is not null)
             throw new DominioException("Já existe um produto com este código de barras.");
 
+        if (produto.IdFornecedor is int idFornecedor)
+        {
+            _ = await _fornecedores.ObterPorIdAsync(idFornecedor, ct)
+                ?? throw new DominioException("Fornecedor informado não existe.");
+        }
+
         produto.Nome = nome;
         produto.CodBarra = codBarra;
         return await _produtos.InserirAsync(produto, ct);

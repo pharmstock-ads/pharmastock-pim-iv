@@ -25,7 +25,9 @@ public class EntradasController : ControllerBase
             var itens = dto.Itens.Select(i => new EntradaItemPedido(
                 i.ProdutoId, i.NumeroLote, i.Validade, i.Quantidade, i.PrecoUnitario)).ToList();
             var id = await _entradas.RegistrarAsync(dto.FuncionarioId, itens, ct);
-            return Created($"/api/entradas/{id}", new EntradaResponseDto(id));
+            return Created(
+                $"/api/entradas/{id}",
+                new EntradaResponseDto(id, dto.FuncionarioId, dto.Itens));
         }
         catch (DominioException ex)
         {

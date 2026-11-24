@@ -65,15 +65,30 @@ public class VendaRepositorio : IVendaRepositorio
     public async Task<IReadOnlyList<VendaListagem>> ListarAsync(CancellationToken ct = default)
     {
         await using var conn = _factory.Create();
-        var rows = await conn.QueryAsync<(
-            int IdVenda,
-            int IdFuncionario,
-            DateTime DataVenda,
-            decimal ValorTotal,
-            string? FuncionarioNome,
-            string? ProdutoNome,
-            decimal? Quantidade)>(new CommandDefinition(
-            """
+        var rows = await QueryLinhasAsync(conn, idVenda: null, ct);
+        return Agrupar(rows);
+    }
+
+    public async Task<VendaListagem?> ObterPorIdAsync(int idVenda, CancellationToken ct = default)
+    {
+        await using var conn = _factory.Create();
+        var rows = await QueryLinhasAsync(conn, idVenda, ct);
+        return Agrupar(rows).FirstOrDefault();
+    }
+
+    private static async Task<IReadOnlyList<(
+        int IdVenda,
+        int IdFuncionario,
+        DateTime DataVenda,
+        decimal ValorTotal,
+        string? FuncionarioNome,
+        string? ProdutoNome,
+        decimal? Quantidade)>> QueryLinhasAsync(
+        System.Data.Common.DbConnection conn,
+        int? idVenda,
+        CancellationToken ct)
+    {
+        var sql = """
             SELECT
                 v.id_venda AS IdVenda,
                 v.id_funcionario AS IdFuncionario,
@@ -86,11 +101,35 @@ public class VendaRepositorio : IVendaRepositorio
             LEFT JOIN dbo.Funcionario f ON f.id_funcionario = v.id_funcionario
             LEFT JOIN dbo.VendaItem vi ON vi.id_venda = v.id_venda
             LEFT JOIN dbo.Produto p ON p.id = vi.id_produto
-            ORDER BY v.data_venda DESC, p.nome
-            """,
-            cancellationToken: ct));
+            """;
+        if (idVenda is not null)
+            sql += " WHERE v.id_venda = @idVenda";
+        sql += " ORDER BY v.data_venda DESC, p.nome";
 
-        return rows
+        var rows = await conn.QueryAsync<(
+            int IdVenda,
+            int IdFuncionario,
+            DateTime DataVenda,
+            decimal ValorTotal,
+            string? FuncionarioNome,
+            string? ProdutoNome,
+            decimal? Quantidade)>(new CommandDefinition(
+            sql,
+            new { idVenda },
+            cancellationToken: ct));
+        return rows.ToList();
+    }
+
+    private static IReadOnlyList<VendaListagem> Agrupar(
+        IReadOnlyList<(
+            int IdVenda,
+            int IdFuncionario,
+            DateTime DataVenda,
+            decimal ValorTotal,
+            string? FuncionarioNome,
+            string? ProdutoNome,
+            decimal? Quantidade)> rows)
+        => rows
             .GroupBy(r => new { r.IdVenda, r.IdFuncionario, r.DataVenda, r.ValorTotal, r.FuncionarioNome })
             .Select(g =>
             {
@@ -109,5 +148,4 @@ public class VendaRepositorio : IVendaRepositorio
                     (int)Math.Floor(g.Sum(x => x.Quantidade ?? 0m)));
             })
             .ToList();
-    }
 }

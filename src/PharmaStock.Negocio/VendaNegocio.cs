@@ -69,4 +69,7 @@ public class VendaNegocio
 
     public Task<IReadOnlyList<VendaListagem>> ListarAsync(CancellationToken ct = default)
         => _vendas.ListarAsync(ct);
+
+    public Task<VendaListagem?> ObterAsync(int idVenda, CancellationToken ct = default)
+        => _vendas.ObterPorIdAsync(idVenda, ct);
 }

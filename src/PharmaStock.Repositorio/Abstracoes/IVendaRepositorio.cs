@@ -24,4 +24,6 @@ public interface IVendaRepositorio
         CancellationToken ct = default);
 
     Task<IReadOnlyList<VendaListagem>> ListarAsync(CancellationToken ct = default);
+
+    Task<VendaListagem?> ObterPorIdAsync(int idVenda, CancellationToken ct = default);
 }

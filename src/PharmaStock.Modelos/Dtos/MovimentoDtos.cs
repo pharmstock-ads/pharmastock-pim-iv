@@ -10,7 +10,10 @@ public record EntradaItemRequestDto(
 
 public record EntradaRequestDto(int FuncionarioId, IReadOnlyList<EntradaItemRequestDto> Itens);
 
-public record EntradaResponseDto(int EntradaId);
+public record EntradaResponseDto(
+    int EntradaId,
+    int FuncionarioId,
+    IReadOnlyList<EntradaItemRequestDto> Itens);
 
 public record VendaItemRequestDto(int ProdutoId, int Quantidade, decimal PrecoUnitario);
 
@@ -19,3 +22,12 @@ public record VendaRequestDto(int FuncionarioId, IReadOnlyList<VendaItemRequestD
 public record VendaResponseDto(int VendaId);
 
 public record VendaResumoDto(int IdVenda, int IdFuncionario, DateTime DataVenda, decimal ValorTotal);
+
+public record VendaDetalheDto(
+    int IdVenda,
+    int IdFuncionario,
+    DateTime DataVenda,
+    decimal ValorTotal,
+    string FuncionarioNome,
+    string Produtos,
+    int QuantidadeItens);

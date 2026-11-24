@@ -129,4 +129,29 @@ public class CadastroNegocioTests
                 CodBarra = new string('1', 26)
             }));
     }
+
+    [Fact]
+    public async Task CriarProduto_SemCodigoBarras_Lanca()
+    {
+        var negocio = Novo();
+
+        await Assert.ThrowsAsync<DominioException>(() =>
+            negocio.CriarProdutoAsync(new Produto { Codigo = 10, Nome = "A" }));
+
+        await Assert.ThrowsAsync<DominioException>(() =>
+            negocio.CriarProdutoAsync(new Produto { Codigo = 11, Nome = "B", CodBarra = "   " }));
+    }
+
+    [Fact]
+    public async Task CriarProduto_ComCodigoBarras_Ok()
+    {
+        var negocio = Novo();
+        var id = await negocio.CriarProdutoAsync(new Produto
+        {
+            Codigo = 10,
+            Nome = "Dipirona",
+            CodBarra = "7891000100028"
+        });
+        Assert.True(id > 0);
+    }
 }

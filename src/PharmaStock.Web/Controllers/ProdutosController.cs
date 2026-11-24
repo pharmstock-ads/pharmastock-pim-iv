@@ -85,7 +85,7 @@ public class ProdutosController : Controller
             {
                 Codigo = model.Codigo,
                 Nome = model.Nome.Trim(),
-                CodBarra = string.IsNullOrWhiteSpace(model.CodBarra) ? null : model.CodBarra.Trim(),
+                CodBarra = model.CodBarra,
                 IdFornecedor = model.IdFornecedor,
                 IdCategoria = null
             });

@@ -129,9 +129,9 @@ O seed deixa lotes com **quantidade 0**. Estoque sobe com **entrada** (Web `/Ent
 | Campo | Valor |
 |-------|--------|
 | E-mail | `ana.souza@pharmastock.local` |
-| Senha | `hash_demo_ana` |
+| Senha | `@Ana123` |
 
-(Outros usuários no seed: `hash_demo_carlos`, `hash_demo_mariana`.)
+(Mesma senha para Carlos e Mariana no seed. No banco fica só o hash BCrypt.)
 
 ---
 

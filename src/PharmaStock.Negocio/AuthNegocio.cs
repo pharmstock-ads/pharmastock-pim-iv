@@ -1,6 +1,7 @@
 // Login de funcionario (MVP sem JWT).
 using PharmaStock.Modelos;
 using PharmaStock.Negocio.Excecoes;
+using PharmaStock.Negocio.Seguranca;
 using PharmaStock.Repositorio.Abstracoes;
 
 namespace PharmaStock.Negocio;
@@ -20,7 +21,7 @@ public class AuthNegocio
             throw new DominioException("Informe CPF/e-mail e senha.");
 
         var funcionario = await _funcionarios.ObterPorCpfOuEmailAsync(cpfOuEmail.Trim(), ct);
-        if (funcionario is null || !funcionario.EstaAtivo || funcionario.SenhaHash != senha)
+        if (funcionario is null || !funcionario.EstaAtivo || !SenhaHasher.Verificar(senha, funcionario.SenhaHash))
             throw new DominioException("Credenciais inválidas.");
 
         return funcionario;

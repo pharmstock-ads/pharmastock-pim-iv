@@ -38,7 +38,7 @@ Sem sessão, rotas protegidas redirecionam para o login.
 ### Login demo (seed)
 
 - E-mail: `ana.souza@pharmastock.local`  
-- Senha: `hash_demo_ana`
+- Senha: `@Ana123`
 
 ### Caminho feliz (sem Scalar)
 

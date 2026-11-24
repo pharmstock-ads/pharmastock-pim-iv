@@ -11,8 +11,8 @@ public class FornecedorFormViewModel
 
     [Required(ErrorMessage = "Informe o CNPJ.")]
     [Display(Name = "CNPJ")]
-    [StringLength(18, MinimumLength = 14, ErrorMessage = "CNPJ deve ter 14 dígitos (com ou sem máscara).")]
-    [RegularExpression(@"^[\d.\-\/]+$", ErrorMessage = "CNPJ deve conter apenas números ou máscara.")]
+    [StringLength(14, MinimumLength = 14, ErrorMessage = "CNPJ deve ter exatamente 14 dígitos.")]
+    [RegularExpression(@"^\d{14}$", ErrorMessage = "CNPJ deve conter apenas 14 números, sem pontuação.")]
     public string Cnpj { get; set; } = string.Empty;
 
     [Display(Name = "Telefone")]

@@ -18,8 +18,8 @@
 
     <div class="mb-3">
         <label asp-for="Cnpj" class="form-label fw-semibold"></label>
-        <input asp-for="Cnpj" class="form-control" placeholder="14 dígitos (com ou sem máscara)" maxlength="18" inputmode="numeric" />
-        <div class="form-text">Serão gravados apenas os 14 dígitos, sem pontuação.</div>
+        <input asp-for="Cnpj" class="form-control" placeholder="Somente 14 números" maxlength="14" inputmode="numeric" pattern="\d{14}" />
+        <div class="form-text">Informe os 14 dígitos, sem pontuação.</div>
         <span asp-validation-for="Cnpj" class="text-danger"></span>
     </div>
 

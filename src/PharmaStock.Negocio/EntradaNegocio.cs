@@ -51,12 +51,16 @@ public class EntradaNegocio
             if (string.IsNullOrWhiteSpace(item.NumeroLote))
                 throw new DominioException("Número do lote é obrigatório.");
 
+            var numeroLote = item.NumeroLote.Trim();
+            if (numeroLote.Length > 50)
+                throw new DominioException("Número do lote deve ter no máximo 50 caracteres.");
+
             var produto = await _produtos.ObterPorIdAsync(item.IdProduto, ct)
                 ?? throw new DominioException($"Produto {item.IdProduto} não encontrado.");
 
             registros.Add(new EntradaItemRegistro(
                 produto.Id,
-                item.NumeroLote.Trim(),
+                numeroLote,
                 item.Validade.Date,
                 item.Quantidade,
                 item.PrecoUnitario));

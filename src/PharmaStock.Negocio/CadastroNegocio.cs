@@ -28,14 +28,31 @@ public class CadastroNegocio
     {
         if (string.IsNullOrWhiteSpace(nomeEmpresa))
             throw new DominioException("Nome da empresa é obrigatório.");
-        if (string.IsNullOrWhiteSpace(cnpj))
-            throw new DominioException("CNPJ é obrigatório.");
+
+        var nome = nomeEmpresa.Trim();
+        if (nome.Length > 100)
+            throw new DominioException("Nome da empresa deve ter no máximo 100 caracteres.");
+
+        var cnpjDigitos = SomenteDigitos(cnpj);
+        if (cnpjDigitos.Length != 14)
+            throw new DominioException("CNPJ deve conter 14 dígitos.");
+
+        if (await _fornecedores.ObterPorCnpjAsync(cnpjDigitos, ct) is not null)
+            throw new DominioException("Já existe um fornecedor com este CNPJ.");
+
+        string? telefoneNormalizado = null;
+        if (!string.IsNullOrWhiteSpace(telefone))
+        {
+            telefoneNormalizado = telefone.Trim();
+            if (telefoneNormalizado.Length > 30)
+                throw new DominioException("Telefone deve ter no máximo 30 caracteres.");
+        }
 
         return await _fornecedores.InserirAsync(new Fornecedor
         {
-            NomeEmpresa = nomeEmpresa.Trim(),
-            Cnpj = cnpj.Trim(),
-            Telefone = telefone
+            NomeEmpresa = nome,
+            Cnpj = cnpjDigitos,
+            Telefone = telefoneNormalizado
         }, ct);
     }
 
@@ -49,19 +66,39 @@ public class CadastroNegocio
     {
         if (produto.Codigo <= 0)
             throw new DominioException("Código do produto inválido.");
+
         if (string.IsNullOrWhiteSpace(produto.Nome))
             throw new DominioException("Nome do produto é obrigatório.");
+
+        var nome = produto.Nome.Trim();
+        if (nome.Length > 100)
+            throw new DominioException("Nome do produto deve ter no máximo 100 caracteres.");
+
+        string? codBarra = null;
+        if (!string.IsNullOrWhiteSpace(produto.CodBarra))
+        {
+            codBarra = produto.CodBarra.Trim();
+            if (codBarra.Length > 25)
+                throw new DominioException("Código de barras deve ter no máximo 25 caracteres.");
+        }
 
         if (await _produtos.ObterPorCodigoAsync(produto.Codigo, ct) is not null)
             throw new DominioException("Já existe um produto com este código.");
 
-        if (!string.IsNullOrWhiteSpace(produto.CodBarra)
-            && await _produtos.ObterPorCodBarraAsync(produto.CodBarra.Trim(), ct) is not null)
+        if (codBarra is not null
+            && await _produtos.ObterPorCodBarraAsync(codBarra, ct) is not null)
             throw new DominioException("Já existe um produto com este código de barras.");
 
+        produto.Nome = nome;
+        produto.CodBarra = codBarra;
         return await _produtos.InserirAsync(produto, ct);
     }
 
     public Task<IReadOnlyList<Lote>> ListarLotesPorProdutoAsync(int idProduto, CancellationToken ct = default)
         => _lotes.ListarPorProdutoAsync(idProduto, ct);
+
+    private static string SomenteDigitos(string? valor)
+        => string.IsNullOrWhiteSpace(valor)
+            ? string.Empty
+            : new string(valor.Where(char.IsDigit).ToArray());
 }

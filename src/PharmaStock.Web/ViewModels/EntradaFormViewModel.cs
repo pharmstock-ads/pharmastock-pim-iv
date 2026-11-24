@@ -11,6 +11,7 @@ public class EntradaFormViewModel
 
     [Required(ErrorMessage = "Informe o número do lote.")]
     [Display(Name = "Número do lote")]
+    [StringLength(50, ErrorMessage = "Número do lote deve ter no máximo 50 caracteres.")]
     public string NumeroLote { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Informe a validade.")]
